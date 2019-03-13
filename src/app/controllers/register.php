@@ -29,7 +29,7 @@
                 if ($userModel->isUserAuthenticated($emailLogin, $passwordLogin)) {
                     $user = $userModel->getUserByEmail($emailLogin);
                     $_SESSION["id"] = $user["id"];
-                    // TODO: Log in.
+                    $this->redirect("/");
                 } else {
                     $errors["login"] = true;
                 }

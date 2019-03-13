@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#loading").show();
 
     $.ajax({
-        url: "./latest_posts",
+        url: "./feed/latest",
         type: "POST",
         cache: false,
         dataType: "json",
@@ -29,7 +29,7 @@ $(document).ready(function () {
             nextPageElement.remove();
 
             $.ajax({
-                url: `./latest_posts?page=${nextPage}`,
+                url: `./feed/latest?page=${nextPage}`,
                 type: "POST",
                 cache: false,
                 dataType: "json",

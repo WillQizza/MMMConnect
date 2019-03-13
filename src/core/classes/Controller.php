@@ -16,5 +16,9 @@
             return new $modelName($this->database);
         }
 
+        protected function redirect ($url) {
+            header("Location: $url");
+        }
+
     }
 ?>
