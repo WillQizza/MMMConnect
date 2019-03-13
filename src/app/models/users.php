@@ -11,5 +11,9 @@
             $user = $this->getUserByEmail($email);
             return $user && password_verify($password, $user["password"]);
         }
+
+        public function createUser ($data) {
+            
+        }
     }
 ?>
