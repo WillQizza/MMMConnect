@@ -1,0 +1,86 @@
+@font-face {
+    font-family: "Tomcat";
+    src: url("../fonts//TOMCAT.otf");
+}
+
+html, body {
+    height: 100%;
+    background: rgb(225, 225, 225);
+}
+
+navbar {
+    z-index: -10;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.navbar-brand {
+    font-size: 150%;
+}
+
+.navbar-brand span {
+    font-family: "Tomcat";
+}
+
+.spacing-top {
+    margin-top: .5em;
+}
+
+.line {
+    margin-top: 1em;
+    border-top: 0.1em solid #00000005;
+    margin-bottom: 1em;
+}
+
+.faded {
+    opacity: 0.5;
+}
+
+#content {
+    width: 95em;
+}
+
+#userInfo {
+    min-width: 25%;
+    max-width: 25%;
+    margin-left: 1%;
+    float: left;
+}
+
+#activity {
+    min-width: 60%;
+    max-width: 60%;
+    float: left;
+    margin-left: 1%;
+}
+
+#activity textarea {
+    width: 80%;
+    max-width: 80%;
+    height: 5em;
+    max-height: 10em;
+    padding: 1em;
+    outline: 0;
+    float: left;
+}
+
+#activity input[type="submit"] {
+    width: 9%;
+    height: 4em;
+    margin-left: 2%;
+    float: right;
+    position: absolute;
+    border: none;
+    border-radius: 1em;
+    background: #209cee;
+    color: white;
+    font-size: large;
+}
+
+#loading {
+    width: 3em;
+    height: 3em;
+    margin-left: 45%;
+    margin-right: 50%;
+}

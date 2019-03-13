@@ -1,0 +1,7 @@
+RewriteEngine on
+RewriteRule ^assets/ - [L]
+RewriteRule ^(.*)$ index.php?_path=$1 [NC,L,QSA]
+# Credit given to https://stackoverflow.com/questions/18406156/redirect-all-to-index-php-htaccess
+# By no means am I great with .htaccess files.
+
+Options -Indexes
