@@ -19,7 +19,12 @@
                     return $this->format($data);
                 }, $results);
             }
-            return $this->format($query->fetch());
+            $results = $query->fetch();
+            if ($results) {
+                return $this->format($results);   
+            } else {
+                return false;
+            }
         }
 
         protected function model ($modelName) {

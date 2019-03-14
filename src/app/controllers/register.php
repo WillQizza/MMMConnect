@@ -1,7 +1,7 @@
 <?php
     class Register extends Controller {
         public function index () {
-            $emailLogin = "";
+            $identifier = "";
             $passwordLogin = "";
             $firstName = "";
             $lastName = "";
@@ -22,12 +22,11 @@
                 "registerSuccess" => false
             );
             $userModel = $this->model("Users");
-            if (isset($_POST["submitLogin"]) && isset($_POST["email"]) && isset($_POST["password"])) {
-
-                $emailLogin = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+            if (isset($_POST["submitLogin"]) && isset($_POST["identifier"]) && isset($_POST["password"])) {
+                $identifier = strtolower(str_replace(" ", "", htmlspecialchars($_POST["identifier"])));
                 $passwordLogin = $_POST["password"];
-                if ($userModel->isUserAuthenticated($emailLogin, $passwordLogin)) {
-                    $user = $userModel->getUserByEmail($emailLogin);
+                $user = $userModel->isUserAuthenticated($identifier, $passwordLogin);
+                if ($user) {
                     $_SESSION["id"] = $user["id"];
                     $this->redirect("feed");
                 } else {
@@ -40,7 +39,6 @@
                 $emailConfirmRegister = strtolower(str_replace(" ", "", htmlspecialchars($_POST["confirmEmail"])));
                 $passwordRegister = $_POST["password"];
                 $passwordConfirmRegister = $_POST["confirmPassword"];
-
                 if ($userModel->getUserByEmail($emailRegister)) {
                     $errors["emailExists"] = true;
                 } else if ($emailRegister != $emailConfirmRegister) {
@@ -81,12 +79,13 @@
                 "submittedRegister" => isset($_POST["submitRegister"]),
                 "errors" => $errors,
                 "placeholders" => array(
-                    "emailLogin" => $emailLogin,
+                    "identifier" => $identifier,
                     "firstName" => $firstName,
                     "lastName" => $lastName,
                     "email" => $emailRegister,
                     "confirmEmail" => $emailConfirmRegister
-                )
+                ),
+                "username" => isset($username) ? $username : null
             ));
         }
     }

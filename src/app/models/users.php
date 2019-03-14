@@ -11,7 +11,7 @@
             $user = $this->query("SELECT * FROM users WHERE username=:username", array(
                 "username" => $username
             ), false);
-            return $this->format($user);
+            return $user;
         }
 
         public function getUserById ($id) {
@@ -21,9 +21,15 @@
             return $user;
         }
 
-        public function isUserAuthenticated ($email, $password) {
-            $user = $this->getUserByEmail($email);
-            return $user && password_verify($password, $user["password"]);
+        public function isUserAuthenticated ($identifier, $password) {
+            $user = $this->getUserByEmail($identifier);
+            if (!$user) {
+                $user = $this->getUserByUsername($identifier);
+            }
+            if ($user && password_verify($password, $user["password"])) {
+                return $user;
+            }
+            return false;
         }
 
         public function generateUsername ($firstName, $lastName) {

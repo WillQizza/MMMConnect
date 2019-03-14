@@ -11,7 +11,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#register input").on({
+    $("#register input[type=\"email\"]").on({
         keydown: function (e) {
             return !(e.which === 32);
         },

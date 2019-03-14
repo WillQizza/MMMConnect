@@ -35,14 +35,14 @@
                         <div id="login">
                             <?php
                                 if ($params["errors"]["login"]) {
-                                    echo "<div class=\"notification is-danger\">The email or password you entered was incorrect.</div>";
+                                    echo "<div class=\"notification is-danger\">Your credentials were incorrect.</div>";
                                 }
                             ?>
                             
                             <form method="POST" action="register">
                                 <div class="field">
                                     <div class="control">
-                                        <input type="email" name="email" placeholder="Email Address" class="input" value="<?php echo $params["placeholders"]["emailLogin"] ?>" required />
+                                        <input type="text" name="identifier" placeholder="Email/Username" class="input" value="<?php echo $params["placeholders"]["identifier"] ?>" required />
                                     </div>
                                 </div>
                                 <div class="field">
@@ -78,7 +78,7 @@
                                     } else if ($params["errors"]["passwordEnglishOnly"]) {
                                         echo "Your password can only contain english characters or numbers.";
                                     } else if ($params["errors"]["registerSuccess"]) {
-                                        echo "Successfully registered! You are now able to login!";
+                                        echo "Successfully registered! You are now able to login!<br />Your username is " . $params["username"];
                                     }
                                     echo "</div>";
                                 }
