@@ -82,7 +82,11 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     if (isset($_POST["body"]) && isset($_POST["postId"])) {
-
+                        $comment = $commentsModel->postComment(array(
+                            
+                        ));
+                    } else {
+                        $this->redirect("feed");
                     }
                 } else {
                     $this->redirect("logout");
