@@ -11,7 +11,7 @@
             $user = $this->query("SELECT * FROM users WHERE username=:username", array(
                 "username" => $username
             ), false);
-            return $user;
+            return $this->format($user);
         }
 
         public function getUserById ($id) {
@@ -54,6 +54,23 @@
                 "sud" => date("Y-m-d"),
                 "uc" => false
             ));
+        }
+
+        protected function format ($data) {
+            return array(
+                "id" => $data["id"],
+                "firstName" => $data["first_name"],
+                "lastName" => $data["last_name"],
+                "name" => $data["first_name"] . " " . $data["last_name"],
+                "email" => $data["email"],
+                "password" => $data["password"],
+                "avatar" => $data["profile_pic"],
+                "closed" => $data["user_closed"],
+                "signUpDate" => $data["signup_date"],
+                "likes" => $data["num_likes"],
+                "posts" => $data["num_posts"],
+                "profileURL" => "/profile/" . $data["username"]
+            );
         }
     }
 ?>

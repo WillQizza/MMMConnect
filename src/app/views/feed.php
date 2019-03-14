@@ -15,7 +15,7 @@
             </div>
             <div class="navbar-menu">
                 <div class="navbar-end">
-                    <a class="navbar-item" href="<?php echo $params["profileURL"] ?>"><?php echo $params["name"] ?></a>
+                    <a class="navbar-item" href="<?php echo $params["user"]["profileURL"] ?>"><?php echo $params["user"]["name"] ?></a>
 
                     <a class="navbar-item" href="/"><i class="fas fa-home"></i></a>
                     
@@ -36,14 +36,14 @@
                 <article class="media">
                     <figure class="media-left">
                         <p class="image is-128x128">
-                            <img src="<?php echo $params["avatarURL"] ?>" />
+                            <img src="<?php echo $params["user"]["avatar"] ?>" />
                         </p>
                     </figure>
                     <div class="media-content">
                         <div class="content">
-                            <a href="<?php echo $params["profileURL"] ?>" class="link"><?php echo $params["name"] ?></a><br />
-                            Posts: <?php echo $params["posts"] ?><br />
-                            Likes: <?php echo $params["likes"] ?>
+                            <a href="<?php echo $params["user"]["profileURL"] ?>" class="link"><?php echo $params["user"]["name"] ?></a><br />
+                            Posts: <?php echo $params["user"]["posts"] ?><br />
+                            Likes: <?php echo $params["user"]["posts"] ?>
                         </div>
                     </div>
                 </article>

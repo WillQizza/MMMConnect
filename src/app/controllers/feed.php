@@ -7,11 +7,7 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     $this->view("feed", array(
-                        "likes" => $user["num_likes"],
-                        "posts" => $user["num_posts"],
-                        "avatarURL" => $user["profile_pic"],
-                        "profileURL" => "/profile/" . $user["username"] ,
-                        "name" => $user["first_name"] . " " . $user["last_name"]
+                        "user" => $user
                     ));
                 } else {
                     $this->redirect("/logout");
@@ -35,7 +31,8 @@
                 if ($user) {
                     $posts = $postsModel->getFeedForUser($user["id"], $page);
                     $this->view("feed_latest", array(
-                        "posts" => $posts
+                        "posts" => $posts,
+                        "page" => count($postsModel->getFeedForUser($user["id"], $page + 1)) > 0 ? $page + 1 : null
                     ));
                 } else {
                     $this->redirect("/logout");
