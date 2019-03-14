@@ -23,7 +23,7 @@
         }
 
         protected function redirect ($url) {
-            header("Location: ./$url");
+            header("Location: " . $this->helper("URL")::create($url));
         }
 
     }
