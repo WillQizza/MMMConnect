@@ -62,6 +62,14 @@
             ));
         }
 
+        public function isUserFriendsWith ($id, $checkId) {
+            $user = $this->query("SELECT * FROM users WHERE id=:id", array(
+                "id" => $id
+            ), false);
+            
+            return in_array($checkId, $user["friendIds"]);
+        }
+
         public function setPosts ($id, $posts) {
             $this->query("UPDATE users SET num_posts=:p WHERE id=:id", array(
                 "p" => $posts,
@@ -82,7 +90,8 @@
                 "signUpDate" => $data["signup_date"],
                 "likes" => $data["num_likes"],
                 "posts" => $data["num_posts"],
-                "profileURL" => $this->helper("URL")::create("profile/" . $data["username"])
+                "profileURL" => $this->helper("URL")::create("profile/" . $data["username"]),
+                "friendIds" => explode(",", $data["friend_array"])
             );
         }
     }

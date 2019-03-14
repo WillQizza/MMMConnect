@@ -107,7 +107,7 @@ $(document).ready(function () {
                 timestampElement.textContent = `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
             } else {
                 const seconds = Math.floor(diff / 1000);
-                if (seconds > 30) {
+                if (seconds > 5) {
                     timestampElement.textContent = `${seconds} seconds ago`;
                 } else {
                     timestampElement.textContent = "Just now";

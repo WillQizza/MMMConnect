@@ -73,5 +73,23 @@
                 $this->redirect("register");
             }
         }
+
+        public function postComment () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $postsModel = $this->model("Posts");
+                $commentsModel = $this->model("Comments");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if ($user) {
+                    if (isset($_POST["body"]) && isset($_POST["postId"])) {
+
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
     }
 ?>

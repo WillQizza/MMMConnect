@@ -4,11 +4,12 @@
         private static $POSTS_PER_PAGE = 10;
 
         public function getFeedForUser ($id, $page = 0) {
+            $userModel = $this->model("Users");
             $posts = $this->query("SELECT * FROM posts ORDER BY id DESC");
             $data = array_slice($posts, self::$POSTS_PER_PAGE * $page, self::$POSTS_PER_PAGE); 
             $feed = array();
             foreach ($data as $post) {
-                if (!$post["deleted"]) {
+                if (!$post["deleted"] && ($post["author"]["id"] == $id || $userModel->isUserFriendsWith($id, $post["author"]["id"]))) {
                     array_push($feed, $post);
                 }
             }
@@ -30,7 +31,7 @@
                 "a" => $author["id"],
                 "t" => $target["id"],
                 "da" => date("Y-m-d H:i:s"),
-                "d" => false,
+                "d" =>false,
                 "l" => 0
             ));
             $post = $this->query("SELECT * FROM posts WHERE author=:a ORDER BY id DESC LIMIT 1", array(
@@ -56,6 +57,7 @@
                 "timestamp" => $this->helper("Timestamp")::get($data["date_added"]),
                 "deleted" => $data["deleted"],
                 "likes" => $data["likes"],
+                "comments" => $this->model("Comments")->getCommentsForPost($data["id"]),
                 "author" => $author,
                 "target" => $target
             );
