@@ -37,6 +37,11 @@
             return $helperName;
         }
 
+        protected function url ($url) {
+            $baseUrl = substr(str_replace("\\", "/", realpath(__DIR__ . "/../../../")), strlen($_SERVER["DOCUMENT_ROOT"]));
+            return $baseUrl . "/" . $url;
+        }
+
         protected function format ($data) {
             return $data;
         }

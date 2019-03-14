@@ -2,11 +2,11 @@
 <html>
     <head>
         <title>MMMConnect | Login</title>
-        <link href="assets/css/bulma.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"]; ?>assets/css/bulma.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <link href="assets/css/register.css" rel="stylesheet" type="text/css" />
-        <script src="assets/js/jquery-3.3.1.min.js"></script>
-        <script src="assets/js/register.js"></script>
+        <link href="<?php echo $params["BASE"]; ?>assets/css/register.css" rel="stylesheet" type="text/css" />
+        <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/register.js"></script>
         <?php
             if ($params["submittedRegister"]) {
                 echo "
