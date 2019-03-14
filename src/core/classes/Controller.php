@@ -8,7 +8,7 @@
         }
         
         protected function view ($file, $params = array()) {
-            $params["BASE"] = $this->url("");
+            $params["BASE"] = $this->helper("URL")::create(""); // Technically the base controller class shouldn't do this.
             require_once(__DIR__ . "/../../app/views/" . strtolower($file) . ".php");
         }
 
@@ -19,11 +19,7 @@
 
         protected function helper ($helperName) {
             require_once(__DIR__ . "/../../app/helpers/" . strtolower($helperName) . ".php");
-        }
-
-        protected function url ($url) {
-            $baseUrl = substr(str_replace("\\", "/", realpath(__DIR__ . "/../../../")), strlen($_SERVER["DOCUMENT_ROOT"]));
-            return $baseUrl . "/" . $url;
+            return $helperName;
         }
 
         protected function redirect ($url) {

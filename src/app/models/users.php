@@ -82,7 +82,7 @@
                 "signUpDate" => $data["signup_date"],
                 "likes" => $data["num_likes"],
                 "posts" => $data["num_posts"],
-                "profileURL" => $this->url("profile/" . $data["username"])
+                "profileURL" => $this->helper("URL")::create("profile/" . $data["username"])
             );
         }
     }
