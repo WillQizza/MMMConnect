@@ -16,8 +16,12 @@
             return new $modelName($this->database);
         }
 
+        protected function helper ($helperName) {
+            require_once(__DIR__ . "/../../app/helpers/" . strtolower($helperName) . ".php");
+        }
+
         protected function redirect ($url) {
-            header("Location: $url");
+            header("Location: ./$url");
         }
 
     }

@@ -56,6 +56,13 @@
             ));
         }
 
+        public function setPosts ($id, $posts) {
+            $this->query("UPDATE users SET num_posts=:p WHERE id=:id", array(
+                "p" => $posts,
+                "id" => $id
+            ));
+        }
+
         protected function format ($data) {
             return array(
                 "id" => $data["id"],
@@ -69,7 +76,7 @@
                 "signUpDate" => $data["signup_date"],
                 "likes" => $data["num_likes"],
                 "posts" => $data["num_posts"],
-                "profileURL" => "/profile/" . $data["username"]
+                "profileURL" => "./profile/" . $data["username"]
             );
         }
     }

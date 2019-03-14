@@ -10,10 +10,10 @@
                         "user" => $user
                     ));
                 } else {
-                    $this->redirect("/logout");
+                    $this->redirect("logout");
                 }   
             } else {
-                $this->redirect("/register");
+                $this->redirect("register");
             }
         }
 
@@ -35,10 +35,42 @@
                         "page" => count($postsModel->getFeedForUser($user["id"], $page + 1)) > 0 ? $page + 1 : null
                     ));
                 } else {
-                    $this->redirect("/logout");
+                    $this->redirect("logout");
                 }
             } else {
-                $this->redirect("/register");
+                $this->redirect("register");
+            }
+        }
+        
+        public function post () {
+            if (isset($_SESSION["id"])) {
+
+                $userModel = $this->model("Users");
+                $postsModel = $this->model("Posts");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if ($user) {
+                    if (isset($_POST["body"])) {
+                        $post = $postsModel->postMessage($user["id"], array(
+                            "body" => $_POST["body"]
+                        ));
+                        if (isset($_GET["json"])) {
+                            $refetchedUser = $userModel->getUserById($_SESSION["id"]);
+                            $this->view("feed_post", array(
+                                "count" => $refetchedUser["posts"],
+                                "post" => $post
+                            ));
+                        } else {
+                            $this->redirect("feed");
+                        }
+                    } else {
+                        $this->redirect("feed");
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+
+            } else {
+                $this->redirect("register");
             }
         }
     }

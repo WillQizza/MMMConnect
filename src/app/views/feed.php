@@ -42,14 +42,14 @@
                     <div class="media-content">
                         <div class="content">
                             <a href="<?php echo $params["user"]["profileURL"] ?>" class="link"><?php echo $params["user"]["name"] ?></a><br />
-                            Posts: <?php echo $params["user"]["posts"] ?><br />
-                            Likes: <?php echo $params["user"]["posts"] ?>
+                            Posts: <span data-stat="posts"><?php echo $params["user"]["posts"] ?></span><br />
+                            Likes: <span data-stat="likes"><?php echo $params["user"]["likes"] ?></span>
                         </div>
                     </div>
                 </article>
             </div>
             <div class="box spacing-top" id="activity">
-                <form method="POST" action="index.php">
+                <form method="POST" action="/feed/post" id="postForm">
                     <textarea name="activityText" placeholder="What's on your mind?"></textarea>
                     <input type="submit" name="activitySubmit" value="Post" />
                 </form><br /><br /><br /> <!-- MANY THE GOODS "CSS" -->

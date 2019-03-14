@@ -13,7 +13,7 @@
             <div class=\"media-content\">
                 <div class=\"content\">
                     <p>
-                        <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . "Yesterday" ."</i><br />
+                        <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
                     </p>
                 </div>

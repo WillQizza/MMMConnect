@@ -56,10 +56,10 @@ navbar {
 }
 
 #activity textarea {
-    width: 80%;
+    min-width: 80%;
     max-width: 80%;
-    height: 5em;
-    max-height: 10em;
+    min-height: 5em;
+    max-height: 5em;
     padding: 1em;
     outline: 0;
     float: left;
@@ -76,6 +76,10 @@ navbar {
     background: #209cee;
     color: white;
     font-size: large;
+}
+
+#activity input[type="submit"]:hover {
+    background: #1c8fdb;
 }
 
 #loading {

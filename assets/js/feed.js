@@ -43,4 +43,25 @@ $(document).ready(function () {
 
         return false;
     });
+
+    $("#postForm").submit(function () {
+        const textarea = $("#postForm > textarea");
+        const body = textarea.val();
+        textarea.val("");
+        
+        $.ajax({
+            url: `./feed/post?json=true`,
+            type: "POST",
+            cache: false,
+            dataType: "json",
+            data: {
+                body
+            },
+            success: function (data) {
+                $("#feed").prepend(data.content);
+                $("span[data-stat=\"posts\"]").text(data.postCount);
+            }
+        });
+        return false;
+    });
 });
