@@ -29,7 +29,7 @@
                 if ($userModel->isUserAuthenticated($emailLogin, $passwordLogin)) {
                     $user = $userModel->getUserByEmail($emailLogin);
                     $_SESSION["id"] = $user["id"];
-                    // TODO: Log in.
+                    $this->redirect("feed");
                 } else {
                     $errors["login"] = true;
                 }
@@ -57,11 +57,21 @@
                     $errors["passwordNotLongEnough"] = true;
                 } else {
                     $username = $userModel->generateUsername($firstName, $lastName);
-                    // TODO: Get user avatar.
+
+                    if (rand(0, 1)) {
+                        $avatar = "head_deep_blue.png";
+                    } else {
+                        $avatar = "head_emerald.png";
+                    }
+                    $avatar = "assets/images/profile_pics/$avatar";
+
                     $userModel->createUser(array(
                         "username" => $username,
+                        "firstName" => $firstName,
+                        "lastName" => $lastName,
                         "email" => $emailRegister,
-                        "password" => $passwordRegister
+                        "password" => $passwordRegister,
+                        "avatar" => $avatar
                     ));
                     $errors["registerSuccess"] = true;
                 }

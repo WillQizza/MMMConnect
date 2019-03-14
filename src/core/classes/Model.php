@@ -1,7 +1,7 @@
 <?php
     class Model {
 
-        protected $database;
+        private $database;
 
         public function __construct ($database) {
             $this->database = $database;
@@ -14,9 +14,26 @@
             }
             $query->execute();
             if ($fetchAll) {
-                return $query->fetchAll();
+                $results = $query->fetchAll();
+                return array_map(function ($data) {
+                    return $this->format($data);
+                }, $results);
             }
-            return $query->fetch();
+            return $this->format($query->fetch());
         }
-    }
+
+        protected function model ($modelName) {
+            require_once(__DIR__ . "/../../app/models/" . strtolower($modelName) . ".php");
+            return new $modelName($this->database);
+        }
+
+        protected function helper ($helperName) {
+            require_once(__DIR__ . "/../../app/helpers/" . strtolower($helperName) . ".php");
+            return $helperName;
+        }
+
+        protected function format ($data) {
+            return $data;
+        }
+     }
 ?>

@@ -51,6 +51,7 @@
                      
             $controller = new $className($database);
             if (!method_exists($controller, $action)) {
+                $args = array_merge(array($action), $args);
                 $action = "index";
             }
             session_start();
