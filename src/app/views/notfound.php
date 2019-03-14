@@ -12,7 +12,7 @@
             <div class="hero-body">
                 <div class="container has-text-centered">
                     <h1 class="title">Whoops! Where are you heading?</h1>
-                    <h2 class="subtitle">Let's get you back in action!</h2>
+                    <h2 class="subtitle">I brought you a map!</h2>
                 </div>
             </div>
         </section>
