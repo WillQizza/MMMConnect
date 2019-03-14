@@ -1,0 +1,15 @@
+For my assignment I have the additional challenge of extending the tutorial video.
+
++ MVC structure
+    + Models
+    + Views
+    + Controllers
++ Post a message without leaving the page
+    + Post count is changed as well.
++ Used Bulma instead of Bootstrap
++ Made the register/login errors pretty.
++ Used PDO instead of mysqli and avoided sql injection attacks
++ Used BCRYPT instead of md5 as md5 hashes are crackable via dictionary attacks.
++ Added 404 page
++ No more annoying .php at the end of any file.
++ Timestamps automatically change.

@@ -11,7 +11,7 @@
     <body>
         <nav class="navbar is-info">
             <div class="navbar-brand">
-                <a class="navbar-item" href="/"><span>MMM</span>Connect</a>
+                <a class="navbar-item" href="./"><span>MMM</span>Connect</a>
             </div>
             <div class="navbar-menu">
                 <div class="navbar-end">

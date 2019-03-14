@@ -6,7 +6,7 @@
     } else {
         $targetText = "";
     }
-    $content .= "<article class=\"media\">
+    $content .= "<article class=\"media\" data-timestamp=\"" . ($post["date_added"]->getTimestamp() * 1000) ."\">
         <figure class=\"media-left\">
             <img class=\"image is-64x64\" src=\"" . $post["author"]["avatar"] ."\" />
         </figure>
