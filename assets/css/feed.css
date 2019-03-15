@@ -45,6 +45,11 @@ div[data-post] {
     display: none;
 }
 
+.commentsContainer input[type="submit"] {
+    height: 3.5em;
+    width: 7%;
+}
+
 #content {
     width: 95em;
 }
@@ -73,9 +78,12 @@ div[data-post] {
     float: left;
 }
 
-#activity input[type="submit"] {
-    width: 9%;
+input[type="submit"] {
     height: 4em;
+    width: 8%;
+}
+
+#activity input[type="submit"] {
     margin-left: 2%;
     float: right;
     position: absolute;

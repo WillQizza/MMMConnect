@@ -6,6 +6,24 @@
         } else {
             $targetText = "";
         }
+
+        $comments = "";
+        foreach ($post["comments"] as $comment) {
+            $comments .= "<article class=\"media\">
+                <div class=\"media-left\">
+                    <img class=\"image is-64x64\" src=\"" . $comment["author"]["avatar"] ."\" />
+                </div>
+                <div class=\"media-content\">
+                <div class=\"content\">
+                    <p>
+                        <a href=\"" . $comment["author"]["profileURL"] . "\">" . $comment["author"]["name"] . "</a> <i class=\"faded\">" . $comment["timestamp"] ."</i><br />
+                        " . $comment["body"] . "
+                    </p>
+                    </div>
+                </div>
+            </article>";
+        }
+    
         $content .= "<article class=\"media\" data-timestamp=\"" . ($post["date_added"]->getTimestamp() * 1000) ."\" data-post=\"" . $post["id"] . "\">
             <figure class=\"media-left\">
                 <img class=\"image is-64x64\" src=\"" . $post["author"]["avatar"] ."\" />
@@ -22,7 +40,8 @@
                         <textarea placeholder=\"What do you want to add?\" name=\"body\"></textarea>
                         <input type=\"submit\" name=\"submitComment\" value=\"Post\" />
                         <input type=\"hidden\" name=\"postId\" value=\"" . $post["id"] . "\" />
-                    </form>
+                    </form><br /><br /><br />
+                    $comments
                 </div>
             </div>
         </article>";

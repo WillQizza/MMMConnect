@@ -32,7 +32,8 @@
                 "body" => $data["post_body"],
                 "date_added" => new DateTime($data["date_added"]),
                 "deleted" => $data["deleted"],
-                "post_id" => $data["post_id"]
+                "post_id" => $data["post_id"],
+                "timestamp" => $this->helper("Timestamp")::get($data["date_added"])
             );
         }
     }
