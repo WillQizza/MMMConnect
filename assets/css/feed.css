@@ -19,6 +19,21 @@ div[data-post] {
     display: none;
 }
 
+textarea {
+    min-width: 80%;
+    max-width: 80%;
+    min-height: 5em;
+    max-height: 5em;
+    padding: 1em;
+    outline: 0;
+    float: left;
+}
+
+input[type="submit"] {
+    height: 4em;
+    width: 8%;
+}
+
 .navbar-brand {
     font-size: 150%;
 }
@@ -43,11 +58,25 @@ div[data-post] {
 
 .commentsContainer {
     display: none;
+    background-color: #e6e6e6;
+}
+
+.commentsContainer article {
+    padding-left: 5%;
 }
 
 .commentsContainer input[type="submit"] {
     height: 3.5em;
     width: 7%;
+}
+
+.commentsContainer textarea {
+    min-width: 75%;
+    max-width: 75%;
+}
+
+.commentForm {
+    margin-bottom: 5em;
 }
 
 #content {
@@ -66,21 +95,6 @@ div[data-post] {
     max-width: 60%;
     float: left;
     margin-left: 1%;
-}
-
-#activity textarea {
-    min-width: 80%;
-    max-width: 80%;
-    min-height: 5em;
-    max-height: 5em;
-    padding: 1em;
-    outline: 0;
-    float: left;
-}
-
-input[type="submit"] {
-    height: 4em;
-    width: 8%;
 }
 
 #activity input[type="submit"] {

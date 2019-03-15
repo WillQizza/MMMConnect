@@ -1,7 +1,7 @@
 <?php
     class Comments extends Model {
         public function getCommentsForPost ($id) {
-            $comments = $this->query("SELECT * FROM comments WHERE post_id=:id", array(
+            $comments = $this->query("SELECT * FROM comments WHERE post_id=:id ORDER by date_added ASC", array(
                 "id" => $id
             ));
             return $comments;

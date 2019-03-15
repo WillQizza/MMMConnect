@@ -9,7 +9,7 @@
 
         $comments = "";
         foreach ($post["comments"] as $comment) {
-            $comments .= "<article class=\"media\">
+            $comments .= "<article class=\"media\" data-timestamp=\"" . ($comment["date_added"]->getTimestamp() * 1000) . "\">
                 <div class=\"media-left\">
                     <img class=\"image is-64x64\" src=\"" . $comment["author"]["avatar"] ."\" />
                 </div>
@@ -34,14 +34,19 @@
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
                     </p>
+                    <a data-post=\"" . $post["id"] . "\">Comments (" . count($post["comments"]) . ")</a>
                 </div>
                 <div class=\"commentsContainer\">
-                    <form action=\"" . $params["BASE"] . "feed/postcomment" . "\" method=\"POST\">
-                        <textarea placeholder=\"What do you want to add?\" name=\"body\"></textarea>
-                        <input type=\"submit\" name=\"submitComment\" value=\"Post\" />
-                        <input type=\"hidden\" name=\"postId\" value=\"" . $post["id"] . "\" />
-                    </form><br /><br /><br />
                     $comments
+                    <article class=\"media\">
+                        <div class=\"media-content\">
+                        <form class=\"commentForm\" action=\"" . $params["BASE"] . "feed/postcomment" . "\" method=\"POST\">
+                            <textarea placeholder=\"What do you want to add?\" name=\"body\"></textarea>
+                            <input type=\"submit\" value=\"Post\" />
+                            <input type=\"hidden\" name=\"postId\" value=\"" . $post["id"] . "\" />
+                        </form>
+                        </div>
+                    </article>
                 </div>
             </div>
         </article>";
