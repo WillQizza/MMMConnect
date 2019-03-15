@@ -74,7 +74,7 @@
             }
         }
 
-        public function postComment () {
+        public function postcomment () {
             if (isset($_SESSION["id"])) {
                 $userModel = $this->model("Users");
                 $postsModel = $this->model("Posts");
@@ -82,8 +82,12 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     if (isset($_POST["body"]) && isset($_POST["postId"])) {
-                        $comment = $commentsModel->postComment(array(
-                            
+                        $comment = $commentsModel->postComment($user["id"], array(
+                            "body" => $_POST["body"],
+                            "postId" => $_POST["postId"]
+                        ));
+                        $this->view("feed_comment", array(
+                            "comment" => $comment
                         ));
                     } else {
                         $this->redirect("feed");

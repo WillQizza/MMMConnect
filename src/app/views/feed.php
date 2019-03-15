@@ -7,6 +7,8 @@
         <link href="<?php echo $params["BASE"]; ?>assets/css/feed.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
     </head>
     <body>
         <nav class="navbar is-info">

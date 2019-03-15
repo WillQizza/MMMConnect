@@ -15,6 +15,10 @@ navbar {
     left: 0;
 }
 
+div[data-post] {
+    display: none;
+}
+
 .navbar-brand {
     font-size: 150%;
 }
@@ -35,6 +39,10 @@ navbar {
 
 .faded {
     opacity: 0.5;
+}
+
+.commentsContainer {
+    display: none;
 }
 
 #content {
