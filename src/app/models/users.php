@@ -2,14 +2,14 @@
     class Users extends Model {
         public function getUserByEmail ($email) {
             $user = $this->query("SELECT * FROM users WHERE email=:email", array(
-                "email" => $email
+                "email" => strtolower($email)
             ), false);
             return $user;
         }
 
         public function getUserByUsername ($username) {
             $user = $this->query("SELECT * FROM users WHERE username=:username", array(
-                "username" => $username
+                "username" => strtolower($username)
             ), false);
             return $user;
         }

@@ -24,6 +24,15 @@
         </article>";
     }
 
+    $likesText = "Like";
+    foreach ($post["likes"] as $like) {
+        if ($like["author"]["id"] == $params["user"]["id"]) {
+            $likesText = "Unlike";
+            break;
+        }
+    }
+    
+
     $content .= "<article class=\"media\" data-timestamp=\"" . ($post["date_added"]->getTimestamp() * 1000) ."\" data-post=\"" . $post["id"] . "\">
             <figure class=\"media-left\">
                 <img class=\"image is-64x64\" src=\"" . $post["author"]["avatar"] ."\" />
@@ -34,10 +43,12 @@
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
                     </p>
-                    <a data-post=\"" . $post["id"] . "\">Comments (" . count($post["comments"]) . ")</a>
+                    <a data-post=\"" . $post["id"] . "\" data-action=\"comment\">Comments (" . count($post["comments"]) . ")</a> <a style=\"margin-left: 1em;\" data-post=\"" . $post["id"] . "\" data-action=\"like\">" . $likesText . " (" . count($post["likes"]) . ")</a>
                 </div>
                 <div class=\"commentsContainer\">
+                    <span class=\"comments\">
                     $comments
+                    </span>
                     <article class=\"media\">
                         <div class=\"media-content\">
                         <form class=\"commentForm\" action=\"" . $params["BASE"] . "feed/postcomment" . "\" method=\"POST\">
