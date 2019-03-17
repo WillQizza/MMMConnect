@@ -22,8 +22,8 @@ $(document).on("submit", ".commentForm", function () {
             postId: $(this).find("input[type=\"hidden\"]").val()
         },
         success: function (data) {
-            console.log(data);
-            form.parentElement.prepend(data.content);
+            $(form).find("textarea").val("");
+            $(form.parentElement.parentElement.parentElement).find("span").append(data.content);
         }
     });
     return false;

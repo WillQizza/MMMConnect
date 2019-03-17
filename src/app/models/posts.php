@@ -31,7 +31,7 @@
                 "a" => $author["id"],
                 "t" => $target["id"],
                 "da" => date("Y-m-d H:i:s"),
-                "d" =>false,
+                "d" => false,
                 "l" => 0
             ));
             $post = $this->query("SELECT * FROM posts WHERE author=:a ORDER BY id DESC LIMIT 1", array(
@@ -44,19 +44,21 @@
 
         protected function format ($data) {
             $userModel = $this->model("Users");
+            $likesModel = $this->model("Likes");
             $author = $userModel->getUserById($data["author"]);
             if ($data["author"] == $data["target"]) {
                 $target = $author;
             } else {
                 $target = $userModel->getUserById($data["target"]);
             }
+            
             return array(
                 "id" => $data["id"],
                 "body" => $data["body"],
                 "date_added" => new DateTime($data["date_added"]),
                 "timestamp" => $this->helper("Timestamp")::get($data["date_added"]),
                 "deleted" => $data["deleted"],
-                "likes" => $data["likes"],
+                "likes" => count($likesModel->getLikesForPost($data["id"])),
                 "comments" => $this->model("Comments")->getCommentsForPost($data["id"]),
                 "author" => $author,
                 "target" => $target

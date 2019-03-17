@@ -34,10 +34,12 @@
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
                     </p>
-                    <a data-post=\"" . $post["id"] . "\">Comments (" . count($post["comments"]) . ")</a>
+                    <a data-post=\"" . $post["id"] . "\">Comments (" . count($post["comments"]) . ")</a> <a data-post=\"" . $post["id"] . "\">Likes (" . $post["likes"] . ")</a>
                 </div>
                 <div class=\"commentsContainer\">
+                    <span class=\"comments\">
                     $comments
+                    </span>
                     <article class=\"media\">
                         <div class=\"media-content\">
                         <form class=\"commentForm\" action=\"" . $params["BASE"] . "feed/postcomment" . "\" method=\"POST\">
