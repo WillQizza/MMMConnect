@@ -8,7 +8,11 @@
         }
         
         protected function view ($file, $params = array()) {
+            $userModel = $this->model("Users");
             $params["BASE"] = $this->helper("URL")::create(""); // Technically the base controller class shouldn't do this.
+            if (isset($_SESSION["id"])) {
+                $params["user"] = $userModel->getUserById($_SESSION["id"]);
+            }
             require_once(__DIR__ . "/../../app/views/" . strtolower($file) . ".php");
         }
 

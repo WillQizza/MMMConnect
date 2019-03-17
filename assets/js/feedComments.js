@@ -1,4 +1,4 @@
-$(document).on("click", "article[data-post] a", function () {
+$(document).on("click", "article[data-post] a[data-action=\"comment\"]", function () {
     const id = this.getAttribute("data-post");
     const commentsContainer = $(`article[data-post="${id}"] .commentsContainer`);
     const display = commentsContainer.css("display");
@@ -7,6 +7,29 @@ $(document).on("click", "article[data-post] a", function () {
     } else {
         commentsContainer.hide();
     }
+});
+
+$(document).on("click", "article[data-post] a[data-action=\"like\"]", function () {
+    const likesEl = this;
+    const postId = likesEl.getAttribute("data-post");
+    const likes = Number(likesEl.textContent.split(" ")[1].slice(1, -1));
+    if (likesEl.textContent.includes("Like")) {
+        likesEl.textContent = `Unlike (${likes + 1})`;
+    } else {
+        likesEl.textContent = `Like (${likes - 1})`;
+    }
+    $.ajax({
+        url: "./feed/likecomment",
+        type: "POST",
+        cache: false,
+        dataType: "json",
+        data: {
+            postId
+        },
+        success: function (data) {
+            likesEl.textContent = likesEl.textContent.substring(0, likesEl.textContent.indexOf("(")) + `(${data.likes})`;
+        }
+    });
 });
 
 $(document).on("submit", ".commentForm", function () {

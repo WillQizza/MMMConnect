@@ -99,5 +99,31 @@
                 $this->redirect("register");
             }
         }
+
+        public function likecomment () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $likesModel = $this->model("Likes");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if ($user) {
+                    if (isset($_POST["postId"])) {
+                        if ($likesModel->hasLikedPost($user["id"], $_POST["postId"])) {
+                            $likesModel->unlikePost($user["id"], $_POST["postId"]);
+                        } else {
+                            $likesModel->likePost($user["id"], $_POST["postId"]);
+                        }
+                        $this->view("feed_like", array(
+                            "likes" => count($likesModel->getLikesForPost($_POST["postId"]))
+                        ));
+                    } else {
+                        $this->redirect("feed");
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
     }
 ?>

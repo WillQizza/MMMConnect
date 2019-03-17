@@ -5,7 +5,7 @@ $(document).ready(function () {
     const ONE_MONTH = ONE_DAY * 31; // Not entirely sure if this is accurate enough.
     const ONE_YEAR = ONE_DAY * 12;
 
-    const SECONDS_BEFORE_CHANGE = 5;
+    const SECONDS_BEFORE_CHANGE = 30;
 
 
     setInterval(function () {

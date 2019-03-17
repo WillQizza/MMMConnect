@@ -51,14 +51,14 @@
             } else {
                 $target = $userModel->getUserById($data["target"]);
             }
-            
+
             return array(
                 "id" => $data["id"],
                 "body" => $data["body"],
                 "date_added" => new DateTime($data["date_added"]),
                 "timestamp" => $this->helper("Timestamp")::get($data["date_added"]),
                 "deleted" => $data["deleted"],
-                "likes" => count($likesModel->getLikesForPost($data["id"])),
+                "likes" => $likesModel->getLikesForPost($data["id"]),
                 "comments" => $this->model("Comments")->getCommentsForPost($data["id"]),
                 "author" => $author,
                 "target" => $target

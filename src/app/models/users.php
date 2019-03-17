@@ -53,8 +53,8 @@
             $this->query("INSERT INTO users (first_name, last_name, username, email, password, profile_pic, signup_date, user_closed) VALUES (:fn, :ln, :u, :e, :p, :pp, :sud, :uc)", array(
                 "fn" => $firstName,
                 "ln" => $lastName,
-                "u" => $username,
-                "e" => $email,
+                "u" => strtolower($username),
+                "e" => strtolower($email),
                 "p" => password_hash($password, PASSWORD_DEFAULT),
                 "pp" => $avatar,
                 "sud" => date("Y-m-d"),
