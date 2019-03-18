@@ -1,0 +1,31 @@
+html, body {
+    height: 100%;
+}
+
+.spacing-top {
+    margin-top: .5em;
+}
+
+#content .box {
+    margin-top: 1em;
+    margin-left: 2.5%;
+    width: 95%;
+}
+
+#profileInfo {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    height: 100%;
+    width: 25%;
+    background: #1b88d1;
+}
+
+#content {
+    position: absolute;
+    left: 25%;
+    display: inline-block;
+    width: 75%;
+    height: 100%;
+    background: rgb(225, 225, 225);
+}

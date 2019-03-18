@@ -1,18 +1,6 @@
-@font-face {
-    font-family: "Tomcat";
-    src: url("../fonts//TOMCAT.otf");
-}
-
 html, body {
     height: 100%;
     background: rgb(225, 225, 225);
-}
-
-navbar {
-    z-index: -10;
-    position: fixed;
-    top: 0;
-    left: 0;
 }
 
 div[data-post] {
@@ -32,14 +20,6 @@ textarea {
 input[type="submit"] {
     height: 4em;
     width: 8%;
-}
-
-.navbar-brand {
-    font-size: 150%;
-}
-
-.navbar-brand span {
-    font-family: "Tomcat";
 }
 
 .spacing-top {
