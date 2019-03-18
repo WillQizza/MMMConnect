@@ -16,7 +16,7 @@ html, body {
     position: absolute;
     left: 0;
     display: inline-block;
-    height: 100%;
+    height: 95%;
     width: 25%;
     background: #1b88d1;
 }
@@ -28,4 +28,13 @@ html, body {
     width: 75%;
     height: 100%;
     background: rgb(225, 225, 225);
+}
+
+#profileAvatar {
+    border: 1em solid #0099ff;
+}
+
+#profileAvatarContainer {
+    width: 50%;
+    margin-left: 25%;
 }

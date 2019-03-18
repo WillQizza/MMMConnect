@@ -36,9 +36,11 @@
         </nav>
 
         <div id="profileInfo">
-            <figure>
-
-            </figure>
+            <div id="profileAvatarContainer">
+                <figure class="image is-square">
+                    <img class="is-rounded" id="profileAvatar" src="<?php echo $params["user"]["avatar"]; ?>" />
+                </figure>
+            </div>
         </div>
         <div id="content">
             <div class="box">

@@ -85,7 +85,7 @@
                 "name" => $data["first_name"] . " " . $data["last_name"],
                 "email" => $data["email"],
                 "password" => $data["password"],
-                "avatar" => $data["profile_pic"],
+                "avatar" => $this->helper("URL")::create($data["profile_pic"]),
                 "closed" => $data["user_closed"],
                 "signUpDate" => $data["signup_date"],
                 "likes" => $data["num_likes"],
