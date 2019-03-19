@@ -70,6 +70,48 @@
             return in_array($checkId, $user["friendIds"]);
         }
 
+        public function addFriend ($id, $friendId) {
+            if (!$this->isUserFriendsWith($id, $friendId)) {
+                $user = $this->getUserById($id);
+                $friend = $this->getUserById($friendId);
+                $userFriends = $user["friendIds"];
+                $friendFriends = $friend["friendIds"];
+                array_push($userFriends, $friend["id"]);
+                array_push($friendFriends, $user["id"]);
+                $userFriends = implode(",", $userFriends);
+                $friendFriends = implode(",", $friendFriends);
+                $this->query("UPDATE users SET friend_array=:fa WHERE id=:a", array(
+                    "fa" => $userFriends,
+                    "a" => $user["id"]
+                ));
+                $this->query("UPDATE users SET friend_array=:fa WHERE id=:a", array(
+                    "fa" => $friendFriends,
+                    "a" => $friend["id"]
+                ));
+            }
+        }
+
+        public function removeFriend ($id, $friendId) {
+            if ($this->isUserFriendsWith($id, $friendId)) {
+                $user = $this->getUserById($id);
+                $friend = $this->getUserById($friendId);
+                $userFriends = $user["friendIds"];
+                $friendFriends = $friend["friendIds"];
+                array_splice($userFriends, array_search($friend["id"], $userFriends), 1);
+                array_splice($friendFriends, array_search($user["id"], $friendFriends), 1);
+                $userFriends = implode(",", $userFriends);
+                $friendFriends = implode(",", $friendFriends);
+                $this->query("UPDATE users SET friend_array=:fa WHERE id=:a", array(
+                    "fa" => $userFriends,
+                    "a" => $user["id"]
+                ));
+                $this->query("UPDATE users SET friend_array=:fa WHERE id=:a", array(
+                    "fa" => $friendFriends,
+                    "a" => $friend["id"]
+                ));
+            }
+        }
+
         public function setPosts ($id, $posts) {
             $this->query("UPDATE users SET num_posts=:p WHERE id=:id", array(
                 "p" => $posts,
