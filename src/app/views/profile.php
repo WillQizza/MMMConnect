@@ -38,7 +38,7 @@
         <div id="profileInfo">
             <div id="profileAvatarContainer">
                 <figure class="image is-square">
-                    <img class="is-rounded" id="profileAvatar" src="<?php echo $params["user"]["avatar"]; ?>" />
+                    <img class="is-rounded" id="profileAvatar" src="<?php echo $params["target"]["avatar"]; ?>" />
                 </figure>
             </div>
         </div>
