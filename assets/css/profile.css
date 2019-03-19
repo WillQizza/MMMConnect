@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    background: rgb(225, 225, 225);
 }
 
 .spacing-top {
@@ -7,27 +8,29 @@ html, body {
 }
 
 #content .box {
-    margin-top: 1em;
     margin-left: 2.5%;
     width: 95%;
+}
+
+.box {
+    margin-top: 1em;
 }
 
 #profileInfo {
     position: absolute;
     left: 0;
     display: inline-block;
-    height: 95%;
+    height: calc(100% - 3.25rem);
     width: 25%;
     background: #1b88d1;
+    border-right: 1em solid #0377c5;
 }
 
 #content {
     position: absolute;
     left: 25%;
-    display: inline-block;
     width: 75%;
-    height: 100%;
-    background: rgb(225, 225, 225);
+    height: calc(100% - 3.25rem);
 }
 
 #profileAvatar {
@@ -37,4 +40,14 @@ html, body {
 #profileAvatarContainer {
     width: 50%;
     margin-left: 25%;
+}
+
+#profileStats {
+    margin-top: 10%;
+    height: 25%;
+    width: 100%;
+    background: #0099ff;
+    color: white;
+    padding-left: 30%;
+    padding-top: 10%;
 }

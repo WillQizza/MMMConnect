@@ -34,24 +34,9 @@
                 </div>
             </div>
         </nav>
-
-        <div id="profileInfo">
-            <div id="profileAvatarContainer">
-                <figure class="image is-square">
-                    <img class="is-rounded" id="profileAvatar" src="<?php echo $params["target"]["avatar"]; ?>" />
-                </figure>
-            </div>
-            <div id="profileStats" class="is-size-4">
-                <p>
-                    Posts: <?php echo $params["target"]["posts"] ?><br />
-                    Likes: <?php echo $params["target"]["likes"] ?><br />
-                    Friends: <?php echo count($params["target"]["friendIds"]) - 1; ?>
-                </p>
-            </div>
-        </div>
-        <div id="content">
+        <div class="container">
             <div class="box">
-                
+                This user is suspended.
             </div>
         </div>
 
