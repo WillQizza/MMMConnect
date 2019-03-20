@@ -26,6 +26,24 @@ input[type="submit"] {
     margin-top: .5em;
 }
 
+.deletePost {
+    display: none;
+}
+
+.deleteComment {
+    display: none;
+    padding-right: 2%;
+}
+
+article:hover .deletePost {
+    display: block;
+}
+
+.comments article:hover .deleteComment {
+    display: block;
+}
+
+
 .line {
     margin-top: 1em;
     border-top: 0.1em solid #00000005;
