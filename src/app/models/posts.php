@@ -16,6 +16,12 @@
             return $feed;
         }
 
+        public function getPostById ($id) {
+            return $this->query("SELECT * FROM POSTS WHERE id=:id", array(
+                "id" => $id
+            ), false);
+        }
+
         public function postMessage ($id, $data) {
             $body = $data["body"];
             $userModel = $this->model("Users");
@@ -40,6 +46,11 @@
             $userModel->setPosts($author["id"], $author["posts"] + 1);
             return $post;
 
+        }
+
+        public function deletePost ($id) {
+            $post = $this->getPostById($id);
+            
         }
 
         protected function format ($data) {

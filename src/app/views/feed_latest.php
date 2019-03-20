@@ -31,6 +31,11 @@
                 break;
             }
         }
+
+        $deleteText = "";
+        if ($post["author"]["id"] == $params["user"]["id"]) {
+            $deleteText = "<span class=\"is-pulled-right deletePost\"><a data-post=\"" . $post["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+        }
     
         $content .= "<article class=\"media\" data-timestamp=\"" . ($post["date_added"]->getTimestamp() * 1000) ."\" data-post=\"" . $post["id"] . "\">
             <figure class=\"media-left\">
@@ -38,6 +43,7 @@
             </figure>
             <div class=\"media-content\">
                 <div class=\"content\">
+                    $deleteText
                     <p>
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
