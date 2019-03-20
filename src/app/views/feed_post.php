@@ -9,12 +9,17 @@
 
     $comments = "";
     foreach ($post["comments"] as $comment) {
+        $deleteCommentText = "";
+        if ($comment["author"]["id"] == $params["user"]["id"]) {
+            $deleteCommentText = "<span class=\"is-pulled-right deleteComment\"><a data-comment=\"" . $comment["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+        }
         $comments .= "<article class=\"media\" data-timestamp=\"" . ($comment["date_added"]->getTimestamp() * 1000) . "\">
             <div class=\"media-left\">
                 <img class=\"image is-64x64\" src=\"" . $comment["author"]["avatar"] ."\" />
             </div>
             <div class=\"media-content\">
             <div class=\"content\">
+                $deleteCommentText
                 <p>
                     <a href=\"" . $comment["author"]["profileURL"] . "\">" . $comment["author"]["name"] . "</a> <i class=\"faded\">" . $comment["timestamp"] ."</i><br />
                     " . $comment["body"] . "
@@ -39,6 +44,7 @@
             </figure>
             <div class=\"media-content\">
                 <div class=\"content\">
+                    <span class=\"is-pulled-right deletePost\"><a data-post=\"" . $post["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>
                     <p>
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "

@@ -30,7 +30,16 @@ input[type="submit"] {
     display: none;
 }
 
+.deleteComment {
+    display: none;
+    padding-right: 2%;
+}
+
 article:hover .deletePost {
+    display: block;
+}
+
+.comments article:hover .deleteComment {
     display: block;
 }
 
