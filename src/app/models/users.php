@@ -125,6 +125,7 @@
                 "firstName" => $data["first_name"],
                 "lastName" => $data["last_name"],
                 "name" => $data["first_name"] . " " . $data["last_name"],
+                "username" => $data["username"],
                 "email" => $data["email"],
                 "password" => $data["password"],
                 "avatar" => $this->helper("URL")::create($data["profile_pic"]),

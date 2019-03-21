@@ -8,12 +8,18 @@
                     if (isset($parts[0])) {
                         $target = $userModel->getUserByUsername($parts[0]);
                         if ($target) {
-                            if ($target["closed"]) {
-                                $this->view("profile_closed");
+                            if (isset($parts[1])) {
+                                // Adding user as a friend.
+                                
                             } else {
-                                $this->view("profile", array(
-                                    "target" => $target
-                                ));
+                                // Viewing profile.
+                                if ($target["closed"]) {
+                                    $this->view("profile_closed");
+                                } else {
+                                    $this->view("profile", array(
+                                        "target" => $target
+                                    ));
+                                }
                             }
                         } else {
                             $this->view("notfound", array(

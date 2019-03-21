@@ -48,6 +48,9 @@
                     Friends: <?php echo count($params["target"]["friendIds"]) - 1; ?>
                 </p>
             </div>
+            <form method="POST" action="<?php echo $params["BASE"]; ?>profile/<?php echo $params["target"]["username"]; ?>/addFriend">
+                <input class="button is-success" id="friendRequestButton" type="submit" name="friend" value="Add As Friend" />
+            </form>
         </div>
         <div id="content">
             <div class="box">
