@@ -7,9 +7,7 @@
         <link href="<?php echo $params["BASE"] ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"] ?>assets/css/profile.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feed.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/profile.js"></script>
     </head>
     <body>
         <nav class="navbar is-info">
@@ -26,7 +24,7 @@
                     
                     <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-envelope"></i></a>
 
-                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-user-friends"></i></a>
+                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
                     
                     <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-cogs"></i></a>
 
@@ -48,9 +46,19 @@
                     Friends: <?php echo count($params["target"]["friendIds"]) - 1; ?>
                 </p>
             </div>
-            <form method="POST" action="<?php echo $params["BASE"]; ?>profile/<?php echo $params["target"]["username"]; ?>/addFriend">
-                <input class="button is-success" id="friendRequestButton" type="submit" name="friend" value="Add As Friend" />
-            </form>
+            <?php
+                if ($params["target"]["id"] != $params["user"]["id"]) {
+                    echo "<form id=\"friendRequestForm\" method=\"POST\" action=\"" . $params["BASE"] ."profile/" . $params["target"]["username"] . "/friend\">";
+                    if ($params["sentFriendRequest"]) {
+                        echo "<input class=\"button is-danger\" id=\"friendRequestButton\" type=\"submit\" name=\"friend\" value=\"Cancel Friend Request\">";
+                    } else if ($params["isFriend"]) {
+                        echo "<input class=\"button is-success\" id=\"friendRequestButton\" type=\"submit\" name=\"friend\" value=\"Remove Friend\">";
+                    } else {
+                        echo "<input class=\"button is-success\" id=\"friendRequestButton\" type=\"submit\" name=\"friend\" value=\"Add As Friend\">";
+                    }
+                    echo "</form>";
+                }
+            ?>
         </div>
         <div id="content">
             <div class="box">

@@ -100,12 +100,58 @@
             }
         }
 
+        public function deletepost () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $postsModel = $this->model("Posts");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if (isset($user)) {
+                    if (isset($_POST["id"])) {
+                        $post = $postsModel->getPostById($_POST["id"]);
+                        if ($post) {
+                            if ($post["author"]["id"] == $user["id"]) {
+                                $postsModel->deletePostById($_POST["id"]);
+                            }
+                        }
+                    }
+                    $this->redirect("feed");
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
+
+        public function deletecomment () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $commentsModel = $this->model("Comments");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if (isset($user)) {
+                    if (isset($_POST["id"])) {
+                        $comment = $commentsModel->getCommentById($_POST["id"]);
+                        if ($comment) {
+                            if ($comment["author"]["id"] == $user["id"]) {
+                                $commentsModel->deleteCommentById($_POST["id"]);
+                            }
+                        }
+                    }
+                    $this->redirect("feed");
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
+
         public function likecomment () {
             if (isset($_SESSION["id"])) {
                 $userModel = $this->model("Users");
                 $likesModel = $this->model("Likes");
                 $user = $userModel->getUserById($_SESSION["id"]);
-                if ($user) {
+                if (isset($user)) {
                     if (isset($_POST["postId"])) {
                         if ($likesModel->hasLikedPost($user["id"], $_POST["postId"])) {
                             $likesModel->unlikePost($user["id"], $_POST["postId"]);

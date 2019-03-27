@@ -48,9 +48,19 @@
 
         }
 
-        public function deletePost ($id) {
+        public function deletePostById ($id) {
             $post = $this->getPostById($id);
-            
+            if ($post) {
+
+                $this->model("Users")->setPosts($post["author"]["id"], $post["author"]["posts"] - 1);
+
+                $this->query("UPDATE posts SET deleted=1 WHERE id=:id", array(
+                    "id" => $id
+                ));
+    
+                $this->model("Comments")->deleteCommentsForPost($id);
+
+            }
         }
 
         protected function format ($data) {

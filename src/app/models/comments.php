@@ -1,10 +1,29 @@
 <?php
     class Comments extends Model {
         public function getCommentsForPost ($id) {
-            $comments = $this->query("SELECT * FROM comments WHERE post_id=:id ORDER by date_added ASC", array(
+            $comments = $this->query("SELECT * FROM comments WHERE post_id=:id AND deleted=0 ORDER by date_added ASC", array(
                 "id" => $id
             ));
             return $comments;
+        }
+
+        public function deleteCommentsForPost ($id) {
+            $this->query("UPDATE comments SET deleted=1 WHERE post_id=:id", array(
+                "id" => $id
+            ));
+        }
+
+        public function deleteCommentById ($id) {
+            $this->query("UPDATE comments SET deleted=1 WHERE id=:id", array(
+                "id" => $id
+            ));
+        }
+
+        public function getCommentById ($id) {
+            $comment = $this->query("SELECT * FROM comments WHERE id=:id", array(
+                "id" => $id
+            ), false);
+            return $comment;
         }
 
         public function postComment ($userId, $data) {

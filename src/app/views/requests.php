@@ -4,12 +4,9 @@
         <title>MMMConnect | Feed</title>
         <link href="<?php echo $params["BASE"]; ?>assets/css/bulma.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <link href="<?php echo $params["BASE"]; ?>assets/css/feed.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"] ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"] ?>assets/css/requests.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feed.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
     </head>
     <body>
         <nav class="navbar is-info">
@@ -34,34 +31,29 @@
                 </div>
             </div>
         </nav>
-        <div id="content">
-            <div class="box spacing-top" id="userInfo">
-                <article class="media">
-                    <figure class="media-left">
-                        <p class="image is-128x128">
-                            <img src="<?php echo $params["user"]["avatar"] ?>" />
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="content">
-                            <a href="<?php echo $params["user"]["profileURL"] ?>" class="link"><?php echo $params["user"]["name"] ?></a><br />
-                            Posts: <span data-stat="posts"><?php echo $params["user"]["posts"] ?></span><br />
-                            Likes: <span data-stat="likes"><?php echo $params["user"]["likes"] ?></span>
-                        </div>
-                    </div>
-                </article>
-            </div>
-            <div class="box spacing-top" id="activity">
-                <form method="POST" action="/feed/post" id="postForm">
-                    <textarea name="activityText" placeholder="What's on your mind?"></textarea>
-                    <input type="submit" name="activitySubmit" value="Post" />
-                </form><br /><br /><br /> <!-- MANY THE GOODS "CSS" -->
-                <div class="line"></div>
-                <div id="feed">
-                </div>
-
-                <img id="loading" src="assets/images/gifs/loading.gif" />
+        <div class="container">
+            <div class="box spacing-top">
+                <h1 class="title">Friend Requests</h1>
+                <?php
+                    foreach ($params["friendRequests"] as $request) {
+                        echo "<article class=\"media\">
+                                <figure class=\"media-left\">
+                                    <img class=\"image is-64x64\" src=\"" . $request["author"]["avatar"] ."\" />
+                                </figure>
+                                <div class=\"media-content\">
+                                    <div class=\"content\">
+                                        <p><a href=\"" . $params["BASE"] . "profile/" . $request["author"]["username"] . "\"><strong>" . $request["author"]["name"] . "</strong></a> would like to be friends with you!</p>
+                                        <form action=\"" . $params["BASE"] . "requests\" method=\"POST\">
+                                            <input type=\"submit\" class=\"button is-success\" name=\"action\" value=\"Accept\" />
+                                            <input type=\"submit\" class=\"button is-danger\" name=\"action\" value=\"Decline\" />
+                                            <input type=\"hidden\" name=\"id\" value=\"" . $request["id"] . "\" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </article>";
+                    }
+                ?>
             </div>
         </div>
     </body>
-</html.
+</html>

@@ -18,7 +18,7 @@
                     "t" => $targetId
                 ));
 
-                $userModel->addFriend($userId, $targetId);
+                $userModel->addFriend($targetId, $userId);
             }
         }
 
@@ -45,5 +45,22 @@
             ));
             return $results;
         }
+
+        public function getFriendRequestById ($id) {
+            $result = $this->query("SELECT * FROM friend_requests WHERE id=:id", array(
+                "id" => $id
+            ), false);
+            return $result;
+        }
+
+        protected function format ($data) {
+            $userModel = $this->model("Users");
+            return array(
+                "target" => $userModel->getUserById($data["target"]),
+                "author" => $userModel->getUserById($data["author"]),
+                "id" => $data["id"]
+            );
+        }
+
     }
 ?>
