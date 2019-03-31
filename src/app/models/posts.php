@@ -16,6 +16,21 @@
             return $feed;
         }
 
+        public function getProfileFeedForUser ($id, $page = 0) {
+            $posts = $this->query("SELECT * FROM posts WHERE author=:a OR target=:t ORDER BY id DESC", array(
+                "a" => $id,
+                "t" => $id
+            ));
+            $data = array_slice($posts, self::$POSTS_PER_PAGE * $page, self::$POSTS_PER_PAGE); 
+            $feed = array();
+            foreach ($data as $post) {
+                if (!$post["deleted"]) {
+                    array_push($feed, $post);
+                }
+            }
+            return $feed;
+        }
+
         public function getPostById ($id) {
             return $this->query("SELECT * FROM POSTS WHERE id=:id", array(
                 "id" => $id
@@ -23,7 +38,7 @@
         }
 
         public function postMessage ($id, $data) {
-            $body = $data["body"];
+            $body = htmlspecialchars($data["body"]);
             $userModel = $this->model("Users");
             $author = $userModel->getUserById($id);
             if (isset($data["target"])) {
@@ -48,9 +63,19 @@
 
         }
 
-        public function deletePost ($id) {
+        public function deletePostById ($id) {
             $post = $this->getPostById($id);
-            
+            if ($post) {
+
+                $this->model("Users")->setPosts($post["author"]["id"], $post["author"]["posts"] - 1);
+
+                $this->query("UPDATE posts SET deleted=1 WHERE id=:id", array(
+                    "id" => $id
+                ));
+    
+                $this->model("Comments")->deleteCommentsForPost($id);
+
+            }
         }
 
         protected function format ($data) {

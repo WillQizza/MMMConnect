@@ -63,7 +63,7 @@
                         <div class=\"media-content\">
                         <form class=\"commentForm\" action=\"" . $params["BASE"] . "feed/postcomment" . "\" method=\"POST\">
                             <textarea placeholder=\"What do you want to add?\" name=\"body\"></textarea>
-                            <input type=\"submit\" value=\"Post\" />
+                            <input class=\"submitButton\" type=\"submit\" value=\"Post\" />
                             <input type=\"hidden\" name=\"postId\" value=\"" . $post["id"] . "\" />
                         </form>
                         </div>

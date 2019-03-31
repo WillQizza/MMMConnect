@@ -10,6 +10,9 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
+        <script>
+            const ROOT = "<?php echo $params["BASE"]; ?>";
+        </script>
     </head>
     <body>
         <nav class="navbar is-info">
@@ -26,9 +29,9 @@
                     
                     <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-envelope"></i></a>
 
-                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-user-friends"></i></a>
+                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
                     
-                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><i class="fas fa-cogs"></i></a>
+                    <a class="navbar-item" href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
 
                     <a class="navbar-item" href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
                 </div>
@@ -54,13 +57,28 @@
             <div class="box spacing-top" id="activity">
                 <form method="POST" action="/feed/post" id="postForm">
                     <textarea name="activityText" placeholder="What's on your mind?"></textarea>
-                    <input type="submit" name="activitySubmit" value="Post" />
+                    <input type="submit" class="submitButton" name="activitySubmit" value="Post" />
                 </form><br /><br /><br /> <!-- MANY THE GOODS "CSS" -->
                 <div class="line"></div>
                 <div id="feed">
                 </div>
 
                 <img id="loading" src="assets/images/gifs/loading.gif" />
+            </div>
+        </div>
+        <div class="modal" id="deleteModal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <a><span class="is-pulled-right">X</span></a>
+                    <p>Are you sure you want to delete this?</p>
+                    <hr />
+                    <form method="POST">
+                        <input class="button is-danger" name="delete" value="Delete" type="submit" />
+                        <a class="button">Cancel</a>
+                        <input name="id" type="hidden" />
+                    </form>
+                </div>
             </div>
         </div>
     </body>

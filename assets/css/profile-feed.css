@@ -1,20 +1,19 @@
-html, body {
-    height: 100%;
-    background: rgb(225, 225, 225);
-}
-
 div[data-post] {
     display: none;
 }
 
 textarea {
-    min-width: 80%;
-    max-width: 80%;
+    min-width: 100%;
+    max-width: 100%;
     min-height: 5em;
     max-height: 5em;
     padding: 1em;
     outline: 0;
-    float: left;
+}
+
+#deleteModal .button {
+    width: inherit !important;
+    margin-top: 0;
 }
 
 .submit {
@@ -43,13 +42,6 @@ article:hover .deletePost {
     display: block;
 }
 
-
-.line {
-    margin-top: 1em;
-    border-top: 0.1em solid #00000005;
-    margin-bottom: 1em;
-}
-
 .faded {
     opacity: 0.5;
 }
@@ -59,13 +51,17 @@ article:hover .deletePost {
     background-color: #e6e6e6;
 }
 
+.commentsContainer > article {
+    padding-top: 0 !important; 
+}
+
 .commentsContainer article {
     padding-left: 5%;
 }
 
 .commentsContainer input[type="submit"] {
     height: 3.5em;
-    width: 7%;
+    width: 10%;
 }
 
 .commentsContainer textarea {
@@ -74,25 +70,11 @@ article:hover .deletePost {
 }
 
 .commentForm {
-    margin-bottom: 5em;
+    margin-bottom: 6em;
 }
 
-#content {
-    width: 95em;
-}
-
-#userInfo {
-    min-width: 25%;
-    max-width: 25%;
-    margin-left: 1%;
+.commentForm textarea {
     float: left;
-}
-
-#activity {
-    min-width: 60%;
-    max-width: 60%;
-    float: left;
-    margin-left: 1%;
 }
 
 .submitButton {
@@ -106,9 +88,10 @@ article:hover .deletePost {
     font-size: large;
     height: 4em;
     width: 8%;
+    margin-top: 0.8em;
 }
 
-#activity input[type="submit"]:hover {
+.submitButton:hover {
     background: #1c8fdb;
 }
 

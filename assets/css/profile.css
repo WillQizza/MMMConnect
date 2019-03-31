@@ -16,10 +16,10 @@ html, body {
     margin-top: 1em;
 }
 
-#friendRequestButton {
+.button {
     width: 60%;
     height: 5%;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 
@@ -34,10 +34,22 @@ html, body {
     text-align: center;
 }
 
-#content {
+#profileBlue {
+    background: #1b88d1;
+    border-right: 1em solid #0377c5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
+    width: 25%;
+}
+
+#profile-content {
     position: absolute;
     left: 25%;
-    width: 75%;
+    width: 70%;
+    margin-left: 1%;
     height: calc(100% - 3.25rem);
 }
 
@@ -61,3 +73,26 @@ html, body {
     padding-top: 10%;
     text-align: initial;
 }
+
+#mutualFriends {
+    padding-top: 1em;
+    color: white;
+}
+
+#loading {
+    width: 3em;
+    height: 3em;
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
+textarea {
+    margin-top: 1em;
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 5em;
+    max-height: 5em;
+    padding: 1em;
+    outline: 0;
+}
+

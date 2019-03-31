@@ -112,9 +112,30 @@
             }
         }
 
+        public function getMutualFriends ($id, $targetId) {
+            $user = $this->getUserById($id);
+            $target = $this->getUserById($targetId);
+
+            $friends = array();
+            foreach ($user["friendIds"] as $id) {
+                if ($id != "" && in_array($id, $target["friendIds"])) {
+                    array_push($friends, $this->getUserById($id));
+                }
+            }
+            return $friends;
+
+        }
+
         public function setPosts ($id, $posts) {
             $this->query("UPDATE users SET num_posts=:p WHERE id=:id", array(
                 "p" => $posts,
+                "id" => $id
+            ));
+        }
+
+        public function changeAvatar ($id, $url) {
+            $this->query("UPDATE users SET profile_pic=:pp WHERE id=:id", array(
+                "pp" => $url,
                 "id" => $id
             ));
         }

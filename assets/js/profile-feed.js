@@ -10,30 +10,36 @@ const getFeed = () => {
         nextPageElement.remove();
 
         $.ajax({
-            url: `${ROOT}/feed/latest?page=${nextPage}`,
+            url: `${document.location.href}/latest?page=${nextPage}`,
             type: "POST",
             cache: false,
             dataType: "json",
             success: function (data) {
                 $("#loading").hide();
                 $("#feed").append(data.content);
+                updateBlueBars();
             }
         });
 
     }
 };
 
+const updateBlueBars = function () {
+    $("#profileBlue").css("height", `${$(document).height()}px`);
+};
+
 $(document).ready(function () {
     $("#loading").show();
 
     $.ajax({
-        url: `${ROOT}/feed/latest`,
+        url: `${document.location.href}/latest`,
         type: "POST",
         cache: false,
         dataType: "json",
         success: function (data) {
             $("#loading").hide();
             $("#feed").html(data.content);
+            updateBlueBars();
         }
     });
 
@@ -47,28 +53,5 @@ $(document).ready(function () {
 
         return false;
     });
-
-    $("#postForm").submit(function () {
-        const textarea = $("#postForm > textarea");
-        const body = textarea.val();
-        textarea.val("");
-        
-        $.ajax({
-            url: `${ROOT}/feed/post?json=true`,
-            type: "POST",
-            cache: false,
-            dataType: "json",
-            data: {
-                body
-            },
-            success: function (data) {
-                $("#feed").prepend(data.content);
-                $("span[data-stat=\"posts\"]").text(data.postCount);
-            }
-        });
-        return false;
-    });
-
-    
 
 });

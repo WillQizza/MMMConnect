@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: rgb(225, 225, 225);
+}
+
+.spacing-top {
+    margin-top: 1em;
+}
+
+.box {
+    height: 30em;
+}
+
+#submitButton {
+    margin-top: 1em;
+}
