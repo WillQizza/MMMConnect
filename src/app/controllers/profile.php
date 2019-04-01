@@ -5,6 +5,7 @@
                 $userModel = $this->model("Users");
                 $friendRequestModel = $this->model("FriendRequests");
                 $postsModel = $this->model("Posts");
+                $messageModel = $this->model("Messages");
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     if (isset($parts[0])) {
@@ -53,12 +54,36 @@
                                 // Viewing profile.
                                 if ($target["closed"]) {
                                     $this->view("profile_closed");
+                                } else if (isset($_POST["message"])) {
+                                    if ($userModel->isUserFriendsWith($user["id"], $target["id"])) {
+                                        if (isset($_POST["message"])) {
+                                            $messageModel->postMessage($user["id"], array(
+                                                "message" => $_POST["message"],
+                                                "target" => $target["id"]
+                                            ));
+                                        }
+                                        $this->view("profile", array(
+                                            "target" => $target,
+                                            "sentFriendRequest" => $friendRequestModel->sentFriendRequestTo($user["id"], $target["id"]),
+                                            "isFriend" => $userModel->isUserFriendsWith($user["id"], $target["id"]),
+                                            "mutualFriends" => $userModel->getMutualFriends($user["id"], $target["id"]),
+                                            "messages" => $messageModel->getMessages($user["id"], $target["id"]),
+                                            "conversations" => $messageModel->getConversations($user["id"]),
+                                            "messageTab" => true
+                                        ));
+                                    } else {
+                                        $this->redirect("profile/" . $target["username"]);
+                                    }
+
                                 } else {
                                     $this->view("profile", array(
                                         "target" => $target,
                                         "sentFriendRequest" => $friendRequestModel->sentFriendRequestTo($user["id"], $target["id"]),
                                         "isFriend" => $userModel->isUserFriendsWith($user["id"], $target["id"]),
-                                        "mutualFriends" => $userModel->getMutualFriends($user["id"], $target["id"])
+                                        "mutualFriends" => $userModel->getMutualFriends($user["id"], $target["id"]),
+                                        "messages" => $messageModel->getMessages($user["id"], $target["id"]),
+                                        "conversations" => $messageModel->getConversations($user["id"]),
+                                        "messageTab" => false
                                     ));
                                 }
                             }

@@ -30,7 +30,6 @@ const updateBlueBars = function () {
 
 $(document).ready(function () {
     $("#loading").show();
-
     $.ajax({
         url: `${document.location.href}/latest`,
         type: "POST",

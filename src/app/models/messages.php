@@ -36,7 +36,7 @@
                 "b" => $id
             ));
             foreach ($messages as $message) {
-                if ($message["author"]["id"] == $id && !in_array($message["target"]["id"], $ids)) {
+                if ($message["author"]["id"] == $id && !in_array($message["target"]["id"], $ids) && $userModel->isUserFriendsWith($message["author"]["id"], $message["target"]["id"])) {
                     $messages = $this->getMessages($message["author"]["id"], $message["target"]["id"]);
 
                     array_push($ids, $message["target"]["id"]);
@@ -44,7 +44,7 @@
                         "user" => $message["target"],
                         "message" => $messages[count($messages) - 1]
                     ));
-                } else if ($message["target"]["id"] == $id && !in_array($message["author"]["id"], $ids)) {
+                } else if ($message["target"]["id"] == $id && !in_array($message["author"]["id"], $ids) && $userModel->isUserFriendsWith($message["author"]["id"], $message["target"]["id"])) {
                     $messages = $this->getMessages($message["target"]["id"], $message["author"]["id"]);
 
                     array_push($ids, $message["author"]["id"]);

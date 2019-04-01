@@ -3,12 +3,17 @@ html,body {
     background: rgb(225, 225, 225);
 }
 
+#conversationForm {
+    margin-top: 1em;
+}
+
 #conversationForm textarea {
     min-width: 80%;
     max-width: 80%;
     min-height: 5em;
     max-height: 5em;
     padding: 1em;
+    margin-top: 0 !important;
     outline: 0;
     float: left;
 }

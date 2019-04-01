@@ -6,12 +6,15 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link href="<?php echo $params["BASE"]; ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"]; ?>assets/css/conversation.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile-feed.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/profile.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/profile-feed.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/profile-tabs.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
         <script>
             const ROOT = "<?php echo $params["BASE"]; ?>";
         </script>
@@ -78,9 +81,48 @@
         </div>
         <div id="profileBlue"></div>
         <div id="profile-content">
-            <div class="box" id="feed">
-                
-                <img id="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
+            <div class="box">
+                <div class="tabs">
+                    <ul>
+                        <?php
+                            if ($params["isFriend"]) {
+                                if ($params["messageTab"]) {
+                                    echo "<li data-tab=\"newsfeed\"><a>Newsfeed</a></li><li data-tab=\"messages\" class=\"is-active\"><a>Messages</a></li>";
+                                } else {
+                                    echo "<li data-tab=\"newsfeed\" class=\"is-active\"><a>Newsfeed</a></li><li data-tab=\"messages\"><a>Messages</a></li>";
+                                }
+                            } else {
+                                echo "<li data-tab=\"newsfeed\" class=\"is-active\"><a>Newsfeed</a></li>";
+                            }
+                        ?>
+
+                    </ul>
+                </div>
+                <div data-tab="newsfeed" id="feed" <?php if ($params["messageTab"]) { echo "style=\"display:none;\""; } ?>>
+                    <img id="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
+                </div>
+                <div data-tab="messages" <?php if (!$params["messageTab"]) { echo "style=\"display:none;\""; } ?>>
+                    
+                    <h1 class="title">You and <a href="<?php echo $params["BASE"]; ?>profile/<?php echo $params["target"]["username"] ?>"><?php echo $params["target"]["name"]; ?></a></h1>
+                    <hr />
+                    <div id="messages">
+                        <?php
+                            foreach ($params["messages"] as $message) {
+                                if ($message["author"]["id"] == $params["user"]["id"]) {
+                                    echo "<div class=\"our-message message\">" . $message["body"] . "</div>";
+                                } else {
+                                    echo "<div class=\"their-message message\">" . $message["body"] . "</div>";
+                                }
+                                echo "<br /><br />";
+                            }
+                        ?>
+                    </div>
+                    <form id="conversationForm" action="<?php echo $params["BASE"]; ?>profile/<?php echo $params["target"]["username"]; ?>" method="POST">
+                        <textarea placeholder="What do you want to send?" name="message"></textarea>
+                        <input value="Send Message" type="submit" />
+                    </form>
+
+                </div>
 
             </div>
         </div>
