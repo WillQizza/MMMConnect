@@ -6,7 +6,7 @@
                 $friendRequestModel = $this->model("FriendRequests");
                 $postsModel = $this->model("Posts");
                 $user = $userModel->getUserById($_SESSION["id"]);
-                if (isset($user)) {
+                if ($user) {
                     if (isset($parts[0])) {
                         $target = $userModel->getUserByUsername($parts[0]);
                         if ($target) {

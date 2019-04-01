@@ -112,6 +112,17 @@
             }
         }
 
+        public function getFriends ($id) {
+            $user = $this->getUserById($id);
+            $friends = array();
+            foreach ($user["friendIds"] as $fId) {
+                if ($id != "") {
+                    array_push($friends, $this->getUserById($fId));
+                }
+            }
+            return $friends;
+        }
+
         public function getMutualFriends ($id, $targetId) {
             $user = $this->getUserById($id);
             $target = $this->getUserById($targetId);
