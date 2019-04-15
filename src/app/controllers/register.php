@@ -33,10 +33,10 @@
                     $errors["login"] = true;
                 }
             } else if (isset($_POST["submitRegister"]) && isset($_POST["firstName"]) && isset($_POST["lastName"]) && isset($_POST["email"]) && isset($_POST["confirmEmail"]) && isset($_POST["password"]) && isset($_POST["confirmPassword"])) {
-                $firstName = ucfirst(strtolower(str_replace(" ", "", htmlspecialchars($_POST["firstName"]))));
-                $lastName = ucfirst(strtolower(str_replace(" ", "", htmlspecialchars($_POST["lastName"]))));
-                $emailRegister = strtolower(str_replace(" ", "", htmlspecialchars($_POST["email"])));
-                $emailConfirmRegister = strtolower(str_replace(" ", "", htmlspecialchars($_POST["confirmEmail"])));
+                $firstName = strip_tags(ucfirst(strtolower(str_replace(" ", "", htmlspecialchars($_POST["firstName"])))));
+                $lastName = strip_tags(ucfirst(strtolower(str_replace(" ", "", htmlspecialchars($_POST["lastName"])))));
+                $emailRegister = strip_tags(strtolower(str_replace(" ", "", htmlspecialchars($_POST["email"]))));
+                $emailConfirmRegister = strip_tags(strtolower(str_replace(" ", "", htmlspecialchars($_POST["confirmEmail"]))));
                 $passwordRegister = $_POST["password"];
                 $passwordConfirmRegister = $_POST["confirmPassword"];
                 if ($userModel->getUserByEmail($emailRegister)) {

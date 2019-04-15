@@ -74,6 +74,8 @@
     }
     if (isset($params["page"])) {
         $content .= "<input type=\"hidden\" name=\"page\" value=\"" . $params["page"] ."\" />";
+    } else {
+        $content .= "<p>No more posts to show!</p>";
     }
 
     echo json_encode(array(
