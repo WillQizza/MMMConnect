@@ -3,7 +3,7 @@ $(document).ready(function () {
     const ONE_HOUR = ONE_MINUTE * 60;
     const ONE_DAY = ONE_HOUR * 24;
     const ONE_MONTH = ONE_DAY * 31; // Not entirely sure if this is accurate enough.
-    const ONE_YEAR = ONE_DAY * 12;
+    const ONE_YEAR = ONE_MONTH * 12;
 
     const SECONDS_BEFORE_CHANGE = 30;
 

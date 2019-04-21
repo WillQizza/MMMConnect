@@ -29,7 +29,7 @@ $(document).ready(function () {
             likesEl.textContent = `Like (${likes - 1})`;
         }
         $.ajax({
-            url: `.${ROOT}/feed/likecomment`,
+            url: `${ROOT}/feed/likecomment`,
             type: "POST",
             cache: false,
             dataType: "json",
@@ -48,10 +48,17 @@ $(document).ready(function () {
         $("#deleteModal").addClass("is-active");
         $("#deleteModal input[name=\"id\"]").val(id);
         if (isPost) {
-            $("#deleteModal form").attr("action", `.${ROOT}/feed/deletepost`);
+            $("#deleteModal form").attr("action", `${ROOT}/feed/deletepost`);
         } else {
-            $("#deleteModal form").attr("action", `.${ROOT}/feed/deletecomment`);
+            $("#deleteModal form").attr("action", `${ROOT}/feed/deletecomment`);
         }
+    });
+
+    $(document).on("click", "article[data-post] a[data-action=\"edit\"]", function () {
+        const id = $(this).attr("data-post");
+        $("#editModal").addClass("is-active");
+        $("#editModal input[name=\"id\"]").val(id);
+        $("#editModal textarea").val($(`article[data-post="${id}"] .message-content`).text());
     });
 
     $(document).on("submit", ".commentForm", function () {
@@ -59,7 +66,7 @@ $(document).ready(function () {
         const body = $(form).find("textarea").val();
         const postId = $(this).find("input[type=\"hidden\"]").val();
         $.ajax({
-            url: `.${ROOT}/feed/postcomment`,
+            url: `${ROOT}/feed/postcomment`,
             type: "POST",
             cache: false,
             dataType: "json",

@@ -9,7 +9,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
         <script>
-            const ROOT = "<?php echo $params["BASE"]; ?>";
+            const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
         </script>
     </head>
     <body>

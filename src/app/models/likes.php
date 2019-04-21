@@ -35,6 +35,14 @@
             return false;
         }
 
+        protected function defaults () {
+            return array(
+                "id" => 0,
+                "author" => 0,
+                "post_id" => 0
+            );
+        }
+
         protected function format ($data) {
             $userModel = $this->model("Users");
             return array(

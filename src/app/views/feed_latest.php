@@ -11,7 +11,7 @@
         foreach ($post["comments"] as $comment) {
             $deleteCommentText = "";
             if ($comment["author"]["id"] == $params["user"]["id"]) {
-                $deleteCommentText = "<span class=\"is-pulled-right deleteComment\"><a data-comment=\"" . $comment["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+                $deleteCommentText = "<span class=\"is-pulled-right deleteComment\"> <a data-comment=\"" . $comment["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
             }
             $comments .= "<article class=\"media\" data-timestamp=\"" . ($comment["date_added"]->getTimestamp() * 1000) . "\">
                 <div class=\"media-left\">
@@ -38,10 +38,16 @@
         }
 
         $deleteText = "";
+        $editText = "";
+        $editedText = "";
         if ($post["author"]["id"] == $params["user"]["id"]) {
-            $deleteText = "<span class=\"is-pulled-right deletePost\"><a data-post=\"" . $post["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+            $deleteText = "<span class=\"is-pulled-right deletePost\"> <a data-post=\"" . $post["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+            $editText = "<a style=\"margin-left: 1em;\" data-action=\"edit\" data-post=\"" . $post["id"] . "\">Edit</a>";
         }
-    
+        if ($post["edited"]) {
+            $editedText = "<i class=\"faded\">(edited)</i>";
+        }
+
         $content .= "<article class=\"media\" data-timestamp=\"" . ($post["date_added"]->getTimestamp() * 1000) ."\" data-post=\"" . $post["id"] . "\">
             <figure class=\"media-left\">
                 <img class=\"image is-64x64\" src=\"" . $post["author"]["avatar"] ."\" />
@@ -50,10 +56,10 @@
                 <div class=\"content\">
                     $deleteText
                     <p>
-                        <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
-                        " . $post["body"] . "
+                        <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i> $editedText <br />
+                        <span class=\"message-content\">" . $post["body"] . "</span>
                     </p>
-                    <a data-post=\"" . $post["id"] . "\" data-action=\"comment\">Comments (" . count($post["comments"]) . ")</a> <a style=\"margin-left: 1em;\" data-post=\"" . $post["id"] . "\" data-action=\"like\">" . $likesText . " (" . count($post["likes"]) . ")</a>
+                    <a data-post=\"" . $post["id"] . "\" data-action=\"comment\">Comments (" . count($post["comments"]) . ")</a> <a style=\"margin-left: 1em;\" data-post=\"" . $post["id"] . "\" data-action=\"like\">" . $likesText . " (" . count($post["likes"]) . ")</a> $editText
                 </div>
                 <div class=\"commentsContainer\">
                     <span class=\"comments\">

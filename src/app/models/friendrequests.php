@@ -53,6 +53,14 @@
             return $result;
         }
 
+        protected function defaults () {
+            return array(
+                "target" => 0,
+                "author" => 0,
+                "id" => 0
+            );
+        }
+
         protected function format ($data) {
             $userModel = $this->model("Users");
             return array(

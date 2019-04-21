@@ -63,7 +63,7 @@
         }
 
         public function isUserFriendsWith ($id, $checkId) {
-            $user = $this->query("SELECT * FROM users WHERE id=:id", array(
+            $user = $this->query("SELECT friend_array FROM users WHERE id=:id", array(
                 "id" => $id
             ), false);
             
@@ -149,6 +149,23 @@
                 "pp" => $url,
                 "id" => $id
             ));
+        }
+
+        protected function defaults () {
+            return array(
+                "id" => 0,
+                "first_name" => "",
+                "last_name" => "",
+                "username" => "",
+                "email" => "",
+                "password" => "",
+                "profile_pic" => "",
+                "user_closed" => false,
+                "signup_date" => date("Y-m-d"),
+                "num_likes" => 0,
+                "num_posts" => 0,
+                "friend_array" => ","
+            );
         }
 
         protected function format ($data) {

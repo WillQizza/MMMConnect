@@ -11,7 +11,7 @@
     foreach ($post["comments"] as $comment) {
         $deleteCommentText = "";
         if ($comment["author"]["id"] == $params["user"]["id"]) {
-            $deleteCommentText = "<span class=\"is-pulled-right deleteComment\"><a data-comment=\"" . $comment["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
+            $deleteCommentText = "<span class=\"is-pulled-right deleteComment\"> <a data-comment=\"" . $comment["id"] . "\" data-action=\"delete\"><i class=\"fa fa-trash\"></i></a></span>";
         }
         $comments .= "<article class=\"media\" data-timestamp=\"" . ($comment["date_added"]->getTimestamp() * 1000) . "\">
             <div class=\"media-left\">
@@ -49,7 +49,7 @@
                         <a href=\"" . $post["author"]["profileURL"] . "\">" . $post["author"]["name"] . "</a> $targetText <i class=\"faded\">" . $post["timestamp"] ."</i><br />
                         " . $post["body"] . "
                     </p>
-                    <a data-post=\"" . $post["id"] . "\" data-action=\"comment\">Comments (" . count($post["comments"]) . ")</a> <a style=\"margin-left: 1em;\" data-post=\"" . $post["id"] . "\" data-action=\"like\">" . $likesText . " (" . count($post["likes"]) . ")</a>
+                    <a data-post=\"" . $post["id"] . "\" data-action=\"comment\">Comments (" . count($post["comments"]) . ")</a> <a style=\"margin-left: 1em;\" data-post=\"" . $post["id"] . "\" data-action=\"like\">" . $likesText . " (" . count($post["likes"]) . ")</a> <a style=\"margin-left: 1em;\" data-action=\"edit\" data-post=\"" . $post["id"] . "\">Edit</a>
                 </div>
                 <div class=\"commentsContainer\">
                     <span class=\"comments\">

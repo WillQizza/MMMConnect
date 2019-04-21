@@ -1,5 +1,5 @@
 <?php
-    class Model {
+    abstract class Model {
 
         private $database;
 
@@ -21,7 +21,7 @@
             }
             $results = $query->fetch();
             if ($results) {
-                return $this->format($results);   
+                return $this->format(array_merge($this->defaults(), $results));
             } else {
                 return false;
             }
@@ -37,8 +37,7 @@
             return $helperName;
         }
         
-        protected function format ($data) {
-            return $data;
-        }
+        protected abstract function format($data);
+        protected abstract function defaults();
      }
 ?>

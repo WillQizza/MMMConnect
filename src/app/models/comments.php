@@ -43,6 +43,17 @@
             }
         }
 
+        protected function defaults () {
+            return array(
+                "id" => 0,
+                "author" => 0,
+                "post_body" => "",
+                "date_added" => date("Y-m-d H:i:s"),
+                "deleted" => false,
+                "post_id" => false
+            );
+        }
+
         protected function format ($data) {
             $userModel = $this->model("Users");
             return array(

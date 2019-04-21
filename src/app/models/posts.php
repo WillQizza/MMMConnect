@@ -6,14 +6,13 @@
         public function getFeedForUser ($id, $page = 0) {
             $userModel = $this->model("Users");
             $posts = $this->query("SELECT * FROM posts ORDER BY id DESC");
-            $data = array_slice($posts, self::$POSTS_PER_PAGE * $page, self::$POSTS_PER_PAGE); 
             $feed = array();
-            foreach ($data as $post) {
+            foreach ($posts as $post) {
                 if (!$post["deleted"] && ($post["author"]["id"] == $id || $userModel->isUserFriendsWith($id, $post["author"]["id"]))) {
                     array_push($feed, $post);
                 }
             }
-            return $feed;
+            return array_slice($feed, self::$POSTS_PER_PAGE * $page, self::$POSTS_PER_PAGE);
         }
 
         public function getProfileFeedForUser ($id, $page = 0) {
@@ -63,6 +62,15 @@
 
         }
 
+        public function editMessage ($id, $newMessage) {
+            $message = htmlspecialchars($newMessage);
+            $this->query("UPDATE posts SET body=:m, edited=:edited WHERE id=:id", array(
+                "id" => $id,
+                "m" => $message,
+                "edited" => true
+            ));
+        }
+
         public function deletePostById ($id) {
             $post = $this->getPostById($id);
             if ($post) {
@@ -76,6 +84,16 @@
                 $this->model("Comments")->deleteCommentsForPost($id);
 
             }
+        }
+
+        protected function defaults () {
+            return array(
+                "id" => 0,
+                "body" => 0,
+                "date_added" => date("Y-m-d H:i:s"),
+                "deleted" => false,
+                "edited" => false
+            );
         }
 
         protected function format ($data) {
@@ -97,7 +115,8 @@
                 "likes" => $likesModel->getLikesForPost($data["id"]),
                 "comments" => $this->model("Comments")->getCommentsForPost($data["id"]),
                 "author" => $author,
-                "target" => $target
+                "target" => $target,
+                "edited" => $data["edited"]
             );
         }
     }

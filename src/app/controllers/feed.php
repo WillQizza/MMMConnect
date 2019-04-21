@@ -171,5 +171,28 @@
                 $this->redirect("register");
             }
         }
+
+        public function editpost () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $postsModel = $this->model("Posts");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if (isset($user)) {
+                    if (isset($_POST["id"]) && isset($_POST["message"])) {
+                        $post = $postsModel->getPostById($_POST["id"]);
+                        if (isset($post) && $post["author"]["id"] == $user["id"]) {
+                            $postsModel->editMessage($_POST["id"], $_POST["message"]);
+                        }
+                        $this->redirect("feed");
+                    } else {
+                        $this->redirect("feed");
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
     }
 ?>

@@ -57,6 +57,18 @@
             return $conversations;
         }
 
+        protected function defaults () {
+            return array(
+                "author" => 0,
+                "target" => 0,
+                "body" => "",
+                "opened" => false,
+                "viewed" => false,
+                "deleted" => false,
+                "date_added" => date("Y-m-d H:i:s")
+            );
+        }
+
         protected function format ($data) {
             $userModel = $this->model("Users");
             return array(

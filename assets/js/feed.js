@@ -10,7 +10,7 @@ const getFeed = () => {
         nextPageElement.remove();
 
         $.ajax({
-            url: `.${ROOT}/feed/latest?page=${nextPage}`,
+            url: `${ROOT}/feed/latest?page=${nextPage}`,
             type: "POST",
             cache: false,
             dataType: "json",
@@ -27,7 +27,7 @@ $(document).ready(function () {
     $("#loading").show();
 
     $.ajax({
-        url: `.${ROOT}/feed/latest`,
+        url: `${ROOT}/feed/latest`,
         type: "POST",
         cache: false,
         dataType: "json",
@@ -54,7 +54,7 @@ $(document).ready(function () {
         textarea.val("");
         
         $.ajax({
-            url: `.${ROOT}/feed/post?json=true`,
+            url: `${ROOT}/feed/post?json=true`,
             type: "POST",
             cache: false,
             dataType: "json",

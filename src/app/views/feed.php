@@ -11,7 +11,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
         <script>
-            const ROOT = "<?php echo $params["BASE"]; ?>";
+            const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
         </script>
     </head>
     <body>
@@ -81,5 +81,21 @@
                 </div>
             </div>
         </div>
+        <div class="modal" id="editModal">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="box">
+                    <a><span class="is-pulled-right">X</span></a>
+                    <p>What would you like to edit this to?</p>
+                    <hr />
+                    <form method="POST" action="<?php echo $params["BASE"] ?>feed/editpost">
+                        <textarea style="max-width: 100% !important; min-width: 100% !important;" name="message" placeholder="What do you want to change this comment to?"></textarea><br /><br /><br />
+                        <input class="button is-success" name="delete" value="Edit" type="submit" />
+                        <a class="button">Cancel</a>
+                        <input name="id" type="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
-</html.
+</html>
