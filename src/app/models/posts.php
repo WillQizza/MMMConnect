@@ -46,13 +46,14 @@
             if (!isset($target)) {
                 $target = $author;
             }
-            $this->query("INSERT INTO posts (body, author, target, date_added, deleted, likes) VALUES (:b, :a, :t, :da, :d, :l)", array(
+            $this->query("INSERT INTO posts (body, author, target, date_added, deleted, likes, edited) VALUES (:b, :a, :t, :da, :d, :l, :e)", array(
                 "b" => $body,
                 "a" => $author["id"],
                 "t" => $target["id"],
                 "da" => date("Y-m-d H:i:s"),
                 "d" => false,
-                "l" => 0
+                "l" => 0,
+                "e" => false
             ));
             $post = $this->query("SELECT * FROM posts WHERE author=:a ORDER BY id DESC LIMIT 1", array(
                 "a" => $author["id"]

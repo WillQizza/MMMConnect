@@ -30,7 +30,7 @@
 
                 if ($user) {
                     $posts = $postsModel->getFeedForUser($user["id"], $page);
-                    $this->view("feed_latest", array(
+                    $this->view("feed/latest", array(
                         "posts" => $posts,
                         "page" => count($postsModel->getFeedForUser($user["id"], $page + 1)) > 0 ? $page + 1 : null
                     ));
@@ -49,19 +49,14 @@
                 $postsModel = $this->model("Posts");
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
-                    if (isset($_POST["body"])) {
+                    if (isset($_POST["message"])) {
                         $post = $postsModel->postMessage($user["id"], array(
-                            "body" => $_POST["body"]
+                            "body" => $_POST["message"]
                         ));
-                        if (isset($_GET["json"])) {
-                            $refetchedUser = $userModel->getUserById($_SESSION["id"]);
-                            $this->view("feed_post", array(
-                                "count" => $refetchedUser["posts"],
-                                "post" => $post
-                            ));
-                        } else {
-                            $this->redirect("feed");
-                        }
+                        $this->view("feed/post", array(
+                            "post" => $post,
+                            "count" => $userModel->getUserById($_SESSION["id"])["posts"]
+                        ));
                     } else {
                         $this->redirect("feed");
                     }
@@ -81,12 +76,12 @@
                 $commentsModel = $this->model("Comments");
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
-                    if (isset($_POST["body"]) && isset($_POST["postId"])) {
+                    if (isset($_POST["message"]) && isset($_POST["id"])) {
                         $comment = $commentsModel->postComment($user["id"], array(
-                            "body" => $_POST["body"],
-                            "postId" => $_POST["postId"]
+                            "body" => $_POST["message"],
+                            "postId" => $_POST["id"]
                         ));
-                        $this->view("feed_comment", array(
+                        $this->view("feed/comment", array(
                             "comment" => $comment
                         ));
                     } else {

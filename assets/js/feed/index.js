@@ -1,0 +1,183 @@
+//@ts-check
+
+/**
+ * @typedef RawCommentData
+ * @property {number} id
+ * @property {boolean} userSentThis
+ * @property {number} timestampMs
+ * @property {string} timestamp
+ * @property {string} avatar
+ * @property {{name : string, profile: string}} user
+ * @property {string} body
+ */
+
+/**
+ * @typedef RawPostData
+ * @property {string} avatar
+ * @property {string} body
+ * @property {number} id
+ * @property {{name: string, profile: string}} target
+ * @property {boolean} targetedMessage
+ * @property {string} timestamp
+ * @property {number} timestampMs
+ * @property {number} likes
+ * @property {{name: string, profile: string}} user
+ * @property {boolean} userSentThis
+ * @property {boolean} likedPost
+ * @property {boolean} edited
+ * @property {boolean} userSentThis
+ * @property {RawCommentData[]} comments
+ */
+
+class PostComment {
+
+    /**
+     * 
+     * @param {RawCommentData} data 
+     */
+    constructor (data) {
+
+        this.id = data.id;
+
+        const specialSelectors = [];
+        if (data.userSentThis) {
+            specialSelectors.push({ selector: "span[data-field=\"delete\"]", attributes: { style: "" } });
+        }
+
+        //@ts-ignore
+        this.element = createTemplate("comment", [
+            ...specialSelectors,
+            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
+            { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
+            { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile }, text: data.user.name },
+            { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
+            { selector: "span[data-field=\"body\"]", text: data.body }
+        ]);
+    }
+}
+
+class Post {
+
+    /**
+     * @param {RawPostData} data 
+     */
+    constructor (data) {
+
+        this.id = data.id;
+        this.CONSTANTS = {
+            //@ts-ignore
+            POST_COMMENT: `${ROOT}feed/postcomment`
+        };
+
+        const specialSelectors = [];
+        if (data.edited) {
+            specialSelectors.push({ selector: "span[data-field=\"edited\"]", attributes: { style: "" } });
+        }
+        if (data.userSentThis) {
+            specialSelectors.push({ selector: "span[data-field=\"delete\"]", attributes: { style: "" } });
+            specialSelectors.push({ selector: "span[data-field=\"edit\"]", attributes: { style: "" } });
+        }
+        if (data.targetedMessage) {
+            specialSelectors.push({ selector: "span[data-field=\"target\"]", attributes: { style: "" } });
+            specialSelectors.push({ selector: "span[data-field=\"target\"] a", attributes: { href: data.target.profile }, text: data.target.name });
+        }
+
+        //@ts-ignore
+        this.element = createTemplate("post", [
+            ...specialSelectors,
+            { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile },  text: data.user.name },
+            { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
+            { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
+            { selector: "span[data-field=\"body\"]", text: data.body },
+            { selector: "span[data-field=\"likesCount\"]", text: data.likes },
+            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
+            { selector: "*[data-post]", attributes: { "data-post": data.id } },
+            { selector: "span[data-field=\"likesText\"]", text: data.likedPost ? "Unlike" : "Like" },
+            { selector: "span[data-field=\"comments\"]", text: data.comments.length },
+            { selector: "input[data-field=\"formPostId\"]", value: data.id }
+        ]);
+
+        this.comments = data.comments.map(data => new PostComment(data));
+        for (const comment of this.comments) {
+            this.element.querySelector(".comments").appendChild(comment.element);
+            comment.element = this.element.querySelector(`.comments article[data-comment="${comment.id}"]`);
+        }
+    }
+
+    /**
+     * Post a comment on this post.
+     * @param {string} message 
+     */
+    async comment (message) {
+        const response = await (await fetch(this.CONSTANTS.POST_COMMENT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `message=${encodeURIComponent(message)}&id=${this.id}`
+        })).json();
+        const comment = new PostComment(response);
+        this.comments.push(comment);
+        this.element.querySelector(".comments").appendChild(comment.element);
+        return comment;
+    }
+}
+
+class PostsManager {
+    constructor () {
+        this.CONSTANTS = {
+            //@ts-ignore - ROOT is defined in the caller file.
+            FEED_URL: `${ROOT}feed/latest`,
+            //@ts-ignore
+            POST_MESSAGE: `${ROOT}feed/post`
+        };
+
+        this.posts = {};
+    }
+
+    /**
+     * Fetch the user's feed.
+     * @param {number} page Page.
+     */
+    async fetchFeed (page = 0) {
+        /** @type {{posts: RawPostData[], nextPage: number}} */
+        const rawPostsData = await (await fetch(`${this.CONSTANTS.FEED_URL}?page=${page}`)).json();
+        const posts = rawPostsData.posts.map(data => new Post(data));
+        for (const post of posts) {
+            this.posts[post.id] = post;
+        }
+        return {
+            posts,
+            nextPage: rawPostsData.nextPage
+        };
+    }
+
+    /**
+     * Post a message.
+     * @param {string} message 
+     */
+    async postMessage (message) {
+        const response = await (await fetch(this.CONSTANTS.POST_MESSAGE, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `message=${encodeURIComponent(message)}`
+        })).json();
+        return {
+            post: new Post(response.post),
+            postCount: response.postCount
+        };
+    }
+
+    /**
+     * Get a post by it's id.
+     * @param {number} id 
+     */
+    getPostById (id) {
+        return this.posts[id];
+    }
+}
+
+
+const Posts = new PostsManager();

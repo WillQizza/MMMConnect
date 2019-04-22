@@ -6,15 +6,19 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link href="<?php echo $params["BASE"]; ?>assets/css/feed.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"] ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
-        <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feed.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
         <script>
             const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
         </script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/feed.js"></script>
+
     </head>
     <body>
+        <?php
+            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
+        ?>
         <nav class="navbar is-info">
             <div class="navbar-brand">
                 <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
@@ -55,17 +59,16 @@
                 </article>
             </div>
             <div class="box spacing-top" id="activity">
-                <form method="POST" action="/feed/post" id="postForm">
-                    <textarea name="activityText" placeholder="What's on your mind?"></textarea>
+                <form method="POST" action="<?php echo $params["BASE"]; ?>feed/post" id="postForm" data-form="feed-message">
+                    <textarea name="body" placeholder="What's on your mind?"></textarea>
                     <input type="submit" class="submitButton" name="activitySubmit" value="Post" />
                 </form><br /><br /><br /> <!-- MANY THE GOODS "CSS" -->
                 <div class="line"></div>
-                <div id="feed">
-                </div>
-
-                <img id="loading" src="assets/images/gifs/loading.gif" />
+                <div id="feed"></div>
+                <img id="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
             </div>
         </div>
+
         <div class="modal" id="deleteModal">
             <div class="modal-background"></div>
             <div class="modal-content">
