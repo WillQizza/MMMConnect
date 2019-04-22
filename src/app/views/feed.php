@@ -12,6 +12,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/feed.js"></script>
 
     </head>
@@ -79,7 +80,9 @@
                     <form method="POST">
                         <input class="button is-danger" name="delete" value="Delete" type="submit" />
                         <a class="button">Cancel</a>
-                        <input name="id" type="hidden" />
+                        <input name="isPost" type="hidden" />
+                        <input name="commentId" type="hidden" />
+                        <input name="postId" type="hidden" />
                     </form>
                 </div>
             </div>

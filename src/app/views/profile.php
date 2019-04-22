@@ -8,18 +8,23 @@
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/conversation.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile-feed.css" rel="stylesheet" type="text/css" />
-        <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/profile.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/profile-feed.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/profile-tabs.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedComments.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feedTimestamps.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
         <script>
             const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
         </script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/profile.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/profile-tabs.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
+
+        <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/profile.js"></script>
     </head>
     <body>
+        <?php
+            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
+        ?>
         <nav class="navbar is-info">
             <div class="navbar-brand">
                 <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
@@ -98,7 +103,9 @@
 
                     </ul>
                 </div>
-                <div data-tab="newsfeed" id="feed" <?php if ($params["messageTab"]) { echo "style=\"display:none;\""; } ?>>
+                <div data-tab="newsfeed" <?php if ($params["messageTab"]) { echo "style=\"display:none;\""; } ?>>
+                    <div id="feed"></div>
+            
                     <img id="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
                 </div>
                 <div data-tab="messages" <?php if (!$params["messageTab"]) { echo "style=\"display:none;\""; } ?>>
@@ -134,7 +141,7 @@
                     <h1 class="subtitle">Post something!</h1>
                     <hr />
                     <p>This will appear on the user's profile page and their newsfeed for your friends to see!</p>
-                    <form action="<?php echo $params["BASE"] ?>profile/<?php echo $params["target"]["username"]; ?>/post" method="POST">
+                    <form action="<?php echo $params["BASE"] ?>profile/<?php echo $params["target"]["username"]; ?>/post" data-form="feed-message" method="POST">
                         <textarea name="message" placeholder="What's on your mind?"></textarea>
                         <input name="submit" value="Post" class="button is-info" style="width: 5em;" type="submit" />
                     </form>
@@ -151,7 +158,9 @@
                     <form method="POST">
                         <input class="button is-danger" name="delete" value="Delete" type="submit" />
                         <a class="button">Cancel</a>
-                        <input name="id" type="hidden" />
+                        <input name="isPost" type="hidden" />
+                        <input name="commentId" type="hidden" />
+                        <input name="postId" type="hidden" />
                     </form>
                 </div>
             </div>

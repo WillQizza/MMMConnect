@@ -37,14 +37,14 @@
 </template>
 
 <template data-name="comment">
-    <article class="media" data-timestamp="timestamp in ms">
+    <article class="media" data-comment="comment id" data-timestamp="timestamp in ms">
         <div class="media-left">
             <img class="image is-64x64" data-field="avatar" src="avatar url" />
         </div>
         <div class="media-content">
             <div class="content">
                 <span style="display: none;" class="is-pulled-right deleteComment" data-field="delete">
-                    <a data-comment="comment id" data-action="delete">
+                    <a data-comment="comment id" data-action="delete" data-post="post id">
                         <i class="fa fa-trash"></i>
                     </a>
                 </span>

@@ -34,26 +34,47 @@ class PostComment {
     /**
      * 
      * @param {RawCommentData} data 
+     * @param {Post} post
      */
-    constructor (data) {
+    constructor (data, post) {
 
         this.id = data.id;
 
         const specialSelectors = [];
         if (data.userSentThis) {
-            specialSelectors.push({ selector: "span[data-field=\"delete\"]", attributes: { style: "" } });
+            specialSelectors.push({ selector: "span[data-field=\"delete\"]", attributes: { style: ""} });
+            specialSelectors.push({ selector: "a[data-action=\"delete\"]", attributes: { "data-post": post.id, "data-comment": this.id  } });
         }
 
         //@ts-ignore
         this.element = createTemplate("comment", [
             ...specialSelectors,
-            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
+            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs, "data-comment": this.id } },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
             { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile }, text: data.user.name },
             { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
             { selector: "span[data-field=\"body\"]", text: data.body }
         ]);
+
+        this.CONSTANTS = {
+            //@ts-ignore
+            DELETE_COMMENT: `${ROOT}feed/deletecomment`
+        };
     }
+
+    /**
+     * Delete this post.
+     */
+    async delete () {
+        await fetch(this.CONSTANTS.DELETE_COMMENT, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `commentId=${this.id}`
+        });
+    }
+
 }
 
 class Post {
@@ -64,9 +85,16 @@ class Post {
     constructor (data) {
 
         this.id = data.id;
+
         this.CONSTANTS = {
             //@ts-ignore
-            POST_COMMENT: `${ROOT}feed/postcomment`
+            POST_COMMENT: `${ROOT}feed/postcomment`,
+            //@ts-ignore
+            LIKE_POST: `${ROOT}feed/likecomment`,
+            //@ts-ignore
+            DELETE_POST: `${ROOT}feed/deletepost`,
+            //@ts-ignore
+            EDIT_POST: `${ROOT}feed/editpost`
         };
 
         const specialSelectors = [];
@@ -97,11 +125,58 @@ class Post {
             { selector: "input[data-field=\"formPostId\"]", value: data.id }
         ]);
 
-        this.comments = data.comments.map(data => new PostComment(data));
+        this.comments = data.comments.map(data => new PostComment(data, this));
         for (const comment of this.comments) {
             this.element.querySelector(".comments").appendChild(comment.element);
-            comment.element = this.element.querySelector(`.comments article[data-comment="${comment.id}"]`);
         }
+    }
+
+    /**
+     * Id of the comment.
+     * @param {number} id 
+     */
+    getCommentById (id) {
+        return this.comments.find(comment => comment.id === id);
+    }
+
+    /**
+     * Like/unlike this post
+     */
+    async like () {
+        await fetch(this.CONSTANTS.LIKE_POST, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `postId=${this.id}`
+        });
+    }
+
+    /**
+     * Delete this post.
+     */
+    async delete () {
+        await fetch(this.CONSTANTS.DELETE_POST, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `postId=${this.id}`
+        });
+    }
+
+    /**
+     * Edit this message.
+     * @param {string} content 
+     */
+    async edit (content) {
+        await fetch(this.CONSTANTS.EDIT_POST, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `postId=${this.id}&body=${encodeURIComponent(content)}`
+        });
     }
 
     /**
@@ -116,10 +191,10 @@ class Post {
             },
             body: `message=${encodeURIComponent(message)}&id=${this.id}`
         })).json();
-        const comment = new PostComment(response);
+        const comment = new PostComment(response, this);
         this.comments.push(comment);
         this.element.querySelector(".comments").appendChild(comment.element);
-        return comment;
+        return this.comments.length;
     }
 }
 
@@ -129,7 +204,9 @@ class PostsManager {
             //@ts-ignore - ROOT is defined in the caller file.
             FEED_URL: `${ROOT}feed/latest`,
             //@ts-ignore
-            POST_MESSAGE: `${ROOT}feed/post`
+            POST_MESSAGE: `${ROOT}feed/post`,
+            //@ts-ignore
+            PROFILE_FEED_URL: `${ROOT}feed/profile`
         };
 
         this.posts = {};
@@ -153,6 +230,24 @@ class PostsManager {
     }
 
     /**
+     * Fetch the user's feed for a profile.
+     * @param {string} username 
+     * @param {number} page 
+     */
+    async fetchFeedForProfile (username, page = 0) {
+        /** @type {{posts: RawPostData[], nextPage: number}} */
+        const rawPostsData = await (await fetch(`${this.CONSTANTS.PROFILE_FEED_URL}?page=${page}&profile=${username}`)).json();
+        const posts = rawPostsData.posts.map(data => new Post(data));
+        for (const post of posts) {
+            this.posts[post.id] = post;
+        }
+        return {
+            posts,
+            nextPage: rawPostsData.nextPage
+        };
+    }
+
+    /**
      * Post a message.
      * @param {string} message 
      */
@@ -164,8 +259,10 @@ class PostsManager {
             },
             body: `message=${encodeURIComponent(message)}`
         })).json();
+        const post = new Post(response.post);
+        this.posts[post.id] = post;
         return {
-            post: new Post(response.post),
+            post,
             postCount: response.postCount
         };
     }

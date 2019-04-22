@@ -2,8 +2,14 @@ $(document).ready(async () => {
 
     let fetching = false;
 
+    const updateBlueBars = function () {
+        $("#profileBlue").css("height", `${$(document).height()}px`);
+    };
+
     $("#loading").show();
-    const feed = await Posts.fetchFeed();
+    const hrefParts = document.location.href.split("/");
+    const username = hrefParts[hrefParts.length - 1];
+    const feed = await Posts.fetchFeedForProfile(username);
     let page = feed.nextPage;
 
     $("#loading").hide();
@@ -11,6 +17,7 @@ $(document).ready(async () => {
         $("#feed").append(post.element);
         post.element = document.querySelector(`article[data-post="${post.id}"]`);
     }
+    updateBlueBars();
 
     $(window).scroll(async () => {
         
@@ -25,7 +32,7 @@ $(document).ready(async () => {
         if (scrollTop + height >= docHeight - 100 && !fetching && page !== -1) {
             fetching = true;
             $("#loading").show();
-            const feed = await Posts.fetchFeed(page);
+            const feed = await Posts.fetchFeedForProfile(username, page);
             for (const post of feed.posts) {
                 $("#feed").append(post.element);
                 post.element = document.querySelector(`article[data-post="${post.id}"]`);
@@ -38,6 +45,7 @@ $(document).ready(async () => {
                 // No more posts?
                 $("#feed").append("<p>There are no more posts!</p>");
             }
+            updateBlueBars();
             
             $("#loading").hide();
         }
@@ -53,8 +61,9 @@ $(document).ready(async () => {
         Posts.postMessage(message).then(data => {
             $("#feed").prepend(data.post.element);
             data.post.element = document.querySelector(`article[data-post="${data.post.id}"]`);
-            $("span[data-stat=\"posts\"]").text(data.postCount);
         });
+
+        $("#postModal").removeClass("is-active");
 
         return false;
     });
