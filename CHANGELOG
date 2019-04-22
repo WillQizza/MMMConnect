@@ -14,3 +14,7 @@ For my assignment I have the additional challenge of extending the tutorial vide
 + No more annoying .php at the end of any file.
 + Timestamps automatically change.
 + Login via username
+
+Part 2
++ Everything related to profile messages is basically ajax.
++ You can edit messages.
