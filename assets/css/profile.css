@@ -3,6 +3,10 @@ html, body {
     background: rgb(225, 225, 225);
 }
 
+img {
+    border-radius: 0.5em;
+}
+
 .spacing-top {
     margin-top: .5em;
 }

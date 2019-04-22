@@ -33,6 +33,7 @@
                             if ($image) {
                                 imagepng($image, $newPath);
                                 $userModel->changeAvatar($user["id"], $newPath);
+                                $this->redirect("profile/" . $user["username"]);
                             }
                             
                         }

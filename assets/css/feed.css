@@ -35,6 +35,10 @@ textarea {
     padding-right: 2%;
 }
 
+img {
+    border-radius: 0.5em;
+}
+
 article:hover .deletePost {
     display: block;
 }
