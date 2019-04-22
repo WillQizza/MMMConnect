@@ -12,7 +12,7 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if (isset($user)) {
                     
-                    if (isset($_FILES["avatar"]) && isset($_POST["x"])) {
+                    if (isset($_FILES["avatar"]) && isset($_POST["x"]) && isset($_POST["y"]) && isset($_POST["height"]) && isset($_POST["width"])) {
                         $data = $_FILES["avatar"];
                         $newPath = "assets/images/profile_pics/" . $user["username"] . "_avatar.png";
 
