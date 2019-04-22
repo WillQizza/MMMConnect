@@ -1,17 +1,19 @@
 html, body {
     height: 100%;
+    background: rgb(225, 225, 225);
 }
 
-body {
-    background: rgb(225, 225, 225);
+.box {
+    margin-bottom: 1em;
+}
+
+#avatar {
+    width: 128px;
+    height: 128px;
 }
 
 .spacing-top {
     margin-top: 1em;
-}
-
-.box {
-    height: 30em;
 }
 
 #submitButton {

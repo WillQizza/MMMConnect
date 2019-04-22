@@ -4,8 +4,11 @@
         <title>MMMConnect | Settings - Avatar</title>
         <link href="<?php echo $params["BASE"]; ?>assets/css/bulma.min.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-        <link href="<?php echo $params["BASE"] ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo $params["BASE"] ?>assets/css/settings-avatar.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"]; ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"]; ?>assets/css/settings-avatar.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo $params["BASE"]; ?>assets/css/jcrop.css" rel="stylesheet" type="text/css" />
+
+        <script src="<?php echo $params["BASE"]; ?>assets/js/jcrop.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/settings-avatar.js"></script>
     </head>
@@ -35,9 +38,10 @@
         <div class="container">
             <div class="box spacing-top">
                 <h1 class="title">Change Your Profile Picture</h1>
-                <figure class="image is-128x128 is-pulled-left">
-                    <img src="<?php echo $params["user"]["avatar"]; ?>" />
-                </figure><br /><br /><br /><br /><br /><br />
+                <img src="<?php echo $params["user"]["avatar"]; ?>" id="avatar" />
+                <!-- <figure class="image is-128x128 is-pulled-left">
+                    <img src="<?php echo $params["user"]["avatar"]; ?>" id="avatar" />
+                </figure><br /><br /><br /><br /><br /><br /> -->
                 <form method="POST" action="<?php echo $params["BASE"] ?>settings/upload" enctype="multipart/form-data">
                     <div class="file">
                         <label class="file-label">
@@ -58,6 +62,10 @@
                             <input name="submit" value="Submit" class="button is-link" type="submit" />
                         </div>
                     </div>
+                    <input name="width" type="hidden" />
+                    <input name="height" type="hidden" />
+                    <input name="x" type="hidden" />
+                    <input name="y" type="hidden" />
                 </form>
             </div>
         </div>

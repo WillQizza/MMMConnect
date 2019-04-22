@@ -13,7 +13,6 @@
         </script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/profile.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/profile-tabs.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
 
         <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
