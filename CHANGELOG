@@ -18,3 +18,4 @@ For my assignment I have the additional challenge of extending the tutorial vide
 Part 2
 + Everything related to profile messages is basically ajax.
 + You can edit messages.
++ Conversations now fetch messages automatically.
