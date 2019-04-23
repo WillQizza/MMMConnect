@@ -69,6 +69,48 @@
             }
         }
 
+        public function latest ($parts) {
+            $userModel = $this->model("Users");
+            $messageModel = $this->model("Messages");
+            if (isset($_SESSION["id"])) {
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if ($user) {
+                    if (isset($parts[0]) && strlen($parts[0]) > 0) {
+                        $target = $userModel->getUserByUsername($parts[0]);
+                        if ($target) {
+                            if ($userModel->isUserFriendsWith($user["id"], $target["id"])) {
+
+                                $lastId = 0;
+                                if (isset($_GET["lastId"])) {
+                                    $lastId = $_GET["lastId"];
+                                }
+
+                                $messages = $messageModel->getMessages($user["id"], $target["id"], $lastId);
+                                $this->view("conversations/latest", array(
+                                    "messages" => $messages,
+                                    "target" => $target
+                                ));
+
+                            } else {
+                                $this->redirect("conversation");
+                            }
+                        } else {
+                            $this->redirect("conversation");
+                        }
+                    } else {
+                        // Ok, they want all of our convos.
+                        $this->view("conversations/all", array(
+                            "conversations" => $messageModel->getConversations($user["id"])
+                        ));
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
+
         public function post ($parts) {
             $userModel = $this->model("Users");
             $messageModel = $this->model("Messages");
@@ -80,12 +122,16 @@
                         if ($target) {
                             if ($userModel->isUserFriendsWith($user["id"], $target["id"])) {
                                 if (isset($_POST["message"])) {
-                                    $messageModel->postMessage($user["id"], array(
+                                    $message = $messageModel->postMessage($user["id"], array(
                                         "message" => $_POST["message"],
                                         "target" => $target["id"]
                                     ));
+                                    $this->view("conversations/post", array(
+                                        "message" => $message
+                                    ));
+                                } else {
+                                    $this->redirect("conversation");
                                 }
-                                $this->redirect("conversation/" . $target["username"]);
                             } else {
                                 $this->redirect("conversation");
                             }

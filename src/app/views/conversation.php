@@ -7,12 +7,18 @@
         <link href="<?php echo $params["BASE"] ?>assets/css/nav.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"] ?>assets/css/conversation.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/conversation.js"></script>
         <script>
             const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
         </script>
+
+        <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/latest.js"></script>
     </head>
     <body>
+        <?php
+            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
+        ?>
         <nav class="navbar is-info">
             <div class="navbar-brand">
                 <a class="navbar-item" href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
@@ -56,30 +62,8 @@
                 <div class="box">
                     <h2 class="subtitle">Conversations</h2>
                     <hr class="conversation-line" />
-                    <?php
-                        foreach ($params["conversations"] as $conversation) {
-                            $who = "You";
-                            if ($conversation["message"]["author"]["id"] != $params["user"]["id"]) {
-                                $who = "They";
-                            }
-                            $body = $conversation["message"]["body"];
-                            if (strlen($body) > 10) {
-                                $body = substr($body, 0, 10) . "...";
-                            }
-                            echo "<a href=\"" . $params["BASE"] . "conversation/" . $conversation["user"]["username"] . "\"><article class=\"media\">
-                                <figure class=\"media-left\">
-                                    <p class=\"image is-64x64\">
-                                        <img src=\"" . $conversation["user"]["avatar"] . "\" />
-                                    </p>
-                                </figure>
-                                <div class=\"media-content gray-text\">
-                                    <span class=\"suggestion-name\">" . $conversation["user"]["name"] . "</span> <i>" . $conversation["message"]["timestamp"] . "</i><br />
-                                    $who said: " . $body . "
-                                </div>
-                            </article><hr class=\"conversation-line\" /></a>";
-                        }
-                    ?>
-
+                    <span id="conversations"></span>
+                    <img src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" data-field="conversations-loading" class="loading" />
                     <a href="<?php echo $params["BASE"]; ?>conversation">New Message</a>
 
                 </div>
@@ -87,18 +71,7 @@
             <div class="box" id="conversation">
                 <h1 class="title">You and <a href="<?php echo $params["BASE"]; ?>profile/<?php echo $params["target"]["username"] ?>"><?php echo $params["target"]["name"]; ?></a></h1>
                 <hr />
-                <div id="messages">
-                    <?php
-                        foreach ($params["messages"] as $message) {
-                            if ($message["author"]["id"] == $params["user"]["id"]) {
-                                echo "<div class=\"our-message message\">" . $message["body"] . "</div>";
-                            } else {
-                                echo "<div class=\"their-message message\">" . $message["body"] . "</div>";
-                            }
-                            echo "<br /><br />";
-                        }
-                    ?>
-                </div>
+                <div id="messages"></div>
                 <form id="conversationForm" action="<?php echo $params["BASE"]; ?>conversation/post/<?php echo $params["target"]["username"]; ?>" method="POST">
                     <textarea placeholder="What do you want to send?" name="message"></textarea>
                     <input value="Send Message" type="submit" />

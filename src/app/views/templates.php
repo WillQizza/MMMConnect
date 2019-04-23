@@ -56,3 +56,32 @@
         </div>
     </article>
 </template>
+
+<template data-name="conversation-preview">
+    <a href="conversation link" data-username="username" data-field="conversation-link">
+        <article class="media">
+            <figure class="media-left">
+                <p class="image is-64x64">
+                    <img src="avatar" data-field="avatar" />
+                </p>
+            </figure>
+            <div class="media-content gray-text">
+                <span class="suggestion-name" data-field="suggestionName">Name</span> <i data-field="timestamp">Timestamp</i><br />
+                <span data-field="who">Sender</span> said: <span data-field="body">content</span>
+            </div>
+        </article>
+        <hr class="conversation-line" />
+    </a>
+</template>
+
+<template data-name="our-conversation-message">
+    <div class="our-message message" data-field="body">
+        Our message
+    </div><br /><br />
+</template>
+
+<template data-name="their-conversation-message">
+    <div class="their-message message" data-field="body">
+        Their message
+    </div><br /><br />
+</template>

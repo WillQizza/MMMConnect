@@ -11,14 +11,20 @@
                 "d" => false,
                 "da" => date("Y-m-d H:i:s")
             ));
+
+            return $this->query("SELECT * FROM messages WHERE author=:a AND target=:t ORDER BY ID DESC LIMIT 1", array(
+                "a" => $id,
+                "t" => $data["target"]
+            ), false);
         }
 
-        public function getMessages ($id, $target) {
-            $messages = $this->query("SELECT * FROM messages WHERE (author=:a AND target=:b) OR (author=:d AND target=:c) ORDER BY id ASC", array(
+        public function getMessages ($id, $target, $lastId = 0) {
+            $messages = $this->query("SELECT * FROM messages WHERE ((author=:a AND target=:b) OR (author=:d AND target=:c)) AND id > :l ORDER BY id ASC", array(
                 "a" => $id,
                 "b" => $target,
                 "c" => $id,
-                "d" => $target
+                "d" => $target,
+                "l" => $lastId
             ));
             $this->query("UPDATE messages SET opened=1 WHERE author=:a AND target=:b", array(
                 "a" => $target,
@@ -59,6 +65,7 @@
 
         protected function defaults () {
             return array(
+                "id" => 0,
                 "author" => 0,
                 "target" => 0,
                 "body" => "",
@@ -72,6 +79,7 @@
         protected function format ($data) {
             $userModel = $this->model("Users");
             return array(
+                "id" => $data["id"],
                 "author" => $userModel->getUserById($data["author"]),
                 "target" => $userModel->getUserById($data["target"]),
                 "body" => $data["body"],

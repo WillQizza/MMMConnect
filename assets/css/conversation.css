@@ -65,6 +65,13 @@ html,body {
     color: white;
 }
 
+.loading {
+    width: 3em;
+    height: 3em;
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
 #content {
     width: 100%;
     height: calc(100% - 3.25rem);
