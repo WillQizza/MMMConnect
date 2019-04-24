@@ -1,0 +1,107 @@
+/**
+    Author: William Qi
+    Licence: MIT
+    
+    Made this because I'm going to be reusing CSS alot. lmao
+    Named it pizza.css because it sounds cool. But not really. Maybe it was because I was hungry?
+
+*/
+
+@font-face {
+    font-family: "Tomcat";
+    src: url("../fonts/TOMCAT.otf");
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/Roboto-Regular.ttf");
+}
+
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: Roboto;
+}
+
+.one-third {
+    width: 33.3%;
+    position: relative;
+    left: 33.3%;
+}
+
+.box {
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5em;
+    border: 0.3px solid black;
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+}
+
+.notification {
+    border-radius: 0;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 1em;
+}
+
+.notification.is-danger {
+    background: #ff3860;
+    color: white;
+}
+
+.notification.is-success {
+    background: #23d160;
+    color: white;
+}
+
+.link {
+    color: #209cee;
+}
+
+.link:hover {
+    cursor: pointer;
+}
+
+.center {
+    margin: auto;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.input {
+    text-align: center;
+    padding: 2%;
+}
+
+.input input[type="text"], .input input[type="password"], .input input[type="email"] {
+    border-radius: 0.2em;
+    border: 1px solid rgb(219, 219, 219);
+    height: 1em;
+    font-size: 100%;
+    padding: 2%;
+    text-align: center;
+}
+
+.input input[type="text"]:focus, .input input[type="password"]:focus, .input input[type="email"]:focus {
+    outline: none;
+    border: 1px solid #1c8cd6;
+}
+
+.input input[type="submit"] {
+    min-width: 5em;
+    height: 3em;
+    color: white;
+    background: #1f94e2;
+    border: none;
+    border-radius: 0.2em;
+    font-size: 100%;
+}
+
+.input input[type="submit"]:hover {
+    cursor: pointer;
+}

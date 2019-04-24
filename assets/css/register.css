@@ -1,18 +1,6 @@
-@font-face {
-    font-family: "Tomcat";
-    src: url("../fonts//TOMCAT.otf");
-}
-
-
-input {
-    text-align: center;
-}
-
-html, body {
-    height: 100%;
-    min-height: 100%;
-    padding: 0;
-    margin: 0;
+#authenticationBox {
+    position: relative;
+    top: 2%;
 }
 
 #wrapper {
@@ -22,18 +10,18 @@ html, body {
     background-position: center;
     width: 100%;
     height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
-
-#loginBox {
-    opacity: 0.9;
-    top: 5%;
-    position: relative;
-}
-
 
 #loginHeader {
     background-color: #209cee;
     color: rgb(240, 240, 240);
+    width: 90%;
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+    padding: 5%;
 }
 
 #loginHeader > h1 > span {
