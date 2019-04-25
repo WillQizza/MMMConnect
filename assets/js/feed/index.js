@@ -118,7 +118,7 @@ class Post {
             { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
             { selector: "span[data-field=\"body\"]", text: data.body },
             { selector: "span[data-field=\"likesCount\"]", text: data.likes },
-            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
+            { selector: "div[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
             { selector: "*[data-post]", attributes: { "data-post": data.id } },
             { selector: "span[data-field=\"likesText\"]", text: data.likedPost ? "Unlike" : "Like" },
             { selector: "span[data-field=\"comments\"]", text: data.comments.length },

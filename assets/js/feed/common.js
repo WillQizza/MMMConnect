@@ -11,7 +11,7 @@ $(document).ready(async () => {
     // Show/hide comments.
     $(document).on("click", "a[data-action=\"comment\"]", function () {
         const postId = $(this).attr("data-post");
-        const commentsContainer = $(`article[data-post="${postId}"]`).find(".commentsContainer");
+        const commentsContainer = $(`div[data-post="${postId}"]`).find(".commentsContainer");
 
         if (commentsContainer.css("display") === "none") {
             commentsContainer.show();
@@ -23,7 +23,7 @@ $(document).ready(async () => {
     // Post comment.
     $(document).on("submit", "form[data-form=\"feed-comment\"]", function () {
         const postId = $(this).find("input[data-field=\"formPostId\"]").val();
-        const post = $(`article[data-post="${postId}"]`);
+        const post = $(`div[data-post="${postId}"]`);
         const textarea = $(this).find("textarea");
         const message = textarea.val();
         textarea.val("");
@@ -81,16 +81,16 @@ $(document).ready(async () => {
         const post = Posts.getPostById(postId);
         if ($(this).find("input[name=\"isPost\"]").val() === "true") {
             post.delete();
-            $(`article[data-post="${postId}"]`).remove();
+            $(`div[data-post="${postId}"]`).remove();
             const postsEl = $("span[data-stat=\"posts\"]");
             postsEl.text(Number(postsEl.text()) - 1);
         } else {
             const commentId = Number($(this).find("input[name=\"commentId\"]").val());
             post.getCommentById(commentId)
                 .delete();
-            const commentsEl = $(`article[data-post="${postId}"] span[data-field="comments"]`);
+            const commentsEl = $(`div[data-post="${postId}"] span[data-field="comments"]`);
             commentsEl.text(Number(commentsEl.text()) - 1);
-            $(`.comments article[data-comment="${commentId}"]`).remove();
+            $(`.comments div[data-comment="${commentId}"]`).remove();
         }
         $("#deleteModal").removeClass("is-active");
 
@@ -101,7 +101,7 @@ $(document).ready(async () => {
     $(document).on("click", "a[data-action=\"edit\"]", function () {
         const id = $(this).attr("data-post");
         $("#editModal input[name=\"id\"]").val(id);
-        $("#editModal textarea").val($(`article[data-post="${id}"] .message-content`).text());
+        $("#editModal textarea").val($(`div[data-post="${id}"] .message-content`).text());
         $("#editModal").addClass("is-active");
     });
 
@@ -121,7 +121,7 @@ $(document).ready(async () => {
     // Timestamps
 
     setInterval(function () {
-        const posts = $("article[data-timestamp]");
+        const posts = $("div[data-timestamp]");
         posts.each((_,post) => {
             const timestamp = post.getAttribute("data-timestamp");
             const timestampElement = post.querySelector(".faded");

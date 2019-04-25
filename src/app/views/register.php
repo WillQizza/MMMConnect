@@ -33,7 +33,7 @@
                     <form method="POST" action="register" id="login">
                         <?php
                             if ($params["errors"]["login"]) {
-                                echo "<div class=\"notification box is-danger\">Your credentials were incorrect.</div>";
+                                echo "<div class=\"notification box is-red\">Your credentials were incorrect.</div>";
                             }
                         ?>
                         <div class="input">
@@ -51,7 +51,7 @@
                     <form method="POST" action="register" id="register">
                         <?php
                             if ($params["errors"]["emailExists"] || $params["errors"]["emailDoesNotMatch"] || $params["errors"]["firstNameNotLongEnough"] || $params["errors"]["lastNameNotLongEnough"] || $params["errors"]["passwordNotLongEnough"] || $params["errors"]["passwordDoesNotMatch"] || $params["errors"]["passwordEnglishOnly"] || $params["errors"]["registerSuccess"]) {
-                                echo "<div class=\"notification box is-" . ($params["errors"]["registerSuccess"] ? "success" : "danger") . "\">";
+                                echo "<div class=\"notification box is-" . ($params["errors"]["registerSuccess"] ? "green" : "red") . "\">";
                                 
                                 if ($params["errors"]["emailExists"]) {
                                     echo "The email already exists.";

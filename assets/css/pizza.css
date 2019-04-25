@@ -20,14 +20,45 @@
 html, body {
     height: 100%;
     padding: 0;
+    width: 100%;
     margin: 0;
     font-family: Roboto;
 }
 
 .one-third {
-    width: 33.3%;
-    position: relative;
-    left: 33.3%;
+    min-width: 33.3%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.one-quarter {
+    min-width: 25%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.three-quarters {
+    min-width: 75%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.one-fifth {
+    min-width: 20%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.half {
+    min-width: 50%;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.seven-tenths {
+    min-width: 70%;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .box {
@@ -37,6 +68,14 @@ html, body {
     padding-left: 1em;
     padding-right: 1em;
     padding-bottom: 1em;
+    padding-top: 1em;
+    min-width: 10em;
+    margin: 1em;
+}
+
+.box hr {
+    outline: none;
+    border-top: #00000005;
 }
 
 .notification {
@@ -47,13 +86,18 @@ html, body {
     padding-top: 1em;
 }
 
-.notification.is-danger {
+.notification.is-red, .nav.is-red {
     background: #ff3860;
     color: white;
 }
 
-.notification.is-success {
+.notification.is-green, .nav.is-green {
     background: #23d160;
+    color: white;
+}
+
+.notification.is-blue, .nav.is-blue {
+    background: #209cee;
     color: white;
 }
 
@@ -104,4 +148,118 @@ html, body {
 
 .input input[type="submit"]:hover {
     cursor: pointer;
+}
+
+.nav {
+    height: 3.5em;
+    width: 100%;
+    font-size: 1em;
+    display: inline-flex;
+}
+
+.nav a {
+    height: 100%;
+}
+
+.nav .nav-left {
+    display: inline-flex;
+    position: absolute;
+    left: 0;
+    width: 50%;
+    height: 3.5em;
+}
+
+.nav .nav-left p {
+    font-size: 1.5em;
+    position: relative;
+    bottom: 0.5em;
+}
+
+.nav .nav-left span {
+    font-family: Tomcat;
+}
+
+.nav .nav-right {
+    display: inline-flex;
+    position: absolute;
+    right: 0;
+    flex-direction: row-reverse;
+    width: 50%;
+    height: 3.5em;
+}
+
+.nav a {
+    vertical-align: middle;
+    color: white !important;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.nav.is-blue a:hover {
+    background: #1e90db;
+}
+
+.nav.is-blue a:active {
+    color: white;
+}
+
+.tomcat {
+    font-family: Tomcat;
+}
+
+.image-64x64 {
+    width: 64px;
+    height: 64px;
+}
+
+.image-128x128 {
+    width: 10em;
+    height: 10em;
+}
+
+.image {
+    border-radius: 0.5em;
+}
+
+.post {
+    display: inline-flex;
+    padding-bottom: 1em;
+}
+
+.post .avatar {
+    float: left;
+}
+
+.post .content {
+    padding-left: 1em;
+}
+
+.post .message-content {
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+.faded {
+    opacity: 0.5;
+}
+
+.loading {
+    width: 3em;
+    height: 3em;
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
+a {
+    text-decoration: none;
+    height: 1em;
+    color: #1c8cd6;
+}
+
+a:visited {
+    color: #1c8cd6;
+}
+
+textarea {
+    font-family: Roboto;
 }

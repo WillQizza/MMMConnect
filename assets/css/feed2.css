@@ -1,0 +1,129 @@
+html, body {
+    height: 100%;
+    background: rgb(225, 225, 225);
+}
+
+div[data-post] {
+    display: none;
+}
+
+textarea {
+    min-width: 80%;
+    max-width: 80%;
+    min-height: 5em;
+    max-height: 5em;
+    padding: 1em;
+    outline: 0;
+    float: left;
+}
+
+.submit {
+    height: 4em;
+    width: 8%;
+}
+
+.spacing-top {
+    margin-top: .5em;
+}
+
+.deletePost {
+    display: none;
+}
+
+.deleteComment {
+    display: none;
+    padding-right: 2%;
+}
+
+img {
+    border-radius: 0.5em;
+}
+
+article:hover .deletePost {
+    display: block;
+}
+
+.comments article:hover .deleteComment {
+    display: block;
+}
+
+
+.line {
+    margin-top: 1em;
+    border-top: 0.1em solid #00000005;
+    margin-bottom: 1em;
+}
+
+.faded {
+    opacity: 0.5;
+}
+
+.commentsContainer {
+    display: none;
+    background-color: #e6e6e6;
+}
+
+.commentsContainer article {
+    padding-left: 5%;
+}
+
+.commentsContainer input[type="submit"] {
+    height: 3.5em;
+    width: 7%;
+}
+
+.commentsContainer textarea {
+    min-width: 75%;
+    max-width: 75%;
+}
+
+.commentForm {
+    margin-bottom: 5em;
+}
+
+#content {
+    width: 95em;
+}
+
+#userInfo {
+    min-width: 25%;
+    max-width: 25%;
+    margin-left: 1%;
+    float: left;
+}
+
+#activity {
+    min-width: 60%;
+    max-width: 60%;
+    float: left;
+    margin-left: 1%;
+}
+
+.submitButton {
+    margin-left: 2%;
+    float: right;
+    position: absolute;
+    border: none;
+    border-radius: 1em;
+    background: #209cee;
+    color: white;
+    font-size: large;
+    height: 4em;
+    width: 8%;
+}
+
+#activity input[type="submit"]:hover {
+    background: #1c8fdb;
+}
+
+#loading {
+    width: 3em;
+    height: 3em;
+    margin-left: 45%;
+    margin-right: 50%;
+}
+
+#deleteButton {
+    width: 10%;
+    height: 2.5em;
+}
