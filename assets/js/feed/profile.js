@@ -3,19 +3,23 @@ $(document).ready(async () => {
     let fetching = false;
 
     const updateBlueBars = function () {
-        $("#profileBlue").css("height", `${$(document).height()}px`);
+        $("#userInfo").css("height", `${$(document).height()}px`);
     };
 
-    $("#loading").show();
+    $(".loading").show();
     const hrefParts = document.location.href.split("/");
     const username = hrefParts[hrefParts.length - 1];
     const feed = await Posts.fetchFeedForProfile(username);
     let page = feed.nextPage;
 
-    $("#loading").hide();
     for (const post of feed.posts) {
         $("#feed").append(post.element);
         post.element = document.querySelector(`div[data-post="${post.id}"]`);
+    }
+    if (feed.nextPage === -1) {
+        $("#feed").parent().append("<p>There are no more posts!</p>");
+        $(".loading").css("width", "0.01px");
+        $(".loading").css("height", "0.01px");
     }
     updateBlueBars();
 
@@ -43,7 +47,9 @@ $(document).ready(async () => {
 
             if (page === -1) {
                 // No more posts?
-                $("#feed").append("<p>There are no more posts!</p>");
+                $("#feed").parent().append("<p>There are no more posts!</p>");
+                $(".loading").css("width", "0.01px");
+                $(".loading").css("height", "0.01px");
             }
             updateBlueBars();
             

@@ -2,6 +2,7 @@ $(document).ready(function () {
     $("#friendRequestForm").submit(function () {
         
         const element = $("#friendRequestButton");
+        const container = element.parent();
 
         const friendValue = element.val();
         
@@ -17,13 +18,13 @@ $(document).ready(function () {
         switch (friendValue) {
             case "Cancel Friend Request":
                 element.val("Add As Friend");
-                element.removeClass("is-danger");
-                element.addClass("is-success");
+                container.removeClass("is-red");
+                container.addClass("is-green");
             break;
             case "Add As Friend":
                 element.val("Cancel Friend Request");
-                element.removeClass("is-success");
-                element.addClass("is-danger");
+                container.removeClass("is-green");
+                container.addClass("is-red");
             break;
             case "Remove Friend":
                 element.val("Add As Friend");
@@ -44,17 +45,21 @@ $(document).ready(function () {
         }
     });
 
-    $("li[data-tab]").click(function () {
+    $("a[data-tab]").click(function () {
         const tab = $(this).attr("data-tab");
         
-        const currentActiveTabLi = $(document).find("li[class~=\"is-active\"]")
-        const currentActiveTab = currentActiveTabLi.attr("data-tab");
+        const currentActiveTabLi = $(document).find("a > li[class~=\"is-active\"]")
+        const currentActiveTab = currentActiveTabLi.parent().attr("data-tab");
 
         currentActiveTabLi.removeClass("is-active");
-        $(this).addClass("is-active");
+        $(this).find("li").addClass("is-active");
 
         $(`div[data-tab="${currentActiveTab}"]`).hide();
         $(`div[data-tab="${tab}"]`).show();
+        if (tab === "messages") {
+            const el = document.querySelector("#messages");
+            el.scrollTop = el.scrollHeight;
+        }
     });
 
 });

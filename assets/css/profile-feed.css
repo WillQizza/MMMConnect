@@ -1,84 +1,18 @@
-div[data-post] {
-    display: none;
-}
-
-textarea {
-    min-width: 100%;
-    max-width: 100%;
-    min-height: 5em;
-    max-height: 5em;
+.form-textarea {
+    min-width: 80%;
+    max-width: 80%;
+    min-height: 4em;
+    max-height: 4em;
     padding: 1em;
     outline: 0;
-}
-
-#deleteModal .button {
-    width: inherit !important;
-    margin-top: 0;
-}
-
-.submit {
-    height: 4em;
-    width: 8%;
-}
-
-.spacing-top {
-    margin-top: .5em;
-}
-
-.deletePost {
-    display: none;
-}
-
-.deleteComment {
-    display: none;
-    padding-right: 2%;
-}
-
-article:hover .deletePost {
-    display: block;
-}
-
-.comments article:hover .deleteComment {
-    display: block;
-}
-
-.faded {
-    opacity: 0.5;
-}
-
-.commentsContainer {
-    display: none;
-    background-color: #e6e6e6;
-}
-
-.commentsContainer > article {
-    padding-top: 0 !important; 
-}
-
-.commentsContainer article {
-    padding-left: 5%;
-}
-
-.commentsContainer input[type="submit"] {
-    height: 3.5em;
-    width: 10%;
-}
-
-.commentsContainer textarea {
-    min-width: 75%;
-    max-width: 75%;
-}
-
-.commentForm {
-    margin-bottom: 6em;
-}
-
-.commentForm textarea {
     float: left;
 }
 
 .submitButton {
-    margin-left: 2%;
+    background: #1c8fdb;
+    border: none;
+    vertical-align: top;
+    margin-left: 1%;
     float: right;
     position: absolute;
     border: none;
@@ -86,23 +20,28 @@ article:hover .deletePost {
     background: #209cee;
     color: white;
     font-size: large;
-    height: 4em;
+    height: 4.5em;
     width: 8%;
-    margin-top: 0.8em;
 }
 
-.submitButton:hover {
-    background: #1c8fdb;
+#postForm {
+    margin-bottom: 6em;
 }
 
-#loading {
-    width: 3em;
-    height: 3em;
-    margin-left: 45%;
-    margin-right: 50%;
+.commentForm textarea {
+    margin-left: 2em;
+    min-width: 60% !important;
+    max-width: 60% !important;
 }
 
-#deleteButton {
-    width: 10%;
-    height: 2.5em;
+.commentForm {
+    min-width: 100%;
+}
+
+.deleteComment {
+    display: none;
+}
+
+.post .content:hover > .deleteComment {
+    display: unset;
 }

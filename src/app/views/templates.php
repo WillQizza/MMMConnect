@@ -16,7 +16,7 @@
             <span data-field="edit" style="display: none;">
                 <a class="link" style="margin-left: 1em;" data-action="edit" data-post="post id">Edit</a>
             </span>
-            <div class="commentsContainer">
+            <div class="commentsContainer" style="display: none;">
                 <div class="comments"></div>
                 <br />
                 <form class="commentForm" action="<?php echo $params["BASE"] ?>feed/postcomment" data-form="feed-comment" method="POST">

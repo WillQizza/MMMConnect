@@ -24,7 +24,7 @@
             </div>
             
         </div>
-        <div id="wrapper">
+        <div id="wrapper" style="height: auto;">
             <div class="box">
                 This user is suspended.
             </div>

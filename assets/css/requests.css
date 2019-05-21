@@ -1,8 +1,22 @@
-html, body {
-    height: 100%;
+body {
     background: rgb(225, 225, 225);
 }
 
-.spacing-top {
-    margin-top: .5em;
+#wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 3.5em;
+}
+
+.buttons {
+    display: flex;
+}
+
+.input input[type="submit"], .input input[type="button"] {
+    height: 2em;
+}
+
+.input {
+    padding: 0.5%;
 }

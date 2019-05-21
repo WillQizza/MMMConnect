@@ -52,7 +52,7 @@ body {
 }
 
 .commentForm textarea {
-    margin-left: 2em;
+    margin-left: 1em;
     min-width: 70% !important;
     max-width: 70% !important;
 }
