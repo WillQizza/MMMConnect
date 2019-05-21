@@ -9,6 +9,7 @@
     background-repeat: no-repeat;
     background-position: center;
     width: 100%;
+    min-width: 1080px;
     height: 100%;
     position: absolute;
     top: 0;
@@ -34,4 +35,8 @@
 
 #register {
     display: none;
+}
+
+.input {
+    text-align: center;
 }

@@ -35,7 +35,9 @@ $(document).ready(async () => {
         const textarea = $(this).find("textarea");
         const message = textarea.val();
         textarea.val("");
-        conversation.send(message).then(async () => await fetchMessages());
+        if (message.replace(/\s|\t/g, "").length > 0) { // I haven't added server side checks for this.
+            conversation.send(message).then(async () => await fetchMessages());
+        }
 
         return false;
     });

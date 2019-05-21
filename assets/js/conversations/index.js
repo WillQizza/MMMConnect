@@ -2,7 +2,6 @@
 
 /**
  * @typedef RawConversationUser
- * @property {string} profile
  * @property {string} avatar
  * @property {string} username
  * @property {string} name
@@ -74,7 +73,7 @@ class Conversation {
         //@ts-ignore
         this.element = createTemplate("conversation-preview", [
             //@ts-ignore
-            { selector: "a[data-field=\"conversation-link\"]", attributes: { href: this.recipient.profile } },
+            { selector: "a[data-field=\"conversation-link\"]", attributes: { href: `${ROOT}conversation/${this.recipient.username}` } },
             { selector: "a[data-username]", attributes: { "data-username": this.recipient.username } },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: this.recipient.avatar } },
             { selector: "span[data-field=\"suggestionName\"]", text: this.recipient.name },

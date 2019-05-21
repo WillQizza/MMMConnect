@@ -5,7 +5,6 @@
         array_push($data, array(
             "user" => array(
                 "avatar" => $convo["user"]["avatar"],
-                "profile" => $convo["user"]["profileURL"],
                 "name" => $convo["user"]["name"],
                 "username" => $convo["user"]["username"]
             ),

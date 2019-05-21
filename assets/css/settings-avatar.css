@@ -1,10 +1,11 @@
-html, body {
-    height: 100%;
+body {
     background: rgb(225, 225, 225);
 }
 
-.box {
-    margin-bottom: 1em;
+#wrapper {
+    position: absolute;
+    top: 3.5em;
+    width: 100%;
 }
 
 #avatar {
@@ -12,10 +13,11 @@ html, body {
     height: 128px;
 }
 
-.spacing-top {
-    margin-top: 1em;
+#invalidFile {
+    display: none;
 }
 
-#submitButton {
-    margin-top: 1em;
+.input {
+    padding: 0;
+    padding-bottom: 1em;
 }

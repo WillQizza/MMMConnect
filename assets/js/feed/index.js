@@ -49,11 +49,11 @@ class PostComment {
         //@ts-ignore
         this.element = createTemplate("comment", [
             ...specialSelectors,
-            { selector: "article[data-timestamp]", attributes: { "data-timestamp": data.timestampMs, "data-comment": this.id } },
+            { selector: "div[data-timestamp]", attributes: { "data-timestamp": data.timestampMs, "data-comment": this.id } },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
             { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile }, text: data.user.name },
             { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
-            { selector: "span[data-field=\"body\"]", text: data.body }
+            { selector: "div[data-field=\"body\"]", text: data.body }
         ]);
 
         this.CONSTANTS = {
@@ -116,7 +116,7 @@ class Post {
             { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile },  text: data.user.name },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
             { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
-            { selector: "span[data-field=\"body\"]", text: data.body },
+            { selector: "div[data-field=\"body\"]", text: data.body },
             { selector: "span[data-field=\"likesCount\"]", text: data.likes },
             { selector: "div[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
             { selector: "*[data-post]", attributes: { "data-post": data.id } },

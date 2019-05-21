@@ -37,7 +37,7 @@
             $userModel = $this->model("Users");
             $ids = array();
             $conversations = array();
-            $messages = $this->query("SELECT * FROM messages WHERE author=:a OR target=:b", array(
+            $messages = $this->query("SELECT author, target FROM messages WHERE author=:a OR target=:b", array(
                 "a" => $id,
                 "b" => $id
             ));

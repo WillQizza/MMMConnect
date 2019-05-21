@@ -15,7 +15,7 @@ $(document).ready(async () => {
     $("#loading").hide();
     for (const post of feed.posts) {
         $("#feed").append(post.element);
-        post.element = document.querySelector(`article[data-post="${post.id}"]`);
+        post.element = document.querySelector(`div[data-post="${post.id}"]`);
     }
     updateBlueBars();
 
@@ -35,7 +35,7 @@ $(document).ready(async () => {
             const feed = await Posts.fetchFeedForProfile(username, page);
             for (const post of feed.posts) {
                 $("#feed").append(post.element);
-                post.element = document.querySelector(`article[data-post="${post.id}"]`);
+                post.element = document.querySelector(`div[data-post="${post.id}"]`);
             }
 
             page = feed.nextPage;
@@ -60,7 +60,7 @@ $(document).ready(async () => {
         textarea.val("");
         Posts.postMessage(message).then(data => {
             $("#feed").prepend(data.post.element);
-            data.post.element = document.querySelector(`article[data-post="${data.post.id}"]`);
+            data.post.element = document.querySelector(`div[data-post="${data.post.id}"]`);
         });
 
         $("#postModal").removeClass("is-active");

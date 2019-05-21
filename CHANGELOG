@@ -6,7 +6,6 @@ For my assignment I have the additional challenge of extending the tutorial vide
     + Controllers
 + Post a message without leaving the page
     + Post count is changed as well.
-+ Used Bulma instead of Bootstrap
 + Made the register/login errors pretty.
 + Used PDO instead of mysqli and avoided sql injection attacks
 + Used BCRYPT instead of md5 as md5 hashes are crackable via dictionary attacks.
@@ -18,4 +17,6 @@ For my assignment I have the additional challenge of extending the tutorial vide
 Part 2
 + Everything related to profile messages is basically ajax.
 + You can edit messages.
++ Deleting posts no longer refreshes the page.
 + Conversations now fetch messages automatically.
++ Sends error if you upload an invalid file.

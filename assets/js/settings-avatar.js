@@ -3,11 +3,6 @@ $(document).ready(function () {
     let imageSelected = false;
     let widget;
 
-    $("input[type=\"file\"]").change(e => {
-        const file = e.target.files[0].name;
-        $(".file-name").text(file);
-    });
-
     $("form").on("submit", () => {
         
         if (imageSelected) {
@@ -31,18 +26,18 @@ $(document).ready(function () {
                     widget = attached.newWidget(rect, { aspectRatio: rect.aspect });
                     attached.addWidget(widget);
                     imageSelected = true;
-                    $(".file").hide();
+                    $("#fileInput").hide();
                     $(".title").text("Crop Your Profile Picture");
                     $("input[type=\"submit\"]").val("Upload");
                 };
                 try {
                     FR.readAsDataURL(file);
                 } catch (_) {
-                    console.log("Invalid");
+                    $("#invalidFile").show();
                 }
             } else {
                 // Error.
-                console.log("Invalid extension.");
+                $("#invalidFile").show();
             }
             return false;
         }

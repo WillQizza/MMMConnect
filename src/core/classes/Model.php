@@ -16,12 +16,14 @@
             if ($fetchAll) {
                 $results = $query->fetchAll();
                 return array_map(function ($data) {
+                    $data = array_merge($this->defaults(), $data);
                     return $this->format($data);
                 }, $results);
             }
             $results = $query->fetch();
             if ($results) {
-                return $this->format(array_merge($this->defaults(), $results));
+                $data = array_merge($this->defaults(), $results);
+                return $this->format($data);
             } else {
                 return false;
             }

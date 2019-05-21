@@ -2,14 +2,13 @@ $(document).ready(async () => {
 
     let fetching = false;
 
-    $("#loading").show();
+    $(".loading").show();
     const feed = await Posts.fetchFeed();
     let page = feed.nextPage;
 
-    $("#loading").hide();
     for (const post of feed.posts) {
         $("#feed").append(post.element);
-        post.element = document.querySelector(`article[data-post="${post.id}"]`);
+        post.element = document.querySelector(`div[data-post="${post.id}"]`);
     }
 
     $(window).scroll(async () => {
@@ -24,11 +23,11 @@ $(document).ready(async () => {
         const docHeight = $(document).height();
         if (scrollTop + height >= docHeight - 100 && !fetching && page !== -1) {
             fetching = true;
-            $("#loading").show();
+            $(".loading").show();
             const feed = await Posts.fetchFeed(page);
             for (const post of feed.posts) {
                 $("#feed").append(post.element);
-                post.element = document.querySelector(`article[data-post="${post.id}"]`);
+                post.element = document.querySelector(`div[data-post="${post.id}"]`);
             }
 
             page = feed.nextPage;
@@ -36,10 +35,11 @@ $(document).ready(async () => {
 
             if (page === -1) {
                 // No more posts?
-                $("#feed").append("<p>There are no more posts!</p>");
+                $("#feed").parent().append("<p class=\"center-text\">There are no more posts!</p>");
+                $(".loading").css("width", "0.01px");
+                $(".loading").css("height", "0.01px");
             }
-            
-            $("#loading").hide();
+        
         }
 
     });
@@ -52,7 +52,7 @@ $(document).ready(async () => {
         textarea.val("");
         Posts.postMessage(message).then(data => {
             $("#feed").prepend(data.post.element);
-            data.post.element = document.querySelector(`article[data-post="${data.post.id}"]`);
+            data.post.element = document.querySelector(`div[data-post="${data.post.id}"]`);
             $("span[data-stat=\"posts\"]").text(data.postCount);
         });
 

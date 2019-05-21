@@ -3,8 +3,12 @@ body {
 }
 
 #wrapper {
-    height: 100%;
+    position: relative;
+    top: 3.5em;
+    height: calc(100% - 3.8em);
     max-width: 100%;
+    min-width: 1080px;
+    display: flex;
 }
 
 #content {
@@ -17,7 +21,7 @@ body {
     padding-left: 1em;
 }
 
-#postForm textarea {
+.form-textarea {
     min-width: 80%;
     max-width: 80%;
     min-height: 4em;
@@ -27,7 +31,7 @@ body {
     float: left;
 }
 
-#postForm input {
+.submitButton {
     background: #1c8fdb;
     border: none;
     vertical-align: top;
@@ -45,4 +49,22 @@ body {
 
 #postForm {
     margin-bottom: 6em;
+}
+
+.commentForm textarea {
+    margin-left: 2em;
+    min-width: 70% !important;
+    max-width: 70% !important;
+}
+
+.commentForm {
+    min-width: 100%;
+}
+
+.deleteComment {
+    display: none;
+}
+
+.post .content:hover > .deleteComment {
+    display: unset;
 }
