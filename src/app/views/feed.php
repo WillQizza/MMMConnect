@@ -59,5 +59,25 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="modal" id="deleteModal">
+            <div class="background"></div>
+            <div class="content">
+                <div class="box">
+                    <a class="link"><span class="keep-right">X</span></a>
+                    <p>Are you sure you want to delete this?</p>
+                    <hr />
+                    <form method="POST">
+                        <div class="input is-red">
+                            <input name="delete" value="Delete" type="submit" />
+                        </div>
+                        <input name="isPost" type="hidden" />
+                        <input name="commentId" type="hidden" />
+                        <input name="postId" type="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

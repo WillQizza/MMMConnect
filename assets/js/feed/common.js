@@ -54,9 +54,9 @@ $(document).ready(async () => {
 
 
     // Modals.
-    $(".modal-background, .modal-content a, .modal-content span").click(function (e) {
+    $(".modal .content span").click(function (e) {
         if (e.target === this) {
-            $(".modal").removeClass("is-active");
+            $(".modal").hide();
         }
     });
 
@@ -64,7 +64,7 @@ $(document).ready(async () => {
     // Delete modal
     $(document).on("click", "a[data-action=\"delete\"]", function() {
         const isPost = !$(this).attr("data-comment");
-        $("#deleteModal").addClass("is-active");
+        $("#deleteModal").show();
         if (isPost) {
             $("#deleteModal input[name=\"postId\"]").val($(this).attr("data-post"));
             $("#deleteModal input[name=\"isPost\"]").val(true);
@@ -92,7 +92,7 @@ $(document).ready(async () => {
             commentsEl.text(Number(commentsEl.text()) - 1);
             $(`.comments div[data-comment="${commentId}"]`).remove();
         }
-        $("#deleteModal").removeClass("is-active");
+        $("#deleteModal").hide();
 
         return false;
     });
@@ -102,7 +102,7 @@ $(document).ready(async () => {
         const id = $(this).attr("data-post");
         $("#editModal input[name=\"id\"]").val(id);
         $("#editModal textarea").val($(`div[data-post="${id}"] .message-content`).text());
-        $("#editModal").addClass("is-active");
+        $("#editModal").show();
     });
 
     // Edit
@@ -113,7 +113,7 @@ $(document).ready(async () => {
         post.edit(body);
         $(post.element).find("span[data-field=\"body\"]").text(body);
         $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
-        $("#editModal").removeClass("is-active");
+        $("#editModal").hide();
         return false;
     });
 

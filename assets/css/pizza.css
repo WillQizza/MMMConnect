@@ -343,3 +343,34 @@ textarea {
 .hide {
     display: none;
 }
+
+.modal .background {
+    background: black;
+    opacity: 0.8;
+    width: 100%;
+    height: 100%;
+}
+
+.modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    display: none;
+}
+
+.modal .content {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.modal .content .box {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 10%;
+}
