@@ -17,22 +17,6 @@
             }
         }
 
-        public function test () {
-            if (isset($_SESSION["id"])) {
-                $userModel = $this->model("Users");
-                $user = $userModel->getUserById($_SESSION["id"]);
-                if ($user) {
-                    $this->view("feed2", array(
-                        "user" => $user
-                    ));
-                } else {
-                    $this->redirect("logout");
-                }   
-            } else {
-                $this->redirect("register");
-            }
-        }
-
         public function latest () {
             if (isset($_SESSION["id"])) {
                 $userModel = $this->model("Users");

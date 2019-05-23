@@ -133,7 +133,7 @@
                     <hr />
                     <p>This will appear on the user's profile page and their newsfeed for your friends to see!</p>
                     <form action="<?php echo $params["BASE"] ?>profile/<?php echo $params["target"]["username"]; ?>/post" data-form="feed-message" method="POST">
-                        <textarea name="message" style="width: 90%; min-height: 5em; padding: 1%; margin-left: 1em;" placeholder="What's on your mind?"></textarea><br />
+                        <textarea name="message" style="width: 90%; min-height: 5em; padding: 1%;" placeholder="What's on your mind?"></textarea><br />
                         <div class="input is-green">
                             <input name="submit" value="Post" type="submit" />
                         </div>

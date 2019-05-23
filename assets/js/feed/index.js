@@ -206,7 +206,9 @@ class PostsManager {
             //@ts-ignore
             POST_MESSAGE: `${ROOT}feed/post`,
             //@ts-ignore
-            PROFILE_FEED_URL: `${ROOT}feed/profile`
+            PROFILE_FEED_URL: `${ROOT}feed/profile`,
+            //@ts-ignore
+            POST_PROFILE_MESSAGE: `${ROOT}profile`
         };
 
         this.posts = {};
@@ -258,6 +260,22 @@ class PostsManager {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
             body: `message=${encodeURIComponent(message)}`
+        })).json();
+        const post = new Post(response.post);
+        this.posts[post.id] = post;
+        return {
+            post,
+            postCount: response.postCount
+        };
+    }
+
+    async postProfileMessage (username, message) {
+        const response = await (await fetch(`${this.CONSTANTS.POST_PROFILE_MESSAGE}/${username}/post`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `message=${encodeURIComponent(message)}&submit`
         })).json();
         const post = new Post(response.post);
         this.posts[post.id] = post;

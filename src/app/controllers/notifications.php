@@ -19,6 +19,7 @@
                         $page = $_GET["page"];
                     }
                     $conversations = $messagesModel->getNotifications($user["id"], $page);
+
                     $this->view("conversations/all", array(
                         "conversations" => $conversations
                     ));

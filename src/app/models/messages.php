@@ -1,7 +1,7 @@
 <?php
     class Messages extends Model {
 
-        public static $CONVERSATIONS_PER_PAGE = 3;
+        public static $CONVERSATIONS_PER_PAGE = 5;
 
         public function postMessage ($id, $data) {
             $message = htmlspecialchars($data["message"]);
@@ -48,6 +48,9 @@
                 if ($conversation["message"]["author"]["id"] != $id) {
                     $this->markRead($conversation["message"]["id"]);
                 }
+            }
+            for ($i = 0; $i < 10; $i++) {
+                $conversations = array_merge($conversations, $conversations);
             }
             return array_slice($conversations, self::$CONVERSATIONS_PER_PAGE * $page, self::$CONVERSATIONS_PER_PAGE);
         }

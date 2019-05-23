@@ -68,9 +68,16 @@ class Conversation {
             POST_MESSAGE: `${ROOT}/conversation/post/`
         };
 
-        let content = this.lastMessage.body;
-        if (content.length > 10) {
-            content = content.slice(0, 10) + "...";
+        let content = "";
+        let timestamp = "";
+        let weSentThis = false;
+        if (this.lastMessage) {
+            content = this.lastMessage.body;
+            if (content.length > 10) {
+                content = content.slice(0, 10) + "...";
+            }
+            timestamp = this.lastMessage.timestamp;
+            weSentThis = this.lastMessage.weSentThis;
         }
 
         //@ts-ignore
@@ -80,9 +87,9 @@ class Conversation {
             { selector: "a[data-username]", attributes: { "data-username": this.recipient.username } },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: this.recipient.avatar } },
             { selector: "span[data-field=\"suggestionName\"]", text: this.recipient.name },
-            { selector: "i[data-field=\"timestamp\"]", text: this.lastMessage.timestamp },
+            { selector: "i[data-field=\"timestamp\"]", text: timestamp },
             { selector: "span[data-field=\"body\"]", text: content },
-            { selector: "span[data-field=\"who\"]", text: this.lastMessage.weSentThis ? "You" : "They" }
+            { selector: "span[data-field=\"who\"]", text: weSentThis ? "You" : "They" }
         ]);
 
     }

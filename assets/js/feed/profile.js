@@ -65,12 +65,12 @@ $(document).ready(async () => {
         const textarea = submitForm.find("textarea");
         const message = textarea.val();
         textarea.val("");
-        Posts.postMessage(message).then(data => {
+        Posts.postProfileMessage(username, message).then(data => {
             $("#feed").prepend(data.post.element);
             data.post.element = document.querySelector(`div[data-post="${data.post.id}"]`);
         });
 
-        $("#postModal").removeClass("is-active");
+        $("#postModal").hide();
 
         return false;
     });

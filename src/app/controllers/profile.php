@@ -26,12 +26,17 @@
                                     $this->redirect("profile/" . $target["username"]);
                                 } elseif ($parts[1] == "post") {
                                     if (isset($_POST["message"]) && isset($_POST["submit"])) {
-                                        $postsModel->postMessage($user["id"], array(
+                                        $post = $postsModel->postMessage($user["id"], array(
                                             "body" => $_POST["message"],
                                             "target" => $target["id"]
                                         ));
+                                        $this->view("feed/post", array(
+                                            "post" => $post,
+                                            "count" => $userModel->getUserById($_SESSION["id"])["posts"]
+                                        ));
+                                    } else {
+                                        $this->redirect("profile/" . $target["username"]);
                                     }
-                                    $this->redirect("profile/" . $target["username"]);
                                 } elseif ($parts[1] == "latest") {
                                     $page = 0;
                                     if (isset($_GET["page"])) {

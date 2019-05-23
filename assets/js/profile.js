@@ -38,7 +38,7 @@ $(document).ready(function () {
         $("#postModal").show();
     });
 
-    $("#postModal .modal-background, .is-pulled-right").click(function (e) {
+    $("#postModal .keep-right").click(function (e) {
         if (e.target === this) {
             $("#postModal").hide();
         }
