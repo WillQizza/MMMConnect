@@ -101,7 +101,7 @@ $(document).ready(async () => {
     $(document).on("click", "a[data-action=\"edit\"]", function () {
         const id = $(this).attr("data-post");
         $("#editModal input[name=\"id\"]").val(id);
-        $("#editModal textarea").val($(`div[data-post="${id}"] .message-content`).text());
+        $("#editModal textarea").val($(`div[data-post="${id}"] > .content > .message-content`).text());
         $("#editModal").show();
     });
 
@@ -111,7 +111,7 @@ $(document).ready(async () => {
         const post = Posts.getPostById(postId);
         const body = $(this).find("textarea").val();
         post.edit(body);
-        $(post.element).find("span[data-field=\"body\"]").text(body);
+        $(post.element).find("div[data-field=\"body\"]").text(body);
         $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
         $("#editModal").hide();
         return false;

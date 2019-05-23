@@ -32,6 +32,16 @@
             return false;
         }
 
+        public function openAccount ($id) {
+            $user = $this->getUserById($id);
+            if ($user["closed"]) {
+                $this->query("UPDATE users SET user_closed=:uc WHERE id=:id", array(
+                    "id" => $id,
+                    "uc" => 0
+                ));
+            }
+        }
+
         public function generateUsername ($firstName, $lastName) {
             $username = $firstName . "_" . $lastName;
             $ogUsername = $username;

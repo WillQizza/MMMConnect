@@ -34,14 +34,13 @@ $(document).ready(function () {
         return false;
     });
 
-
     $("#postMessage").click(function () {
-        $("#postModal").addClass("is-active");
+        $("#postModal").show();
     });
 
     $("#postModal .modal-background, .is-pulled-right").click(function (e) {
         if (e.target === this) {
-            $("#postModal").removeClass("is-active");
+            $("#postModal").hide();
         }
     });
 

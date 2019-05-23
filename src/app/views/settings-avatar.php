@@ -10,8 +10,20 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/jcrop.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/settings-avatar.js"></script>
+
+        <script>
+            const ROOT = `${document.location.protocol}//${document.location.hostname}<?php echo $params["BASE"]; ?>`;
+        </script>
+
+        <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/messages.js"></script>
     </head>
     <body>
+        <?php
+            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
+        ?>
         <div class="nav is-blue">
             <div class="nav-left">
                 <a href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
@@ -21,11 +33,12 @@
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation"><i class="fas fa-envelope"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><i class="fas fa-envelope"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
             </div>
         </div>
+        <div class="nav-dropdown"></div>
         <div id="wrapper">
             <div class="box">
                 <div class="notification box is-red" id="invalidFile">

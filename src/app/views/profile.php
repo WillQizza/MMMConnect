@@ -20,6 +20,9 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/profile.js"></script>
+        
+        <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/messages.js"></script>
     </head>
     <body>
         <?php
@@ -34,12 +37,13 @@
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation"><i class="fas fa-envelope"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><i class="fas fa-envelope"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             
         </div>
+        <div class="nav-dropdown"></div>
         <div id="wrapper">
             <div class="one-quarter">
                 <div id="userInfo">
@@ -53,7 +57,6 @@
                     </div>
                     <?php
                         if ($params["isFriend"]) {
-                            echo "<a class=\"button is-success\" id=\"postMessage\">Post Message</a>";
                             echo "<div class=\"input is-green center-text\">
                                     <input id=\"postMessage\" type=\"button\" value=\"Post Message\" />
                             </div>";
@@ -90,7 +93,16 @@
                         <!-- I really didn't feel like remaking this entire page to fit bootstrap smh. Custom CSS let's go. -->
                         <ul>
                             <a class="link" data-tab="newsfeed"><li <?php if (!$params["messageTab"]) { echo "class=\"is-active\""; } ?>>Newsfeed</li></a>
-                            <a class="link" data-tab="messages"><li <?php if ($params["messageTab"]) { echo "class=\"is-active\""; } ?> >Messages</li></a>
+                            <?php
+                                if ($params["user"]["id"] != $params["target"]["id"]) {
+                                    if ($params["messageTab"]) {
+                                        echo "<a class=\"link\" data-tab=\"messages\"><li class=\"is-active\">Messages</li></a>";
+                                    } else {
+                                        echo "<a class=\"link\" data-tab=\"messages\"><li>Messages</li></a>";
+                                    }
+                                }
+                            ?>
+                            
                         </ul>
                         <hr />
                     </div>
@@ -108,6 +120,61 @@
                             <input value="Send Message" type="submit" />
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="postModal">
+            <div class="background"></div>
+            <div class="content">
+                <div class="box">
+                    <a class="link"><span class="keep-right">X</span></a>
+                    <h1>Post something!</h1>
+                    <hr />
+                    <p>This will appear on the user's profile page and their newsfeed for your friends to see!</p>
+                    <form action="<?php echo $params["BASE"] ?>profile/<?php echo $params["target"]["username"]; ?>/post" data-form="feed-message" method="POST">
+                        <textarea name="message" style="width: 90%; min-height: 5em; padding: 1%; margin-left: 1em;" placeholder="What's on your mind?"></textarea><br />
+                        <div class="input is-green">
+                            <input name="submit" value="Post" type="submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="deleteModal">
+            <div class="background"></div>
+            <div class="content">
+                <div class="box">
+                    <a class="link"><span class="keep-right">X</span></a>
+                    <p>Are you sure you want to delete this?</p>
+                    <hr />
+                    <form method="POST">
+                        <div class="input is-red">
+                            <input name="delete" value="Delete" type="submit" />
+                        </div>
+                        <input name="isPost" type="hidden" />
+                        <input name="commentId" type="hidden" />
+                        <input name="postId" type="hidden" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="editModal">
+            <div class="background"></div>
+            <div class="content">
+                <div class="box">
+                    <a class="link"><span class="keep-right">X</span></a>
+                    <p>What would you like to edit this to?</p>
+                    <hr />
+                    <form method="POST" action="<?php echo $params["BASE"] ?>feed/editpost">
+                        <textarea style="width: 90%; min-height: 10em; padding: 1%;" name="message" placeholder="What do you want to change this comment to?"></textarea><br />
+                        <div class="input is-green">
+                            <input name="edit" value="Edit" type="submit" />
+                        </div>
+                        <input name="id" type="hidden" />
+                    </form>
                 </div>
             </div>
         </div>

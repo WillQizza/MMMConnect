@@ -11,6 +11,7 @@
  * @typedef RawConversation
  * @property {RawConversationMessage[]} messages
  * @property {RawConversationUser} target
+ * @property {boolean} viewed
  */
 
 /**
@@ -57,6 +58,8 @@ class Conversation {
         this.messages = data.messages.map(data => new ConversationMessage(data));
         this.recipient = data.target;
         this.lastMessage = this.messages[this.messages.length - 1];
+
+        this.viewed = data.viewed;
 
         this.CONSTANTS = {
             //@ts-ignore
@@ -161,13 +164,14 @@ class ConversationsManager {
     }
 
     async getConversations () {
-        /** @type {{user: RawConversationUser, message: RawConversationMessage}[]} */
+        /** @type {{user: RawConversationUser, message: RawConversationMessage, viewed: boolean}[]} */
         const response = await (await fetch(`${this.CONSTANTS.GET_CONVERSATION}`)).json();
         const convos = [];
         for (const conversation of response) {
             const convo = new Conversation({
                 target: conversation.user,
-                messages: [conversation.message]
+                messages: [conversation.message],
+                viewed: conversation.viewed
             });
             this.conversations[conversation.user.username] = convo;
             convos.push(convo);

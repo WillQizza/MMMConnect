@@ -13,6 +13,8 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/latest.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/messages.js"></script>
     </head>
     <body>
         <?php
@@ -27,12 +29,13 @@
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation"><i class="fas fa-envelope"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><i class="fas fa-envelope"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
             </div>
             
         </div>
+        <div class="nav-dropdown"></div>
         <div id="wrapper">
             <div class="one-quarter">
                 <div class="box">

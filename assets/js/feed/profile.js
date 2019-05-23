@@ -17,10 +17,11 @@ $(document).ready(async () => {
         post.element = document.querySelector(`div[data-post="${post.id}"]`);
     }
     if (feed.nextPage === -1) {
-        $("#feed").parent().append("<p>There are no more posts!</p>");
+        $("#feed").parent().append("<p class=\"center-text\">There are no more posts!</p>");
         $(".loading").css("width", "0.01px");
         $(".loading").css("height", "0.01px");
     }
+
     updateBlueBars();
 
     $(window).scroll(async () => {

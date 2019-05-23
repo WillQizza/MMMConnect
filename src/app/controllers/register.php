@@ -28,6 +28,9 @@
                 $user = $userModel->isUserAuthenticated($identifier, $passwordLogin);
                 if ($user) {
                     $_SESSION["id"] = $user["id"];
+                    if ($user["closed"]) {
+                        $userModel->openAccount($user["id"]);
+                    }
                     $this->redirect("feed");
                 } else {
                     $errors["login"] = true;

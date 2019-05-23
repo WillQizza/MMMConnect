@@ -13,7 +13,8 @@
                 "weSentThis" => $convo["message"]["author"]["id"] == $params["user"]["id"],
                 "body" => $convo["message"]["body"],
                 "timestamp" => $convo["message"]["timestamp"]
-            )
+            ),
+            "viewed" => $convo["viewed"]
         ));
     }
 
