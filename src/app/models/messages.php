@@ -15,10 +15,12 @@
                 "da" => date("Y-m-d H:i:s")
             ));
 
-            return $this->query("SELECT * FROM messages WHERE author=:a AND target=:t ORDER BY ID DESC LIMIT 1", array(
+            $post = $this->query("SELECT * FROM messages WHERE author=:a AND target=:t ORDER BY ID DESC LIMIT 1", array(
                 "a" => $id,
                 "t" => $data["target"]
             ), false);
+
+            return $post;
         }
 
         public function getMessages ($id, $target, $lastId = 0) {
@@ -49,8 +51,8 @@
                     $this->markRead($conversation["message"]["id"]);
                 }
             }
-            for ($i = 0; $i < 10; $i++) {
-                $conversations = array_merge($conversations, $conversations);
+            if ($page == "all") {
+                return $conversations;
             }
             return array_slice($conversations, self::$CONVERSATIONS_PER_PAGE * $page, self::$CONVERSATIONS_PER_PAGE);
         }

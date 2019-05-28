@@ -13,6 +13,14 @@
                     "a" => $userId,
                     "pid" => $id
                 ));
+
+                $post = $this->model("Posts")->getPostById($id);
+
+                if ($post["author"]["id"] != $userId) {
+                    $nModel = $this->model("Notifications");
+                    $nModel->addNotification($userId, $post["author"]["id"], $post["id"], "like");
+                }
+
             }
         }
 

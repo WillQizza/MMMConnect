@@ -31,7 +31,7 @@
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><i class="fas fa-envelope"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><span id="messagesUnread" data-field="messages-unread"></span><i class="fas fa-envelope"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
             </div>

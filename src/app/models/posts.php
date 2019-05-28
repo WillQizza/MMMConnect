@@ -58,6 +58,12 @@
             $post = $this->query("SELECT * FROM posts WHERE author=:a ORDER BY id DESC LIMIT 1", array(
                 "a" => $author["id"]
             ), false);
+
+            if ($data["target"] != $id) {
+                $nModel = $this->model("Notifications");
+                $nModel->addNotification($id, $data["target"], $post["id"], "profilePost");
+            }
+
             $userModel->setPosts($author["id"], $author["posts"] + 1);
             return $post;
 

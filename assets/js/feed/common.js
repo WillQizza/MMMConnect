@@ -111,7 +111,7 @@ $(document).ready(async () => {
         const post = Posts.getPostById(postId);
         const body = $(this).find("textarea").val();
         post.edit(body);
-        $(post.element).find("div[data-field=\"body\"]").text(body);
+        $(post.element).find("div[data-field=\"body\"]:first").text(body);
         $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
         $("#editModal").hide();
         return false;

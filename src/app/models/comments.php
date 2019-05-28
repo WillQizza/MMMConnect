@@ -39,6 +39,29 @@
                 $comment = $this->query("SELECT * FROM comments WHERE author=:a ORDER BY id DESC LIMIT 1", array(
                     "a" => $userId
                 ), false);
+
+                $comments = $this->getCommentsForPost($data["postId"]);
+                $post = $this->model("Posts")->getPostById($data["postId"]);
+                $notifyUsers = array();
+                $nModel = $this->model("Notifications");
+                foreach ($comments as $postedComment) {
+                    // We are not the person who posted the comment and we aren't the person who posted this post.
+                    if ($postedComment["author"]["id"] != $userId && $post["author"]["id"] != $postedComment["author"]["id"]) {
+                        $index = array_search($postedComment["author"]["id"], $notifyUsers);
+                        if ($index == -1) {
+                            array_push($notifyUsers, $postedComment["author"]["id"]);
+                            $nModel->addNotification($userId, $postedComment["author"]["id"], $data["postId"], "commentComment");
+                        }
+                    }
+                }
+                if ($userId != $post["author"]["id"]) {
+                    if ($post["author"]["id"] == $post["target"]["id"]) {
+                        $nModel->addNotification($userId, $post["author"]["id"], $data["postId"], "comment");
+                    } else {
+                        $nModel->addNotification($userId, $post["author"]["id"], $data["postId"], "profileComment");
+                    }
+                }
+
                 return $comment;
             }
         }

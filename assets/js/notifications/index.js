@@ -11,7 +11,7 @@ class NotificationManager {
 
     /**
      * Get your unread messages.
-     * @param {number} page The page.
+     * @param {number|"all"} page The page.
      */
     async getMessages (page = 0) {
         /** @type {{user: RawConversationUser, message: RawConversationMessage, viewed: boolean}[]} */
