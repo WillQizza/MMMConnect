@@ -25,6 +25,10 @@
         <div class="nav is-blue">
             <div class="nav-left">
                 <a href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
+                <form class="search">
+                    <input type="text" class="input" />
+                    <i class="fas fa-search"></i>
+                </form>
             </div>
             <div class="nav-right">
                 <a href="<?php echo $params["user"]["profileURL"] ?>"><?php echo $params["user"]["name"] ?></a>
