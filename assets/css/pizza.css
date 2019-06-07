@@ -431,3 +431,17 @@ textarea {
     padding-right: 0.2em;
     background: red;
 }
+
+.message-notification {
+    background: red;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 1em;
+    position: relative;
+    right: 8px;
+    bottom: 8px;
+}
+
+.nav a > .message-notification {
+    margin-right: -16px;
+}

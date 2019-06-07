@@ -19,9 +19,11 @@
                         $page = $_GET["page"];
                     }
                     $conversations = $messagesModel->getNotifications($user["id"], $page);
+                    $unread = $messagesModel->getUnreadNotificationCount($user["id"]);
 
-                    $this->view("conversations/all", array(
-                        "conversations" => $conversations
+                    $this->view("conversations/notifications", array(
+                        "conversations" => $conversations,
+                        "unread" => $unread
                     ));
                 } else {
                     $this->redirect("logout");

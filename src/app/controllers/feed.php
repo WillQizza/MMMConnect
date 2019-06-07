@@ -6,8 +6,12 @@
                 $userModel = $this->model("Users");
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
+                    $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
                     $this->view("feed", array(
-                        "user" => $user
+                        "user" => $user,
+                        "notifications" => array(
+                            "messages" => $messages
+                        )
                     ));
                 } else {
                     $this->redirect("logout");
@@ -92,7 +96,8 @@
                 if ($user) {
                     if (isset($_POST["message"])) {
                         $post = $postsModel->postMessage($user["id"], array(
-                            "body" => $_POST["message"]
+                            "body" => $_POST["message"],
+                            "target" => $user["id"]
                         ));
                         $this->view("feed/post", array(
                             "post" => $post,

@@ -14,10 +14,10 @@ class NotificationManager {
      * @param {number|"all"} page The page.
      */
     async getMessages (page = 0) {
-        /** @type {{user: RawConversationUser, message: RawConversationMessage, viewed: boolean}[]} */
+        /** @type {{convos: {user: RawConversationUser, message: RawConversationMessage, viewed: boolean}[], unread: number}} */
         const response = await (await fetch(`${this.CONSTANTS.MESSAGES}?page=${page}`)).json();
         const convos = [];
-        for (const conversation of response) {
+        for (const conversation of response.convos) {
             const convo = new Conversation({
                 target: conversation.user,
                 messages: [conversation.message],
@@ -25,7 +25,10 @@ class NotificationManager {
             });
             convos.push(convo);
         }
-        return convos;
+        return {
+            convos,
+            unread: response.unread
+        };
     }
 }
 

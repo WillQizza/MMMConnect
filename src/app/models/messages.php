@@ -15,15 +15,13 @@
                 "da" => date("Y-m-d H:i:s")
             ));
 
-            $post = $this->query("SELECT * FROM messages WHERE author=:a AND target=:t ORDER BY ID DESC LIMIT 1", array(
+            return $this->query("SELECT * FROM messages WHERE author=:a AND target=:t ORDER BY ID DESC LIMIT 1", array(
                 "a" => $id,
                 "t" => $data["target"]
             ), false);
-
-            return $post;
         }
 
-        public function getMessages ($id, $target, $lastId = 0) {
+        public function getMessages ($id, $target, $lastId = 0, $opened = true) {
             $messages = $this->query("SELECT * FROM messages WHERE ((author=:a AND target=:b) OR (author=:d AND target=:c)) AND id > :l ORDER BY id ASC", array(
                 "a" => $id,
                 "b" => $target,
@@ -44,10 +42,10 @@
             ));
         }
 
-        public function getNotifications ($id, $page = 0) {
-            $conversations = $this->getConversations($id);
+        public function getNotifications ($id, $page = 0, $markRead = true) {
+            $conversations = $this->getConversations($id, false);
             foreach ($conversations as $conversation) {
-                if ($conversation["message"]["author"]["id"] != $id) {
+                if ($conversation["message"]["author"]["id"] != $id && !$conversation["message"]["viewed"] && $markRead) {
                     $this->markRead($conversation["message"]["id"]);
                 }
             }
@@ -57,7 +55,18 @@
             return array_slice($conversations, self::$CONVERSATIONS_PER_PAGE * $page, self::$CONVERSATIONS_PER_PAGE);
         }
 
-        public function getConversations ($id) {
+        public function getUnreadNotificationCount ($id) {
+            $notifications = $this->getNotifications($id, "all", false);
+            $count = 0;
+            foreach ($notifications as $n) {
+                if (!$n["viewed"] && $n["message"]["author"]["id"] != $id) {
+                    $count++;
+                }
+            }
+            return $count;
+        }
+
+        public function getConversations ($id, $markOpened = true) {
             $userModel = $this->model("Users");
             $ids = array();
             $conversations = array();
@@ -67,7 +76,7 @@
             ));
             foreach ($messages as $message) {
                 if ($message["author"]["id"] == $id && !in_array($message["target"]["id"], $ids) && $userModel->isUserFriendsWith($message["author"]["id"], $message["target"]["id"])) {
-                    $messages = $this->getMessages($message["author"]["id"], $message["target"]["id"]);
+                    $messages = $this->getMessages($message["author"]["id"], $message["target"]["id"], 0, $markOpened);
                     array_push($ids, $message["target"]["id"]);
                     array_push($conversations, array(
                         "user" => $message["target"],
@@ -75,7 +84,7 @@
                         "viewed" => $messages[count($messages) - 1]["viewed"]
                     ));
                 } else if ($message["target"]["id"] == $id && !in_array($message["author"]["id"], $ids) && $userModel->isUserFriendsWith($message["author"]["id"], $message["target"]["id"])) {
-                    $messages = $this->getMessages($message["target"]["id"], $message["author"]["id"]);
+                    $messages = $this->getMessages($message["target"]["id"], $message["author"]["id"], 0, $markOpened);
 
                     array_push($ids, $message["author"]["id"]);
                     array_push($conversations, array(

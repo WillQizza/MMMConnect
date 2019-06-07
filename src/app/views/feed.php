@@ -12,7 +12,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/templates.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/messages.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/nav.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/feed.js"></script>
@@ -34,8 +34,13 @@
                 <a href="<?php echo $params["user"]["profileURL"] ?>"><?php echo $params["user"]["name"] ?></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><span id="messagesUnread" data-field="messages-unread"></span><i class="fas fa-envelope"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i><div class="message-notification" data-notification="friends"></div></a>
+                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown" data-notification="messages">
+                    <i class="fas fa-envelope"></i>
+                    <div class="message-notification" data-notification="messages">
+                        <?php if ($params["notifications"]["messages"]) echo $params["notifications"]["messages"]; ?>
+                    </div>
+                </a>
                 <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
                 <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
             </div>
