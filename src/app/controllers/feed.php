@@ -7,10 +7,12 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
+                    $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
                     $this->view("feed", array(
                         "user" => $user,
                         "notifications" => array(
-                            "messages" => $messages
+                            "messages" => $messages,
+                            "notifications" => $notifications
                         )
                     ));
                 } else {

@@ -5,11 +5,17 @@ $(document).ready(() => {
 
     let fetchedMessages = {
         status: false,
-        data: []
+        data: [],
+        page: 0,
+        fetching: false
     };
 
-    let fetching = false;
-    let page = 0;
+    let fetchedNotifications = {
+        status: false,
+        data: [],
+        page: 0,
+        fetching: false
+    };
 
     let activeDropdown = "";
 
@@ -31,6 +37,21 @@ $(document).ready(() => {
         }
     });
 
+    $(".dropdown[data-notification=\"notifications\"]").mouseenter(async () => {
+        activeDropdown = "notifications";
+        show();
+        if (!fetchedNotifications.status) {
+            fetchedNotifications.status = true;
+            const data = await Notifications.getNotifications();
+            fetchedNotifications.data = data.notifications;
+            $("div[data-notification=\"notifications\"]").text(data.unread > 0 ? data.unread : "");
+        }
+        $(".nav-dropdown").empty();
+        for (const n of fetchedNotifications.data) {
+            n.element = $($(".nav-dropdown").append(n.element)[0]).children().last(); // Wackity hack hack.
+        }
+    });
+
     $(".nav, .nav-dropdown").mouseleave(() => {
         if ($(".nav-dropdown:hover").length === 0) {
             hide();
@@ -41,20 +62,20 @@ $(document).ready(() => {
         const scrollTop = $(this).scrollTop();
         const height = $(this).height();
         const scrollHeight = $(this)[0].scrollHeight;
-        if (height + scrollTop >= scrollHeight - 100 && !fetching) {
+        if (height + scrollTop >= scrollHeight - 100 && !fetchedMessages.fetching) {
             if (activeDropdown === "messages") {
-                fetching = true;
-                const data = await Notifications.getMessages(page);
+                fetchedMessages.fetching = true;
+                const data = await Notifications.getMessages(fetchedMessages.page);
                 fetchedMessages.data = fetchedMessages.data.concat(data.convos);
                 $("div[data-notification=\"messages\"]").text(data.unread > 0 ? data.unread : "");
-                page++;
+                fetchedMessages.page++;
                 for (const c of data.convos) {
                     c.element = $($(".nav-dropdown").append(c.element)[0]).children().last(); // Wackity hack hack.     
                     if (!c.viewed && !c.lastMessage.weSentThis) {
                         $(`.nav-dropdown a[data-username="${c.recipient.username}"] .post`).addClass("tint-blue");
                     }         
                 }
-                if (data.convos.length > 0) fetching = false;
+                if (data.convos.length > 0) fetchedMessages.fetching = false;
             }
         }
 

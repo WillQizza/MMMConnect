@@ -1,11 +1,31 @@
 //@ts-check
 
+/**
+ * @typedef NotificationRawData
+ * @property {string} link
+ * @property {string} message
+ */
+
+class MMMConnectNotification {
+    /**
+     * @param {NotificationRawData} data 
+     */
+    constructor (data) {
+        //@ts-ignore
+        this.element = createTemplate("post", [
+            { selector: "", text: data. }
+        ]);
+    }
+}
+
 class NotificationManager {
 
     constructor () {
         this.CONSTANTS = {
             //@ts-ignore
-            MESSAGES: `${ROOT}notifications/messages`
+            MESSAGES: `${ROOT}notifications/messages`,
+            //@ts-ignore
+            NOTIFICATIONS: `${ROOT}notifications`
         };
     }
 
@@ -27,6 +47,19 @@ class NotificationManager {
         }
         return {
             convos,
+            unread: response.unread
+        };
+    }
+
+    async getNotifications (page = 0) {
+        /** @type {{notifications: {}[], unread: number}} */
+        const response = await (await fetch(`${this.CONSTANTS.NOTIFICATIONS}?page=${page}`)).json();
+        const notifications = [];
+        for (const nData of response.notifications) {
+            notifications.push(new MMMConnectNotification(nData));
+        }
+        return {
+            notifications,
             unread: response.unread
         };
     }

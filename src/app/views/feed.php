@@ -33,7 +33,12 @@
             <div class="nav-right">
                 <a href="<?php echo $params["user"]["profileURL"] ?>"><?php echo $params["user"]["name"] ?></a>
                 <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
+                <a href="<?php echo $params["BASE"]; ?>" class="dropdown" data-notification="notifications">
+                    <i class="fas fa-bell"></i>
+                    <div class="message-notification" data-notification="notifications">
+                        <?php if ($params["notifications"]["notifications"]) echo $params["notifications"]["notifications"]; ?>
+                    </div>
+                </a>
                 <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i><div class="message-notification" data-notification="friends"></div></a>
                 <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown" data-notification="messages">
                     <i class="fas fa-envelope"></i>
