@@ -21,8 +21,17 @@
                         }
                     }
 
+                    $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
+                    $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                    $friends = $friendRequestModel->getUnreadNotificationCount($user["id"]);
+
                     $this->view("requests", array(
-                        "friendRequests" => $friendRequestModel->getFriendRequests($user["id"])
+                        "friendRequests" => $friendRequestModel->getFriendRequests($user["id"]),
+                        "notifications" => array(
+                            "messages" => $messages,
+                            "notifications" => $notifications,
+                            "friends" => $friends
+                        )
                     ));
                 } else {
                     $this->redirect("logout");

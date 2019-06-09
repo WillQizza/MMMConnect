@@ -57,8 +57,17 @@
                                 }
                             } else {
                                 // Viewing profile.
+                                $messages = $messageModel->getUnreadNotificationCount($user["id"]);
+                                $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                                $friends = $friendRequestModel->getUnreadNotificationCount($user["id"]);
                                 if ($target["closed"]) {
-                                    $this->view("profile_closed");
+                                    $this->view("profile_closed", array(
+                                        "notifications" => array(
+                                            "messages" => $messages,
+                                            "notifications" => $notifications,
+                                            "friends" => $friends
+                                        )
+                                    ));
                                 } else if (isset($_POST["message"])) {
                                     if ($userModel->isUserFriendsWith($user["id"], $target["id"])) {
                                         if (isset($_POST["message"])) {
@@ -74,7 +83,12 @@
                                             "mutualFriends" => $userModel->getMutualFriends($user["id"], $target["id"]),
                                             "messages" => $messageModel->getMessages($user["id"], $target["id"]),
                                             "conversations" => $messageModel->getConversations($user["id"]),
-                                            "messageTab" => true
+                                            "messageTab" => true,
+                                            "notifications" => array(
+                                                "messages" => $messages,
+                                                "notifications" => $notifications,
+                                                "friends" => $friends
+                                            )
                                         ));
                                     } else {
                                         $this->redirect("profile/" . $target["username"]);
@@ -88,7 +102,12 @@
                                         "mutualFriends" => $userModel->getMutualFriends($user["id"], $target["id"]),
                                         "messages" => $messageModel->getMessages($user["id"], $target["id"]),
                                         "conversations" => $messageModel->getConversations($user["id"]),
-                                        "messageTab" => false
+                                        "messageTab" => false,
+                                        "notifications" => array(
+                                            "messages" => $messages,
+                                            "notifications" => $notifications,
+                                            "friends" => $friends
+                                        )
                                     ));
                                 }
                             }

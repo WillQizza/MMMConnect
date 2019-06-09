@@ -50,13 +50,27 @@
 
 <template data-name="conversation-preview">
     <a href="conversation link" data-username="username" data-field="conversation-link">
-        <div class="post">
+        <div class="post" data-timestamp="timestamp in ms">
             <div class="avatar">
                 <img class="image image-64x64" src="avatar" data-field="avatar" />
             </div>
             <div class="content">
                 <span class="link" data-field="suggestionName">Name</span> <i class="faded" data-field="timestamp">Timestamp</i><br />
                 <span data-field="who">Sender</span> said: <span data-field="body">content</span>
+            </div>
+        </div>
+    </a>
+</template>
+
+<template data-name="notification">
+    <a href="notification link" data-field="link">
+        <div class="post" data-timestamp="timestamp in ms">
+            <div class="avatar">
+                <img class="image image-64x64" src="avatar" data-field="avatar" />
+            </div>
+            <div class="content">
+                <i class="faded" data-field="timestamp">1 hour ago</i><br />
+                <div class="message-content" style="padding-top: 0;"><span class="link" data-field="body">body of the post</span></div>
             </div>
         </div>
     </a>

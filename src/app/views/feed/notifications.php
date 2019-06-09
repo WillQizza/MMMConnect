@@ -12,7 +12,10 @@
                 "avatar" => $notification["author"]["avatar"],
                 "name" => $notification["author"]["name"],
                 "username" => $notification["author"]["username"]
-            )
+            ),
+            "timestamp" => $notification["timestamp"],
+            "timestampMs" => $notification["date_added"]->getTimestamp() * 1000,
+            "opened" => $notification["opened"]
         ));
     }
 

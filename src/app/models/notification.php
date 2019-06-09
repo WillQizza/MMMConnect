@@ -4,7 +4,7 @@
         public static $NOTIFICATIONS_PER_PAGE = 5;
 
         public function getNotifications ($id, $page = 0) {
-            $results = $this->query("SELECT * FROM notifications WHERE target=:id", array(
+            $results = $this->query("SELECT * FROM notifications WHERE target=:id ORDER BY date_added DESC", array(
                 "id" => $id
             ));
             if ($page == "all") {
@@ -13,11 +13,19 @@
             return array_slice($results, self::$NOTIFICATIONS_PER_PAGE * $page, self::$NOTIFICATIONS_PER_PAGE);
         }
 
+        public function clearNotifications ($id, $postId) {
+            $this->query("UPDATE notifications SET opened=:o WHERE target=:id AND link LIKE :postId", array(
+                "id" => $id,
+                "postId" => "%$postId",
+                "o" => true
+            ));
+        }
+
         public function getUnreadNotificationCount ($id) {
             $notifications = $this->getNotifications($id, "all");
             $count = 0;
             foreach ($notifications as $n) {
-                if (!$n["viewed"]) {
+                if (!$n["opened"]) {
                     $count++;
                 }
             }
@@ -70,6 +78,7 @@
                 "message" => "",
                 "link" => "",
                 "date_added" => date("Y-m-d H:i:s"),
+                "timestampMs" => new DateTime(),
                 "opened" => false,
                 "viewed" => false
             );
@@ -84,6 +93,7 @@
                 "message" => $data["message"],
                 "link" => $data["link"],
                 "timestamp" => $this->helper("Timestamp")::get($data["date_added"]),
+                "date_added" => new DateTime($data["date_added"]),
                 "opened" => $data["opened"],
                 "viewed" => $data["viewed"]
             );

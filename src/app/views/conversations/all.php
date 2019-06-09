@@ -14,7 +14,8 @@
                 "body" => $convo["message"]["body"],
                 "timestamp" => $convo["message"]["timestamp"]
             ),
-            "viewed" => $convo["viewed"]
+            "viewed" => $convo["viewed"],
+            "timestampMs" => $convo["timestampMs"]
         ));
     }
 

@@ -13,17 +13,22 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/nav.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/feed/feed.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
-
+        <script>
+            Posts.getPostById("<?php echo htmlspecialchars($_GET["id"]) ?>").then(post => {
+                $("#feed").append(post.element);
+                post.element = $("#feed").find(".post")[0];
+            });
+        </script>
     </head>
     <body>
         <?php
-            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
-            require(dirname(__FILE__) . "/nav.php");
+            require(dirname(__FILE__) . "/../templates.php"); // I would have prefered this elsewhere. But it works.
+            require(dirname(__FILE__) . "/../nav.php");
         ?>
+        
         <div id="wrapper">
             <div class="one-quarter">
                 <div class="box">
@@ -39,13 +44,10 @@
             </div>
             <div class="seven-tenths">
                 <div class="box">
-                    <form method="POST" action="<?php echo $params["BASE"]; ?>feed/post" id="postForm" data-form="feed-message">
-                        <textarea class="form-textarea" name="body" placeholder="What's on your mind?"></textarea>
-                        <input type="submit" class="input submitButton" name="activitySubmit" value="Post" />
-                    </form>
-                    <hr />
                     <div id="feed"></div>
-                    <img class="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
+                    <br />
+                    <!-- *sigh* I don't know how to fix this right now... CSS is a pain. -->
+                    <img src="<?php echo $params["BASE"] ?>assets/images/gifs/loading.gif" class="loading" style="width: 0.1px; height: 0.1px;" />
                 </div>
             </div>
         </div>

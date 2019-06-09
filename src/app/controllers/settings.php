@@ -39,7 +39,16 @@
                         }
                         
                     }
-                    $this->view("settings-avatar");
+                    $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
+                    $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                    $friends = $this->model("FriendRequests")->getUnreadNotificationCount($user["id"]);
+                    $this->view("settings-avatar", array(
+                        "notifications" => array(
+                            "messages" => $messages,
+                            "notifications" => $notifications,
+                            "friends" => $friends
+                        )
+                    ));
 
                 } else {
                     $this->redirect("logout");

@@ -94,7 +94,7 @@ class Post {
             //@ts-ignore
             DELETE_POST: `${ROOT}feed/deletepost`,
             //@ts-ignore
-            EDIT_POST: `${ROOT}feed/editpost`
+            EDIT_POST: `${ROOT}feed/editpost`,
         };
 
         const specialSelectors = [];
@@ -208,7 +208,9 @@ class PostsManager {
             //@ts-ignore
             PROFILE_FEED_URL: `${ROOT}feed/profile`,
             //@ts-ignore
-            POST_PROFILE_MESSAGE: `${ROOT}profile`
+            POST_PROFILE_MESSAGE: `${ROOT}profile`,
+            //@ts-ignore
+            GET_POST: `${ROOT}feed/getpost`
         };
 
         this.posts = {};
@@ -289,8 +291,14 @@ class PostsManager {
      * Get a post by it's id.
      * @param {number} id 
      */
-    getPostById (id) {
-        return this.posts[id];
+    async getPostById (id) {
+        if (this.posts[id]) {
+            return this.posts[id];
+        }
+        const response = await (await fetch(`${this.CONSTANTS.GET_POST}?id=${id}`)).json();
+        const post = new Post(response.post);
+        this.posts[id] = post;
+        return post;
     }
 }
 

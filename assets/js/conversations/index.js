@@ -12,6 +12,7 @@
  * @property {RawConversationMessage[]} messages
  * @property {RawConversationUser} target
  * @property {boolean} viewed
+ * @property {number} timestampMs
  */
 
 /**
@@ -58,6 +59,7 @@ class Conversation {
         this.messages = data.messages.map(data => new ConversationMessage(data));
         this.recipient = data.target;
         this.lastMessage = this.messages[this.messages.length - 1];
+        this.timestampMs = data.timestampMs;
 
         this.viewed = data.viewed;
 
@@ -89,7 +91,8 @@ class Conversation {
             { selector: "span[data-field=\"suggestionName\"]", text: this.recipient.name },
             { selector: "i[data-field=\"timestamp\"]", text: timestamp },
             { selector: "span[data-field=\"body\"]", text: content },
-            { selector: "span[data-field=\"who\"]", text: weSentThis ? "You" : "They" }
+            { selector: "span[data-field=\"who\"]", text: weSentThis ? "You" : "They" },
+            { selector: ".post", attributes: { "data-timestamp": this.timestampMs } }
         ]);
 
     }
@@ -171,14 +174,15 @@ class ConversationsManager {
     }
 
     async getConversations () {
-        /** @type {{user: RawConversationUser, message: RawConversationMessage, viewed: boolean}[]} */
+        /** @type {{user: RawConversationUser, message: RawConversationMessage, viewed: boolean, timestampMs: number}[]} */
         const response = await (await fetch(`${this.CONSTANTS.GET_CONVERSATION}`)).json();
         const convos = [];
         for (const conversation of response) {
             const convo = new Conversation({
                 target: conversation.user,
                 messages: [conversation.message],
-                viewed: conversation.viewed
+                viewed: conversation.viewed,
+                timestampMs: conversation.timestampMs
             });
             this.conversations[conversation.user.username] = convo;
             convos.push(convo);

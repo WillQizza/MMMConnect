@@ -161,6 +161,24 @@
             ));
         }
 
+        public function searchForUsers ($query) {
+            $parts = explode(" ", $query);
+            $firstName = $query;
+            $lastName = $query;
+            if (count($parts) == 2) {
+                $firstName = $parts[0];
+                $lastName = $parts[1];
+            }
+
+            $users = $this->query("SELECT * FROM users WHERE ((username LIKE :u) OR (username LIKE :uu) OR (first_name LIKE :fn AND last_name LIKE :ln)) AND user_closed=0 LIMIT 8", array(
+                "u" => "$query%",
+                "uu" => "%$query%",
+                "fn" => "$firstName%",
+                "ln" => "$lastName%"
+            ));
+            return $users;
+        }
+
         protected function defaults () {
             return array(
                 "id" => 0,

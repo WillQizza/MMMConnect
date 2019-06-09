@@ -7,6 +7,11 @@
             if (isset($_SESSION["id"])) {
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if (isset($user)) {
+
+                    $messages = $messageModel->getUnreadNotificationCount($user["id"]);
+                    $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                    $friends = $this->model("FriendRequests")->getUnreadNotificationCount($user["id"]);
+
                     if (isset($parts[0])) {
                         $target = $userModel->getUserByUsername($parts[0]);
                         if ($target) {
@@ -14,7 +19,12 @@
                                 $this->view("conversation", array(
                                     "target" => $target,
                                     "messages" => $messageModel->getMessages($user["id"], $target["id"]),
-                                    "conversations" => $messageModel->getConversations($user["id"])
+                                    "conversations" => $messageModel->getConversations($user["id"]),
+                                    "notifications" => array(
+                                        "messages" => $messages,
+                                        "notifications" => $notifications,
+                                        "friends" => $friends
+                                    )
                                 ));
                             } else {
                                 $this->redirect("conversation");
@@ -24,7 +34,12 @@
                         }
                     } else {
                         $this->view("conversation-no-user", array(
-                            "conversations" => $messageModel->getConversations($user["id"])
+                            "conversations" => $messageModel->getConversations($user["id"]),
+                            "notifications" => array(
+                                "messages" => $messages,
+                                "notifications" => $notifications,
+                                "friends" => $friends
+                            )
                         ));
                     }
                 } else {
@@ -78,7 +93,7 @@
                     if (isset($parts[0]) && strlen($parts[0]) > 0) {
                         $target = $userModel->getUserByUsername($parts[0]);
                         if ($target) {
-                            if ($userModel->isUserFriendsWith($user["id"], $target["id"])) {
+                            if ($userModel->isUserFriendsWith($user["id"], $target["id"]) || $user["id"] == $target["id"]) {
 
                                 $lastId = 0;
                                 if (isset($_GET["lastId"])) {

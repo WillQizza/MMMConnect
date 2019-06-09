@@ -5,14 +5,15 @@
             if (isset($_SESSION["id"])) {
                 $userModel = $this->model("Users");
                 $user = $userModel->getUserById($_SESSION["id"]);
-                if ($user) {
+                if (isset($user)) {
                     $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
                     $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                    $friends = $this->model("FriendRequests")->getUnreadNotificationCount($user["id"]);
                     $this->view("feed", array(
-                        "user" => $user,
                         "notifications" => array(
                             "messages" => $messages,
-                            "notifications" => $notifications
+                            "notifications" => $notifications,
+                            "friends" => $friends
                         )
                     ));
                 } else {
@@ -238,5 +239,34 @@
                 $this->redirect("register");
             }
         }
+
+        public function getpost () {
+            if (isset($_SESSION["id"])) {
+                $userModel = $this->model("Users");
+                $postsModel = $this->model("Posts");
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if (isset($user)) {
+                    if (isset($_GET["id"])) {
+                        $post = $postsModel->getPostById($_GET["id"]);
+                        if (isset($post) && !$post["deleted"] && ($post["author"]["id"] == $user["id"] || $userModel->isUserFriendsWith($user["id"], $post["author"]["id"]))) {
+                            $this->view("feed/post", array(
+                                "post" => $post,
+                                "count" => $user["posts"]
+                            ));
+                        } else {
+                            $this->redirect("feed");
+                        }
+                    } else {
+                        $this->redirect("feed");
+                    }
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
+
+
     }
 ?>

@@ -81,7 +81,8 @@
                     array_push($conversations, array(
                         "user" => $message["target"],
                         "message" => $messages[count($messages) - 1],
-                        "viewed" => $messages[count($messages) - 1]["viewed"]
+                        "viewed" => $messages[count($messages) - 1]["viewed"],
+                        "timestampMs" => $messages[count($messages) - 1]["date_added"]->getTimestamp() * 1000
                     ));
                 } else if ($message["target"]["id"] == $id && !in_array($message["author"]["id"], $ids) && $userModel->isUserFriendsWith($message["author"]["id"], $message["target"]["id"])) {
                     $messages = $this->getMessages($message["target"]["id"], $message["author"]["id"], 0, $markOpened);
@@ -90,7 +91,8 @@
                     array_push($conversations, array(
                         "user" => $message["author"],
                         "message" => $messages[count($messages) - 1],
-                        "viewed" => $messages[count($messages) - 1]["viewed"]
+                        "viewed" => $messages[count($messages) - 1]["viewed"],
+                        "timestampMs" => $messages[count($messages) - 1]["date_added"]->getTimestamp() * 1000
                     ));
                 }
             }
@@ -120,6 +122,7 @@
                 "opened" => $data["opened"],
                 "viewed" => $data["viewed"],
                 "deleted" => $data["deleted"],
+                "date_added" => new DateTime($data["date_added"]),
                 "timestamp" => $this->helper("Timestamp")::get($data["date_added"])
             );
         }

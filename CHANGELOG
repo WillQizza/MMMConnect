@@ -20,3 +20,5 @@ Part 2
 + Deleting posts no longer refreshes the page.
 + Conversations now fetch messages automatically.
 + Sends error if you upload an invalid file.
+
+Part 3

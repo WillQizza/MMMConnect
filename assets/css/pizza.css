@@ -294,6 +294,7 @@ html, body {
     padding-bottom: 1em;
     word-wrap: break-word;
     min-height: 0.1em;
+    color: black;
 }
 
 .post .message-content p {
@@ -409,7 +410,8 @@ textarea {
 }
 
 .search input {
-    height: 50%;
+    height: 45%;
+    width: 250px;
     margin-top: calc(3.5em / 6);
     padding-left: 1em;
     padding-right: 1em;
@@ -419,6 +421,20 @@ textarea {
     position: relative;
     filter: invert(1);
     right: 2em;
+}
+
+.search-dropdown {
+    width: 93%;
+    background: white;
+    position: relative;
+    bottom: 1px;
+    left: 1px;
+}
+
+.search-dropdown a {
+    color: black !important;
+    text-shadow: none;
+    font-size: 1em;
 }
 
 #messagesUnread {

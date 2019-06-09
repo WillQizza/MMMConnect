@@ -46,6 +46,11 @@
             return $results;
         }
 
+        public function getUnreadNotificationCount ($id) {
+            $requests = $this->getFriendRequests($id);
+            return count($requests);
+        }
+
         public function getFriendRequestById ($id) {
             $result = $this->query("SELECT * FROM friend_requests WHERE id=:id", array(
                 "id" => $id

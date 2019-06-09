@@ -22,28 +22,15 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/profile.js"></script>
         
         <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/messages.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/nav.js"></script>
     </head>
     <body>
         <?php
             require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
-        ?>
-        <div class="nav is-blue">
-            <div class="nav-left">
-                <a href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
-            </div>
-            <div class="nav-right">
-                <a href="<?php echo $params["user"]["profileURL"] ?>"><?php echo $params["user"]["name"] ?></a>
-                <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-home"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>"><i class="fas fa-bell"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>requests"><i class="fas fa-user-friends"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>conversation" class="dropdown"><i class="fas fa-envelope"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>settings"><i class="fas fa-cogs"></i></a>
-                <a href="<?php echo $params["BASE"]; ?>logout"><i class="fas fa-sign-out-alt"></i></a>
-            </div>
+            require(dirname(__FILE__) . "/nav.php");
             
-        </div>
-        <div class="nav-dropdown"></div>
+        ?>
         <div id="wrapper">
             <div class="one-quarter">
                 <div id="userInfo">

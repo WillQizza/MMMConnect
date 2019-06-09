@@ -6,14 +6,14 @@ $(document).ready(() => {
     let fetchedMessages = {
         status: false,
         data: [],
-        page: 0,
+        page: 1,
         fetching: false
     };
 
     let fetchedNotifications = {
         status: false,
         data: [],
-        page: 0,
+        page: 1,
         fetching: false
     };
 
@@ -22,33 +22,37 @@ $(document).ready(() => {
     $(".dropdown[data-notification=\"messages\"]").mouseenter(async () => {
         activeDropdown = "messages";
         show();
+        $(".nav-dropdown").empty();
         if (!fetchedMessages.status) {
             fetchedMessages.status = true;
             const data = await Notifications.getMessages();
             fetchedMessages.data = data.convos;
             $("div[data-notification=\"messages\"]").text(data.unread > 0 ? data.unread : "");
         }
-        $(".nav-dropdown").empty();
-        for (const c of fetchedMessages.data) {
-            c.element = $($(".nav-dropdown").append(c.element)[0]).children().last(); // Wackity hack hack.
-            if (!c.viewed && !c.lastMessage.weSentThis) {
-                $(`.nav-dropdown a[data-username="${c.recipient.username}"] .post`).addClass("tint-blue");
-            }         
+        if (activeDropdown === "messages") {
+            for (const c of fetchedMessages.data) {
+                c.element = $($(".nav-dropdown").append(c.element)[0]).children().last(); // Wackity hack hack.
+                if (!c.viewed && !c.lastMessage.weSentThis) {
+                    $(`.nav-dropdown a[data-username="${c.recipient.username}"] .post`).addClass("tint-blue");
+                }
+            }
         }
     });
 
     $(".dropdown[data-notification=\"notifications\"]").mouseenter(async () => {
         activeDropdown = "notifications";
         show();
+        $(".nav-dropdown").empty();
         if (!fetchedNotifications.status) {
             fetchedNotifications.status = true;
             const data = await Notifications.getNotifications();
             fetchedNotifications.data = data.notifications;
             $("div[data-notification=\"notifications\"]").text(data.unread > 0 ? data.unread : "");
         }
-        $(".nav-dropdown").empty();
-        for (const n of fetchedNotifications.data) {
-            n.element = $($(".nav-dropdown").append(n.element)[0]).children().last(); // Wackity hack hack.
+        if (activeDropdown === "notifications") {
+            for (const n of fetchedNotifications.data) {
+                n.element = $($(".nav-dropdown").append(n.element)[0]).children().last(); // Wackity hack hack.
+            }
         }
     });
 
@@ -62,24 +66,75 @@ $(document).ready(() => {
         const scrollTop = $(this).scrollTop();
         const height = $(this).height();
         const scrollHeight = $(this)[0].scrollHeight;
-        if (height + scrollTop >= scrollHeight - 100 && !fetchedMessages.fetching) {
-            if (activeDropdown === "messages") {
+        if (height + scrollTop >= scrollHeight - 100) {
+            if (activeDropdown === "messages" && !fetchedMessages.fetching) {
                 fetchedMessages.fetching = true;
                 const data = await Notifications.getMessages(fetchedMessages.page);
                 fetchedMessages.data = fetchedMessages.data.concat(data.convos);
                 $("div[data-notification=\"messages\"]").text(data.unread > 0 ? data.unread : "");
                 fetchedMessages.page++;
-                for (const c of data.convos) {
-                    c.element = $($(".nav-dropdown").append(c.element)[0]).children().last(); // Wackity hack hack.     
-                    if (!c.viewed && !c.lastMessage.weSentThis) {
-                        $(`.nav-dropdown a[data-username="${c.recipient.username}"] .post`).addClass("tint-blue");
-                    }         
+                if (activeDropdown === "messages") {
+                    for (const c of data.convos) {
+                        c.element = $($(".nav-dropdown").append(c.element)[0]).children().last(); // Wackity hack hack.     
+                        if (!c.viewed && !c.lastMessage.weSentThis) {
+                            $(`.nav-dropdown a[data-username="${c.recipient.username}"] .post`).addClass("tint-blue");
+                        }         
+                    }
+                    if (data.convos.length > 0) fetchedMessages.fetching = false;
                 }
-                if (data.convos.length > 0) fetchedMessages.fetching = false;
+                fetchedMessages.fetching = false;
+            } else if (activeDropdown === "notifications" && !fetchedNotifications.fetching) {
+                fetchedNotifications.fetching = true;
+                const data = await Notifications.getNotifications(fetchedNotifications.page);
+                fetchedNotifications.data = fetchedNotifications.data.concat(data.notifications);
+                $("div[data-notification=\"notifications\"]").text(data.unread > 0 ? data.unread : "");
+                fetchedNotifications.page++;
+                if (activeDropdown === "notifications") {
+                    for (const n of data.notifications) {
+                        n.element = $($(".nav-dropdown").append(n.element)[0]).children().last(); // Wackity hack hack.
+                    }
+                }
+                fetchedNotifications.fetching = false;
             }
         }
 
     });
+
+
+
+
+
+
+    // Search
+    $(".search input").focus(function () {
+        if (window.matchMedia("(min-width: 800px)").matches) {
+            $(this).animate({ width: "300px", "height": "40%" }, 500);
+        }
+    });
+
+    $(".search input").focusout(function () {
+        if (window.matchMedia("(min-width: 800px)").matches) {
+            $(this).animate({ width: "250px" }, 500);
+            $(".search-dropdown").animate({ width: "93%" }, 500);
+        }
+    });
+
+    $(".search input").keyup(function () {
+        const query = $(this).val();
+        $.ajax({
+            method: "POST",
+            url: `${ROOT}search`,
+            dataType: "json",
+            data: {
+                query
+            },
+            success: results => {
+                $(".search-dropdown").html(results.content);
+            }
+        });
+    });
+
+    $(".search .fas").click(() => $(".search").submit());
 
 
 });

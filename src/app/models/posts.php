@@ -39,6 +39,7 @@
         public function postMessage ($id, $data) {
             $body = htmlspecialchars($data["body"]);
             $userModel = $this->model("Users");
+            $nModel = $this->model("Notification");
             $author = $userModel->getUserById($id);
             if (isset($data["target"])) {
                 $target = $userModel->getUserById($data["target"]);
@@ -60,9 +61,10 @@
             ), false);
 
             if ($data["target"] != $id) {
-                $nModel = $this->model("Notifications");
                 $nModel->addNotification($id, $data["target"], $post["id"], "profilePost");
             }
+
+
 
             $userModel->setPosts($author["id"], $author["posts"] + 1);
             return $post;
