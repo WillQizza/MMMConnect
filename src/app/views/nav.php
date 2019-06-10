@@ -3,13 +3,13 @@
 ?>
 <div class="nav is-blue">
     <div class="nav-left">
-        <a href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
+        <a class="logo" href="<?php echo $params["BASE"]; ?>"><span>MMM</span>Connect</a>
         <form class="search" method="GET" action="<?php echo $params["BASE"] ?>search">
             <input type="text" name="query" class="input" autocomplete="off" />
             <i class="fas fa-search"></i>
             <div class="search-dropdown">
-                <span></span>
-                <a>See All Results</a>
+                <span class="results"></span>
+                <a class="link moreResults">See All Results</a>
             </div>
         </form>
     </div>

@@ -26,6 +26,12 @@ html, body {
     font-family: Roboto;
 }
 
+.full {
+    min-width: 100%;
+    display: inline-block;
+    vertical-align: top;
+}
+
 .one-third {
     min-width: 33.3%;
     display: inline-block;
@@ -183,12 +189,12 @@ html, body {
     height: 100%;
 }
 
-.nav-left a {
+.nav-left .logo {
     font-size: 2em;
     text-shadow: #0000ff 0.5px 0.5px 0.5px;
 }
 
-.nav-left span {
+.nav-left .logo span {
     font-family: Tomcat;
 }
 
@@ -209,7 +215,7 @@ html, body {
     height: 100%;
 }
 
-.nav.is-blue a:hover {
+.nav.is-blue .nav-right a:hover, .nav.is-blue .nav-left .logo:hover {
     background: #1e90db;
 }
 
@@ -289,6 +295,10 @@ html, body {
     float: left;
 }
 
+.search-dropdown .post .content {
+    padding-left: 0;
+}
+
 .post .message-content {
     padding-top: 0.5em;
     padding-bottom: 1em;
@@ -316,6 +326,11 @@ html, body {
 
 .faded {
     opacity: 0.5;
+    color: gray;
+}
+
+.faded-dark {
+    opacity: 0.9;
     color: gray;
 }
 
@@ -429,12 +444,23 @@ textarea {
     position: relative;
     bottom: 1px;
     left: 1px;
+    display: none;
 }
 
 .search-dropdown a {
-    color: black !important;
     text-shadow: none;
     font-size: 1em;
+
+}
+
+.search-dropdown .results {
+    background: lightgray;
+}
+
+.search-dropdown .moreResults {
+    padding-left: 25%;
+    background: #24a7ff;
+    font-size: 1.5em;
 }
 
 #messagesUnread {

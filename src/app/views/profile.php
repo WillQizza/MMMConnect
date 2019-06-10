@@ -81,10 +81,10 @@
                         <ul>
                             <a class="link" data-tab="newsfeed"><li <?php if (!$params["messageTab"]) { echo "class=\"is-active\""; } ?>>Newsfeed</li></a>
                             <?php
-                                if ($params["user"]["id"] != $params["target"]["id"]) {
+                                if ($params["user"]["id"] != $params["target"]["id"] && $params["isFriend"]) {
                                     if ($params["messageTab"]) {
                                         echo "<a class=\"link\" data-tab=\"messages\"><li class=\"is-active\">Messages</li></a>";
-                                    } else {
+                                    } else if ($params["isFriend"]) {
                                         echo "<a class=\"link\" data-tab=\"messages\"><li>Messages</li></a>";
                                     }
                                 }

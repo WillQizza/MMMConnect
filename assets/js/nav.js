@@ -109,13 +109,30 @@ $(document).ready(() => {
     $(".search input").focus(function () {
         if (window.matchMedia("(min-width: 800px)").matches) {
             $(this).animate({ width: "300px", "height": "40%" }, 500);
+            $(".search-dropdown").show();
+            $(".search-dropdown .results").empty();
+            const query = $(".search input").val();
+            $.ajax({
+                method: "POST",
+                url: `${ROOT}search`,
+                dataType: "json",
+                data: {
+                    query
+                },
+                success: results => {
+                    $(".search-dropdown .results").html(results.content);
+                }
+            });
         }
     });
 
     $(".search input").focusout(function () {
-        if (window.matchMedia("(min-width: 800px)").matches) {
-            $(this).animate({ width: "250px" }, 500);
-            $(".search-dropdown").animate({ width: "93%" }, 500);
+        if (!$(".search-dropdown a:focus")[0]) {
+            if (window.matchMedia("(min-width: 800px)").matches) {
+                $(this).animate({ width: "250px" }, 500);
+                $(".search-dropdown").animate({ width: "93%" }, 500);
+                setTimeout(() => $(".search-dropdown").hide(), 100);
+            }
         }
     });
 
@@ -129,12 +146,12 @@ $(document).ready(() => {
                 query
             },
             success: results => {
-                $(".search-dropdown").html(results.content);
+                $(".search-dropdown .results").html(results.content);
             }
         });
     });
 
-    $(".search .fas").click(() => $(".search").submit());
+    $(".search .fas, .search .moreResults").click(() => $(".search").submit());
 
 
 });

@@ -107,7 +107,10 @@
                                 ));
 
                             } else {
-                                $this->redirect("conversation");
+                                $this->view("conversations/latest", array(
+                                    "messages" => array(),
+                                    "target" => $target
+                                ));
                             }
                         } else {
                             $this->redirect("conversation");
