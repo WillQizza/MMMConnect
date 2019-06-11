@@ -109,21 +109,21 @@ $(document).ready(() => {
     $(".search input").focus(function () {
         if (window.matchMedia("(min-width: 800px)").matches) {
             $(this).animate({ width: "300px", "height": "40%" }, 500);
-            $(".search-dropdown").show();
-            $(".search-dropdown .results").empty();
-            const query = $(".search input").val();
-            $.ajax({
-                method: "POST",
-                url: `${ROOT}search`,
-                dataType: "json",
-                data: {
-                    query
-                },
-                success: results => {
-                    $(".search-dropdown .results").html(results.content);
-                }
-            });
         }
+        $(".search-dropdown").show();
+        $(".search-dropdown .results").empty();
+        const query = $(".search input").val();
+        $.ajax({
+            method: "POST",
+            url: `${ROOT}search`,
+            dataType: "json",
+            data: {
+                query
+            },
+            success: results => {
+                $(".search-dropdown .results").html(results.content);
+            }
+        });
     });
 
     $(".search input").focusout(function () {
@@ -131,8 +131,8 @@ $(document).ready(() => {
             if (window.matchMedia("(min-width: 800px)").matches) {
                 $(this).animate({ width: "250px" }, 500);
                 $(".search-dropdown").animate({ width: "93%" }, 500);
-                setTimeout(() => $(".search-dropdown").hide(), 100);
             }
+            setTimeout(() => $(".search-dropdown").hide(), 100)
         }
     });
 

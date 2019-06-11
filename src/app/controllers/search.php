@@ -32,13 +32,19 @@
                     $user = $userModel->getUserById($_SESSION["id"]);
                     if (isset($user)) {
                         $users = $userModel->searchForUsers($_GET["query"]);
-                        $users = array_merge($users, $users);
-                        $users = array_merge($users, $users);
-                        $users = array_merge($users, $users);
+                        $friendModel = $this->model("FriendRequests");
+                        $statuses = array();
 
                         foreach ($users as $u) {
                             if ($user["id"] != $u["id"]) {
                                 $mutual[$u["id"]] = count($userModel->getMutualFriends($user["id"], $u["id"]));
+                                if ($friendModel->sentFriendRequestTo($user["id"], $u["id"])) {
+                                    $statuses[$u["id"]] = 2;
+                                } else if ($userModel->isUserFriendsWith($user["id"], $u["id"])) {
+                                    $statuses[$u["id"]] = 1;
+                                } else {
+                                    $statuses[$u["id"]] = 0;
+                                }
                                 array_push($suggestions, $u);
                             }
                         }
@@ -53,7 +59,8 @@
                                 "friends" => $friends
                             ),
                             "results" => $suggestions,
-                            "mutual" => $mutual
+                            "mutual" => $mutual,
+                            "friendStatus" => $statuses
                         ));
                     } else {
                         $this->redirect("logout");

@@ -28,6 +28,8 @@ $(document).ready(function () {
             break;
             case "Remove Friend":
                 element.val("Add As Friend");
+                container.removeClass("is-red");
+                container.addClass("is-green");
             break;
         }
 
