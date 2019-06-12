@@ -89,6 +89,13 @@
             ));
         }
 
+        public function changePassword ($id, $newPassword) {
+            $this->query("UPDATE users SET password=:p WHERE id=:id", array(
+                "p" => password_hash($newPassword, PASSWORD_DEFAULT),
+                "id" => $id
+            ));
+        }
+
         public function addFriend ($id, $friendId) {
             if (!$this->isUserFriendsWith($id, $friendId)) {
                 $user = $this->getUserById($id);
@@ -174,18 +181,33 @@
             $parts = explode(" ", $query);
             $firstName = $query;
             $lastName = $query;
-            if (count($parts) == 2) {
+            if (count($parts) == 1) {
                 $firstName = $parts[0];
-                $lastName = $parts[1];
+                $users = $this->query("SELECT * FROM users WHERE ((username LIKE :u) OR (username LIKE :uu) OR (first_name LIKE :fn OR last_name LIKE :ln)) AND user_closed=0 LIMIT 8", array(
+                    "u" => "$query%",
+                    "uu" => "%$query%",
+                    "fn" => "$firstName%",
+                    "ln" => "$firstName%"
+                ));
+            } else {
+                if (count($parts) == 2) {
+                    $firstName = $parts[0];
+                    $lastName = $parts[1];
+                }
+                $users = $this->query("SELECT * FROM users WHERE ((username LIKE :u) OR (username LIKE :uu) OR (first_name LIKE :fn AND last_name LIKE :ln)) AND user_closed=0 LIMIT 8", array(
+                    "u" => "$query%",
+                    "uu" => "%$query%",
+                    "fn" => "$firstName%",
+                    "ln" => "$lastName%"
+                ));
             }
-
-            $users = $this->query("SELECT * FROM users WHERE ((username LIKE :u) OR (username LIKE :uu) OR (first_name LIKE :fn AND last_name LIKE :ln)) AND user_closed=0 LIMIT 8", array(
-                "u" => "$query%",
-                "uu" => "%$query%",
-                "fn" => "$firstName%",
-                "ln" => "$lastName%"
-            ));
             return $users;
+        }
+
+        public function closeAccount ($id) {
+            $this->query("UPDATE users SET user_closed=1 WHERE id=:id", array(
+                "id" => $id
+            ));
         }
 
         protected function defaults () {

@@ -8,7 +8,7 @@
             $posts = $this->query("SELECT * FROM posts ORDER BY id DESC");
             $feed = array();
             foreach ($posts as $post) {
-                if (!$post["deleted"] && ($post["author"]["id"] == $id || $userModel->isUserFriendsWith($id, $post["author"]["id"]))) {
+                if (!$post["deleted"] && !$post["author"]["closed"] && ($post["author"]["id"] == $id || $userModel->isUserFriendsWith($id, $post["author"]["id"]))) {
                     array_push($feed, $post);
                 }
             }

@@ -55,7 +55,7 @@
                                     <input id=\"friendRequestButton\" type=\"submit\" name=\"friend\" value=\"Cancel Friend Request\" />
                                 </div>";
                             } else if ($params["isFriend"]) {
-                                echo "<div class=\"input is-green center-text\">
+                                echo "<div class=\"input is-red center-text\">
                                     <input id=\"friendRequestButton\" type=\"submit\" name=\"friend\" value=\"Remove Friend\" />
                                 </div>";
                             } else {

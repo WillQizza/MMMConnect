@@ -15,6 +15,16 @@
                             "messages" => $messages,
                             "notifications" => $notifications,
                             "friends" => $friends
+                        ),
+                        "errors" => array(
+                            "emailExists" => false,
+                            "firstNameNotLongEnough" => false,
+                            "lastNameNotLongEnough" => false,
+                            "passwordNotLongEnough" => false,
+                            "passwordDoesNotMatch" => false,
+                            "newPasswordDoesNotMatch" => false,
+                            "passwordEnglishOnly" => false,
+                            "success" => false
                         )
                     ));
 
@@ -27,20 +37,19 @@
             }
         }
 
-        public function personal () {
+        public function edit () {
             $userModel = $this->model("Users");
 
             if (isset($_SESSION["id"])) {
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if (isset($user)) {
                     $errors = array(
-                        "login" => false,
                         "emailExists" => false,
-                        "emailDoesNotMatch" => false,
                         "firstNameNotLongEnough" => false,
                         "lastNameNotLongEnough" => false,
                         "passwordNotLongEnough" => false,
                         "passwordDoesNotMatch" => false,
+                        "newPasswordDoesNotMatch" => false,
                         "passwordEnglishOnly" => false,
                         "success" => false
                     );
@@ -64,6 +73,20 @@
                                 "lastName" => $lastName
                             ));
                         }
+                    } else if (isset($_POST["oldPassword"]) && isset($_POST["newPassword"]) && isset($_POST["newPasswordAgain"])) {
+                        if (!$userModel->isUserAuthenticated($user["email"], $_POST["oldPassword"])) {
+                            $errors["passwordDoesNotMatch"] = true;
+                        } else if (strlen($_POST["newPassword"]) > 30 || strlen($_POST["newPassword"]) < 5) {
+                            $errors["passwordNotLongEnough"] = true;
+                        } else if ($_POST["newPassword"] != $_POST["newPasswordAgain"]) {
+                            $errors["newPasswordDoesNotMatch"] = true;
+                        } else if (preg_match("/[^A-Za-z0-9]/", $_POST["newPassword"])) {
+                            $errors["passwordEnglishOnly"] = true;
+                        } else {
+                            // Success.
+                            $errors["success"] = true;
+                            $userModel->changePassword($user["id"], $_POST["newPassword"]);
+                        }
                     }
 
                     $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
@@ -74,9 +97,40 @@
                         "notifications" => array(
                             "messages" => $messages,
                             "notifications" => $notifications,
-                            "friends" => $friends
-                        )
+                            "friends" => $friends,
+                        ),
+                        "errors" => $errors
                     ));
+                } else {
+                    $this->redirect("logout");
+                }
+            } else {
+                $this->redirect("register");
+            }
+        }
+
+        public function close () {
+            $userModel = $this->model("Users");
+
+            if (isset($_SESSION["id"])) {
+                $user = $userModel->getUserById($_SESSION["id"]);
+                if (isset($user)) {
+                    if (isset($_POST["delete"]) && $_POST["delete"] == "Close it") {
+                        $userModel->closeAccount($user["id"]);
+                        $this->redirect("logout");
+                    } else {
+                        $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
+                        $notifications = $this->model("Notification")->getUnreadNotificationCount($user["id"]);
+                        $friends = $this->model("FriendRequests")->getUnreadNotificationCount($user["id"]);    
+                        $this->view("settings/close", array(
+                            "notifications" => array(
+                                "messages" => $messages,
+                                "notifications" => $notifications,
+                                "friends" => $friends,
+                            )
+                        ));
+                    }
+                    
                 } else {
                     $this->redirect("logout");
                 }

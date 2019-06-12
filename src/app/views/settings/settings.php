@@ -31,13 +31,38 @@
             <div class="one-quarter"></div>
             <div class="seven-tenths">
                 <div class="box">
+                    <?php
+                        if ($params["errors"]["emailExists"] || $params["errors"]["firstNameNotLongEnough"] || $params["errors"]["lastNameNotLongEnough"] || $params["errors"]["passwordNotLongEnough"] || $params["errors"]["passwordDoesNotMatch"] || $params["errors"]["newPasswordDoesNotMatch"] || $params["errors"]["passwordEnglishOnly"] || $params["errors"]["success"]) {
+                            echo "<div class=\"notification box is-" . ($params["errors"]["success"] ? "green" : "red") . "\">";
+
+                            if ($params["errors"]["emailExists"]) {
+                                echo "The email already exists.";
+                            } else if ($params["errors"]["firstNameNotLongEnough"]) {
+                                echo "Your first name must be within 2 and 25 characters.";
+                            } else if ($params["errors"]["lastNameNotLongEnough"]) {
+                                echo "Your last name must be within 2 and 25 characters.";
+                            } else if ($params["errors"]["passwordNotLongEnough"]) {
+                                echo "Your password  must be within 5 and 30 characters.";
+                            } else if ($params["errors"]["passwordDoesNotMatch"]) {
+                                echo "Your password does not match your current password.";
+                            } else if ($params["errors"]["newPasswordDoesNotMatch"]) {
+                                echo "The new passwords provided do not match.";
+                            } else if ($params["errors"]["passwordEnglishOnly"]) {
+                                echo "Your password can only contain english characters or numbers.";
+                            } else {
+                                echo "Settings changed successfully!";
+                            }
+
+                            echo "</div>";
+                        }
+                    ?>
                     <h1>Account Settings</h1>
                     <span id="avatarContainer">
                         <img src="<?php echo $params["user"]["avatar"] ?>" class="image" />
                         <a class="link" href="<?php echo $params["BASE"]; ?>settings/upload">Upload new profile picture</a>
                     </span>
                     <br />
-                    <form method="POST" action="<?php echo $params["BASE"] ?>settings/personal">
+                    <form method="POST" action="<?php echo $params["BASE"] ?>settings/edit">
                         <div class="input">
                             First Name:
                             <input name="firstName" type="text" value="<?php echo $params["user"]["firstName"]; ?>" />
@@ -55,7 +80,7 @@
                         </div>
                     </form>
                     <h2>Change Password</h2>
-                    <form method="POST" action="<?php echo $params["BASE"]; ?>settings/password">
+                    <form method="POST" action="<?php echo $params["BASE"]; ?>settings/edit">
                         <div class="input">
                             Old Password:
                             <input name="oldPassword" type="password" />
