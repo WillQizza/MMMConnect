@@ -17,6 +17,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/feed.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/markdown.js"></script>
 
     </head>
     <body>

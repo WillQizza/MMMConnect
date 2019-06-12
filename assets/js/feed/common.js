@@ -96,9 +96,11 @@ $(document).ready(async () => {
     $(document).on("submit", "#editModal form", function () {
         const postId = $(this).find("input[name=\"id\"]").val();
         const body = $(this).find("textarea").val();
-        Posts.getPostById(postId).then(post => post.edit(body));
-        $(post.element).find("div[data-field=\"body\"]:first").text(body);
-        $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
+        Posts.getPostById(postId).then(post => {
+            post.edit(body);
+            $(post.element).find("div[data-field=\"body\"]:first").text(body);
+            $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
+        });
         $("#editModal").hide();
         return false;
     });
