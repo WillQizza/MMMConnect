@@ -1,0 +1,24 @@
+#avatarContainer {
+    display: flex;
+    align-items: center;
+}
+
+#avatarContainer a {
+    padding-left: 1em;
+}
+
+#wrapper input[type="text"], #wrapper input[type="email"], #wrapper input[type="password"] {
+    padding: 0.5em;
+}
+
+#closeAccount {
+    height: 1em;
+    padding: 1em;
+    min-width: 5em;
+    height: 3em;
+    color: white;
+    background: #e90404;
+    border: none;
+    border-radius: 0.2em;
+    font-size: 100%;
+}

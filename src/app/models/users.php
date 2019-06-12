@@ -80,6 +80,15 @@
             return in_array($checkId, $user["friendIds"]);
         }
 
+        public function updateUser ($id, $data) {
+            $this->query("UPDATE users SET first_name=:fn, last_name=:ln, email=:email WHERE id=:id", array(
+                "fn" => $data["firstName"],
+                "ln" => $data["lastName"],
+                "email" => $data["email"],
+                "id" => $id
+            ));
+        }
+
         public function addFriend ($id, $friendId) {
             if (!$this->isUserFriendsWith($id, $friendId)) {
                 $user = $this->getUserById($id);

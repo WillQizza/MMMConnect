@@ -23,8 +23,8 @@
     </head>
     <body>
         <?php
-            require(dirname(__FILE__) . "/templates.php"); // I would have prefered this elsewhere. But it works.
-            require(dirname(__FILE__) . "/nav.php");
+            require(dirname(__FILE__) . "/../templates.php"); // I would have prefered this elsewhere. But it works.
+            require(dirname(__FILE__) . "/../nav.php");
         ?>
         <div id="wrapper">
             <div class="box">
