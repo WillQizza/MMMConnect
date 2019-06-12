@@ -21,6 +21,7 @@ const markdownify = text => {
                 i += message.length - 1;
             } else {
                 soFar += text.substring(i, i + 2);
+                i++;
             }
         } else {
             soFar += text[i];
