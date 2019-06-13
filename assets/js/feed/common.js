@@ -88,8 +88,10 @@ $(document).ready(async () => {
     $(document).on("click", "a[data-action=\"edit\"]", function () {
         const id = $(this).attr("data-post");
         $("#editModal input[name=\"id\"]").val(id);
-        $("#editModal textarea").val($(`div[data-post="${id}"] > .content > .message-content`).text());
-        $("#editModal").show();
+        Posts.getPostById(id).then(post => {
+            $("#editModal textarea").val(post.body);
+            $("#editModal").show();
+        });
     });
 
     // Edit
@@ -98,7 +100,10 @@ $(document).ready(async () => {
         const body = $(this).find("textarea").val();
         Posts.getPostById(postId).then(post => {
             post.edit(body);
-            $(post.element).find("div[data-field=\"body\"]:first").text(body);
+            const bodyEl = $(post.element).find("div[data-field=\"body\"]:first")[0];
+            console.log(bodyEl, body);
+            bodyEl.textContent = body;
+            bodyEl.innerHTML = markdownify(bodyEl.textContent);
             $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
         });
         $("#editModal").hide();

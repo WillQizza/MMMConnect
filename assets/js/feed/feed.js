@@ -54,9 +54,11 @@ $(document).ready(async () => {
     const submitForm = $("form[data-form=\"feed-message\"]");
     submitForm.submit(() => {
         const textarea = submitForm.find("textarea");
+        const file = submitForm.find("input[type=\"file\"]");
         const message = textarea.val();
         textarea.val("");
-        Posts.postMessage(message).then(data => {
+        Posts.postMessage(message, file[0].files[0]).then(data => {
+            file.val("");
             $("#feed").prepend(data.post.element);
             data.post.element = document.querySelector(`div[data-post="${data.post.id}"]`);
             $("span[data-stat=\"posts\"]").text(data.postCount);

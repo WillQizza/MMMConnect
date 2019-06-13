@@ -20,6 +20,7 @@ const createTemplate = (name, data) => {
             }
             if (query.text != null) {
                 q.textContent = query.text;
+                q.innerHTML = markdownify(q.textContent);
             }
         }
     }

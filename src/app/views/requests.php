@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>MMMConnect | Friend Requests</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="<?php echo $params["BASE"]; ?>assets/css/fa/css/all.css" rel="stylesheet" type="text/css" />  
         <link href="<?php echo $params["BASE"] ?>assets/css/pizza.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"] ?>assets/css/requests.css" rel="stylesheet" type="text/css" />
         <script src="<?php echo $params["BASE"]; ?>assets/js/jquery-3.3.1.min.js"></script>
@@ -15,7 +15,8 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/conversations/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/nav.js"></script>
-        <script src="<?php echo $params["BASE"]; ?>assets/js/timestamp.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/markdown.js"></script>
         
     </head>
     <body>

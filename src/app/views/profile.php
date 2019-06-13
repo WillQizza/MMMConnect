@@ -3,7 +3,7 @@
     <head>
         <title>MMMConnect | Feed</title>
         
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="<?php echo $params["BASE"]; ?>assets/css/fa/css/all.css" rel="stylesheet" type="text/css" />  
         <link href="<?php echo $params["BASE"]; ?>assets/css/pizza.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo $params["BASE"]; ?>assets/css/profile-feed.css" rel="stylesheet" type="text/css" />
@@ -24,6 +24,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/notifications/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/nav.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/markdown.js"></script>
     </head>
     <body>
         <?php
@@ -119,6 +120,7 @@
                     <h1>Post something!</h1>
                     <hr />
                     <p>This will appear on the user's profile page and their newsfeed for your friends to see!</p>
+                    <p>Tip: you can bold text by typing <b>**text**</b>, you can underline text by typing <b>__text__</b>, you can cross text out with <b>~~text~~</b></p>
                     <form action="<?php echo $params["BASE"] ?>profile/<?php echo $params["target"]["username"]; ?>/post" data-form="feed-message" method="POST">
                         <textarea name="message" style="width: 90%; min-height: 5em; padding: 1%;" placeholder="What's on your mind?"></textarea><br />
                         <div class="input is-green">

@@ -14,7 +14,8 @@
                             "messages" => $messages,
                             "notifications" => $notifications,
                             "friends" => $friends
-                        )
+                        ),
+                        "trending" => $this->model("Trends")->getTrending()
                     ));
                 } else {
                     $this->redirect("logout");
@@ -98,10 +99,35 @@
                 $user = $userModel->getUserById($_SESSION["id"]);
                 if ($user) {
                     if (isset($_POST["message"])) {
-                        $post = $postsModel->postMessage($user["id"], array(
-                            "body" => $_POST["message"],
-                            "target" => $user["id"]
-                        ));
+                        if (isset($_FILES["image"]) && in_array($_FILES["image"]["type"], array("image/jpeg", "image/png"))) {
+                            $data = $_FILES["image"];
+                            if ($data["type"] == "image/jpeg") {
+                                $image = imagecreatefromjpeg($data["tmp_name"]);
+                            } else {
+                                $image = imagecreatefrompng($data["tmp_name"]);
+                            }
+                            if (isset($image)) {
+                                $saveLocation = "assets/images/attachments/" . (new DateTime())->getTimestamp() . ".png";
+                                $image = imagepng($image, $saveLocation);
+                                $post = $postsModel->postMessage($user["id"], array(
+                                    "body" => $_POST["message"],
+                                    "target" => $user["id"],
+                                    "attachment" => $this->helper("URL")::create($saveLocation)
+                                ));
+                            } else {
+                                $post = $postsModel->postMessage($user["id"], array(
+                                    "body" => $_POST["message"],
+                                    "target" => $user["id"]
+                                ));
+                            }
+                            
+                        } else {
+                            $post = $postsModel->postMessage($user["id"], array(
+                                "body" => $_POST["message"],
+                                "target" => $user["id"]
+                            ));
+                        }
+
                         $this->view("feed/post", array(
                             "post" => $post,
                             "count" => $userModel->getUserById($_SESSION["id"])["posts"]

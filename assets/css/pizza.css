@@ -318,6 +318,11 @@ html, body {
     padding-bottom: 7em;
 }
 
+.post img[data-field="attachment"] {
+    max-width: 40em;
+    max-height: 20em;
+}
+
 .post .commentsContainer .comments {
     display: inline-block;
     width: 100%;

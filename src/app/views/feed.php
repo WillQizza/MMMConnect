@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>MMMConnect | Feed</title>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link href="<?php echo $params["BASE"]; ?>assets/css/fa/css/all.css" rel="stylesheet" type="text/css" />  
         <link href="<?php echo $params["BASE"]; ?>assets/css/pizza.css" rel="stylesheet" type="text/css" />  
         <link href="<?php echo $params["BASE"]; ?>assets/css/feed.css" rel="stylesheet" type="text/css" />  
         <script>
@@ -37,13 +37,23 @@
                         <span>Likes: <span data-stat="likes"><?php echo $params["user"]["likes"] ?></span></span>
                     </div>
                 </div>
+                <div class="box">
+                    <h2>Trending</h2>
+                    <?php
+                        foreach ($params["trending"] as $trending) {
+                            echo $trending["term"] . "<br />";
+                        }
+                    ?>
+                </div>
             </div>
             <div class="seven-tenths">
                 <div class="box">
-                    <form method="POST" action="<?php echo $params["BASE"]; ?>feed/post" id="postForm" data-form="feed-message">
+                    <form method="POST" enctype="multipart/form-data" action="<?php echo $params["BASE"]; ?>feed/post" id="postForm" data-form="feed-message">
+                        <input name="image" type="file" /><br />
                         <textarea class="form-textarea" name="body" placeholder="What's on your mind?"></textarea>
                         <input type="submit" class="input submitButton" name="activitySubmit" value="Post" />
                     </form>
+                    <p>Tip: you can bold text by typing <b>**text**</b>, you can underline text by typing <b>__text__</b>, you can cross text out with <b>~~text~~</b></p>
                     <hr />
                     <div id="feed"></div>
                     <img class="loading" src="<?php echo $params["BASE"]; ?>assets/images/gifs/loading.gif" />
@@ -77,6 +87,7 @@
                 <div class="box">
                     <a class="link"><span class="keep-right">X</span></a>
                     <p>What would you like to edit this to?</p>
+                    <p>Tip: you can bold text by typing <b>**text**</b>, you can underline text by typing <b>__text__</b>, you can cross text out with <b>~~text~~</b></p>
                     <hr />
                     <form method="POST" action="<?php echo $params["BASE"] ?>feed/editpost">
                         <textarea style="width: 90%; min-height: 10em; padding: 1%; margin-left: 1em;" name="message" placeholder="What do you want to change this comment to?"></textarea><br />

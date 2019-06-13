@@ -26,6 +26,7 @@
  * @property {boolean} likedPost
  * @property {boolean} edited
  * @property {boolean} userSentThis
+ * @property {string} attachment
  * @property {RawCommentData[]} comments
  */
 
@@ -39,6 +40,10 @@ class PostComment {
     constructor (data, post) {
 
         this.id = data.id;
+        this.body = data.body
+            .replace(/&amp;/g, "&")
+            .replace(/lt;/g, "<")
+            .replace(/&quot;/g, "\"");
 
         const specialSelectors = [];
         if (data.userSentThis) {
@@ -85,6 +90,13 @@ class Post {
     constructor (data) {
 
         this.id = data.id;
+        this.body = data.body
+            //.replace(/&amp;/g, "&")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, "\"");
+
+        this.attachment = data.attachment;
 
         this.CONSTANTS = {
             //@ts-ignore
@@ -109,6 +121,9 @@ class Post {
             specialSelectors.push({ selector: "span[data-field=\"target\"]", attributes: { style: "" } });
             specialSelectors.push({ selector: "span[data-field=\"target\"] a", attributes: { href: data.target.profile }, text: data.target.name });
         }
+        if (data.attachment) {
+            specialSelectors.push({ selector: "div[data-field=\"attachmentContainer\"]", attributes: { style: "" } });
+        }
 
         //@ts-ignore
         this.element = createTemplate("post", [
@@ -122,7 +137,8 @@ class Post {
             { selector: "*[data-post]", attributes: { "data-post": data.id } },
             { selector: "span[data-field=\"likesText\"]", text: data.likedPost ? "Unlike" : "Like" },
             { selector: "span[data-field=\"comments\"]", text: data.comments.length },
-            { selector: "input[data-field=\"formPostId\"]", value: data.id }
+            { selector: "input[data-field=\"formPostId\"]", value: data.id },
+            { selector: "img[data-field=\"attachment\"]", attributes: { src: data.attachment } },
         ]);
 
         this.comments = data.comments.map(data => new PostComment(data, this));
@@ -170,6 +186,7 @@ class Post {
      * @param {string} content 
      */
     async edit (content) {
+        this.body = content;
         await fetch(this.CONSTANTS.EDIT_POST, {
             method: "POST",
             headers: {
@@ -255,13 +272,13 @@ class PostsManager {
      * Post a message.
      * @param {string} message 
      */
-    async postMessage (message) {
+    async postMessage (message, attachment) {
+        const data = new FormData();
+        data.append("message", message);
+        if (attachment) data.append("image", attachment);
         const response = await (await fetch(this.CONSTANTS.POST_MESSAGE, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: `message=${encodeURIComponent(message)}`
+            body: data
         })).json();
         const post = new Post(response.post);
         this.posts[post.id] = post;

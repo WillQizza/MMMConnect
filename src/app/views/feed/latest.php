@@ -46,6 +46,7 @@
                 "profile" => $post["target"]["profileURL"],
                 "name" => $post["target"]["name"]
             ),
+            "attachment" => $post["attachment"],
             "edited" => $post["edited"]
         ));
     }

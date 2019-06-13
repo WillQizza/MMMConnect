@@ -11,6 +11,7 @@
             </span>
             <a class="link" href="profile link" data-field="userFullName">user's name</a> <span data-field="target" style="display: none;"> > <a class="link" href="profile link">target's name</a></span> <i class="faded" data-field="timestamp">timestamp</i> <span style="display: none;" data-field="edited"><i class="faded">(edited)</i></span><br />
             <div data-field="body" class="message-content"></div>
+            <div data-field="attachmentContainer" class="center-text" style="display:none;"><img data-field="attachment" /></div>
             <a class="link" data-post="post id" data-action="comment">Comments (<span data-field="comments">Comment count</span>)</a> 
             <a class="link" style="margin-left: 1em;" data-post="post id" data-action="like"><span data-field="likesText">like text</span> (<span data-field="likesCount">Like count</span>)</a> 
             <span data-field="edit" style="display: none;">

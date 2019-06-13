@@ -47,15 +47,28 @@
             if (!isset($target)) {
                 $target = $author;
             }
-            $this->query("INSERT INTO posts (body, author, target, date_added, deleted, likes, edited) VALUES (:b, :a, :t, :da, :d, :l, :e)", array(
-                "b" => $body,
-                "a" => $author["id"],
-                "t" => $target["id"],
-                "da" => date("Y-m-d H:i:s"),
-                "d" => false,
-                "l" => 0,
-                "e" => false
-            ));
+            if (isset($data["attachment"])) {
+                $this->query("INSERT INTO posts (body, author, target, date_added, deleted, likes, edited, attachment) VALUES (:b, :a, :t, :da, :d, :l, :e, :aa)", array(
+                    "b" => $body,
+                    "a" => $author["id"],
+                    "t" => $target["id"],
+                    "da" => date("Y-m-d H:i:s"),
+                    "d" => false,
+                    "l" => 0,
+                    "e" => false,
+                    "aa" => $data["attachment"]
+                ));
+            } else {
+                $this->query("INSERT INTO posts (body, author, target, date_added, deleted, likes, edited) VALUES (:b, :a, :t, :da, :d, :l, :e)", array(
+                    "b" => $body,
+                    "a" => $author["id"],
+                    "t" => $target["id"],
+                    "da" => date("Y-m-d H:i:s"),
+                    "d" => false,
+                    "l" => 0,
+                    "e" => false
+                ));
+            }
             $post = $this->query("SELECT * FROM posts WHERE author=:a ORDER BY id DESC LIMIT 1", array(
                 "a" => $author["id"]
             ), false);
@@ -63,6 +76,11 @@
             if ($data["target"] != $id) {
                 $nModel->addNotification($id, $data["target"], $post["id"], "profilePost");
             }
+
+            // Trending
+            $this->model("Trends")->addTerms($body);
+            
+
 
 
 
@@ -101,7 +119,8 @@
                 "body" => 0,
                 "date_added" => date("Y-m-d H:i:s"),
                 "deleted" => false,
-                "edited" => false
+                "edited" => false,
+                "attachments" => ""
             );
         }
 
@@ -125,7 +144,8 @@
                 "comments" => $this->model("Comments")->getCommentsForPost($data["id"]),
                 "author" => $author,
                 "target" => $target,
-                "edited" => $data["edited"]
+                "edited" => $data["edited"],
+                "attachment" => $data["attachment"]
             );
         }
     }
