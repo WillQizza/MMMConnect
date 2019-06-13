@@ -305,6 +305,8 @@ html, body {
     word-wrap: break-word;
     min-height: 0.1em;
     color: black;
+    width: 900px;
+    max-width: 100%;
 }
 
 .post .message-content p {

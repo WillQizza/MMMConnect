@@ -28,7 +28,7 @@
             </div><br /><hr />
         </div>
             
-    </div>
+    </div><br />
 </template>
 
 <template data-name="comment">

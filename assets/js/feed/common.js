@@ -101,10 +101,40 @@ $(document).ready(async () => {
         Posts.getPostById(postId).then(post => {
             post.edit(body);
             const bodyEl = $(post.element).find("div[data-field=\"body\"]:first")[0];
-            console.log(bodyEl, body);
-            bodyEl.textContent = body;
-            bodyEl.innerHTML = markdownify(bodyEl.textContent);
             $(post.element).find("span[data-field=\"edited\"]").attr("style", "");
+
+            // YT videos.
+            $(post.element).find("iframe").remove();
+            const videos = [];
+            let noVideoBody = body.slice(0);
+            let match = noVideoBody.match(/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+/);
+            while (match) {
+                
+                const unparsedUrl = match[0].split(" ")[0];
+                const url = match[0].toLocaleLowerCase().split(" ")[0];
+
+                if (url.includes("watch?v=")) {
+                    const getParams = unparsedUrl.substring(unparsedUrl.indexOf("?") + 1).split("&");
+                    const found = getParams.find(param => param.startsWith("v"));
+                    if (found) {
+                        videos.push(found.substring(2));
+                    }
+                } else {
+                    videos.push(unparsedUrl.split("/")[unparsedUrl.split("/").length - 1]);
+                }
+
+
+                noVideoBody = noVideoBody.substring(0, noVideoBody.toLocaleLowerCase().indexOf(url)) + noVideoBody.substring(noVideoBody.toLocaleLowerCase().indexOf(url) + url.length);
+                match = noVideoBody.match(/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+/);
+            }
+
+            bodyEl.textContent = noVideoBody;
+            bodyEl.innerHTML = markdownify(bodyEl.textContent);
+
+            for (const id of videos) {
+                $(post.element).find("div[data-field=\"attachmentContainer\"]").append(`<iframe src="https://www.youtube.com/embed/${encodeURIComponent(id)}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
+            }
+
         });
         $("#editModal").hide();
         return false;

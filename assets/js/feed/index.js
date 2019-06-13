@@ -61,6 +61,8 @@ class PostComment {
             { selector: "div[data-field=\"body\"]", text: data.body }
         ]);
 
+        
+
         this.CONSTANTS = {
             //@ts-ignore
             DELETE_COMMENT: `${ROOT}feed/deletecomment`
@@ -96,6 +98,30 @@ class Post {
             .replace(/&gt;/g, ">")
             .replace(/&quot;/g, "\"");
 
+        const videos = [];
+        let noVideoBody = data.body.slice(0);
+        let match = noVideoBody.match(/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+/);
+        while (match) {
+            
+            const unparsedUrl = match[0].split(" ")[0];
+            const url = match[0].toLocaleLowerCase().split(" ")[0];
+
+            if (url.includes("watch?v=")) {
+                const getParams = unparsedUrl.substring(unparsedUrl.indexOf("?") + 1).split("&");
+                const found = getParams.find(param => param.startsWith("v"));
+                if (found) {
+                    videos.push(found.substring(2));
+                }
+            } else {
+                videos.push(unparsedUrl.split("/")[unparsedUrl.split("/").length - 1]);
+            }
+
+
+            noVideoBody = noVideoBody.substring(0, noVideoBody.toLocaleLowerCase().indexOf(url)) + noVideoBody.substring(noVideoBody.toLocaleLowerCase().indexOf(url) + url.length);
+            match = noVideoBody.match(/(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+/);
+        }
+        
+
         this.attachment = data.attachment;
 
         this.CONSTANTS = {
@@ -121,7 +147,7 @@ class Post {
             specialSelectors.push({ selector: "span[data-field=\"target\"]", attributes: { style: "" } });
             specialSelectors.push({ selector: "span[data-field=\"target\"] a", attributes: { href: data.target.profile }, text: data.target.name });
         }
-        if (data.attachment) {
+        if (data.attachment || videos.length > 0) {
             specialSelectors.push({ selector: "div[data-field=\"attachmentContainer\"]", attributes: { style: "" } });
         }
 
@@ -131,7 +157,7 @@ class Post {
             { selector: "a[data-field=\"userFullName\"]", attributes: { href: data.user.profile },  text: data.user.name },
             { selector: "img[data-field=\"avatar\"]", attributes: { src: data.avatar } },
             { selector: "i[data-field=\"timestamp\"]", text: data.timestamp },
-            { selector: "div[data-field=\"body\"]", text: data.body },
+            { selector: "div[data-field=\"body\"]", text: noVideoBody },
             { selector: "span[data-field=\"likesCount\"]", text: data.likes },
             { selector: "div[data-timestamp]", attributes: { "data-timestamp": data.timestampMs } },
             { selector: "*[data-post]", attributes: { "data-post": data.id } },
@@ -144,6 +170,10 @@ class Post {
         this.comments = data.comments.map(data => new PostComment(data, this));
         for (const comment of this.comments) {
             this.element.querySelector(".comments").appendChild(comment.element);
+        }
+
+        for (const id of videos) {
+            $(this.element).find("div[data-field=\"attachmentContainer\"]").append(`<iframe src="https://www.youtube.com/embed/${encodeURIComponent(id)}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`);
         }
     }
 

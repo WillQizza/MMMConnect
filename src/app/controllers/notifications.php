@@ -60,7 +60,7 @@
                 if (isset($user)) {
                     if (isset($_GET["id"])) {
                         $post = $postsModel->getPostById($_GET["id"]);
-                        if (isset($post) && !$post["author"]["closed"] && !$post["deleted"] && ($post["author"]["id"] == $user["id"] || $userModel->isUserFriendsWith($user["id"], $post["author"]["id"]))) {
+                        if (isset($post) && $post != false && !$post["author"]["closed"] && !$post["deleted"] && ($post["author"]["id"] == $user["id"] || $userModel->isUserFriendsWith($user["id"], $post["author"]["id"]))) {
                             $notificationsModel->clearNotifications($user["id"], $_GET["id"]);
                             $messages = $this->model("Messages")->getUnreadNotificationCount($user["id"]);
                             $notifications = $notificationsModel->getUnreadNotificationCount($user["id"]);
