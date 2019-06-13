@@ -31,7 +31,7 @@
         }
 
         public function getPostById ($id) {
-            return $this->query("SELECT * FROM POSTS WHERE id=:id", array(
+            return $this->query("SELECT * FROM posts WHERE id=:id", array(
                 "id" => $id
             ), false);
         }
