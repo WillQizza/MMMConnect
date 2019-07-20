@@ -16,6 +16,7 @@
         <script src="<?php echo $params["BASE"]; ?>assets/js/timestamps.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/index.js"></script>
         <script src="<?php echo $params["BASE"]; ?>assets/js/feed/common.js"></script>
+        <script src="<?php echo $params["BASE"]; ?>assets/js/markdown.js"></script>
         <script>
             Posts.getPostById("<?php echo htmlspecialchars($_GET["id"]) ?>").then(post => {
                 $("#feed").append(post.element);

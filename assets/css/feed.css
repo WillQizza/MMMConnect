@@ -2,6 +2,7 @@ body {
     background: rgb(225, 225, 225);
 }
 
+/* And this is why I hate CSS, px. REEE */
 #wrapper {
     position: relative;
     top: 3.5em;
@@ -9,6 +10,11 @@ body {
     max-width: 100%;
     min-width: 1080px;
     display: flex;
+}
+
+/* And this is why I hate CSS, px. REEE */
+#feed {
+    max-width: 1080px;
 }
 
 #content {

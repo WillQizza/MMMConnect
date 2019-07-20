@@ -18,7 +18,7 @@
                 if ($diff->d == 1) {
                     $dayText = "& 1 day ago";
                 } else if ($diff->d != 0) {
-                    $dayText = $diff->d . "& days ago";
+                    $dayText = "& " . ($diff->d - 1) . " days ago";
                 }
                 if ($diff->m == 1) {
                     return "1 month ago " . $dayText;
